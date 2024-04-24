@@ -30,8 +30,7 @@ Gem::Specification.new do |spec|
   spec.test_files = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
-  spec.add_dependency "japanese_calendar", "~> 0"
-  spec.add_dependency "metanorma-iso", "~> 2.7.3"
+  spec.add_dependency "metanorma-jis", "~> 0.2.7"
   spec.add_dependency "pubid"
 
   spec.add_development_dependency "debug"

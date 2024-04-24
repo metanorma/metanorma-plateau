@@ -1,26 +1,26 @@
-= metanorma-JIS: Metanorma processor for Japanese Industrial Standards
+= metanorma-plateau: Metanorma processor for Plateau project, Japanese Ministry of Land, Infrastructure, Transport and Tourism
 
-image:https://img.shields.io/gem/v/metanorma-jis.svg["Gem Version", link="https://rubygems.org/gems/metanorma-jis"]
-image:https://github.com/metanorma/metanorma-jis/workflows/rake/badge.svg["Build Status", link="https://github.com/metanorma/metanorma-jis/actions?workflow=rake"]
-image:https://codeclimate.com/github/metanorma/metanorma-jis/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/metanorma-jis"]
-image:https://img.shields.io/github/issues-pr-raw/metanorma/metanorma-jis.svg["Pull Requests", link="https://github.com/metanorma/metanorma-jis/pulls"]
-image:https://img.shields.io/github/commits-since/metanorma/metanorma-jis/latest.svg["Commits since latest",link="https://github.com/metanorma/metanorma-jis/releases"]
+image:https://img.shields.io/gem/v/metanorma-plateau.svg["Gem Version", link="https://rubygems.org/gems/metanorma-plateau"]
+image:https://github.com/metanorma/metanorma-plateau/workflows/rake/badge.svg["Build Status", link="https://github.com/metanorma/metanorma-plateau/actions?workflow=rake"]
+image:https://codeclimate.com/github/metanorma/metanorma-plateau/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/metanorma-plateau"]
+image:https://img.shields.io/github/issues-pr-raw/metanorma/metanorma-plateau.svg["Pull Requests", link="https://github.com/metanorma/metanorma-plateau/pulls"]
+image:https://img.shields.io/github/commits-since/metanorma/metanorma-plateau/latest.svg["Commits since latest",link="https://github.com/metanorma/metanorma-plateau/releases"]
 
 == Functionality
 
 This gem processes https://www.metanorma.com[Metanorma documents] following
-the Metanorma model for generating JIS standards.
+the Metanorma model for generating MLIT Plateau standards.
 
-The gem is basically the https://github.com/metanorma/metanorma-iso gem, with some tweaking of rendering to meet the particular requirements of the JIS.
+The gem is basically the https://github.com/metanorma/metanorma-jis gem, with some tweaking of rendering to meet the particular requirements of the MLIT Plateau project.
 
 It provides the following functions:
 
-. Compiles Metanorma input into the Metanorma-JIS XML format (which is identical to Metanorma-ISO, since the two standards share the same document model)
-. Validates XML output against the Metanorma-JIS document model
+. Compiles Metanorma input into the Metanorma-Plateau XML format
+. Validates XML output against the Metanorma-Plateau document model
 ** Errors are reported to console against the XML, and are intended for users to
 check that they have provided all necessary components of the
 document.
-. Metanorma-JIS XML is then converted into desired output formats.
+. Metanorma-Plateau XML is then converted into desired output formats.
 
 The following outputs are supported:
 
@@ -28,12 +28,11 @@ The following outputs are supported:
 * Secondary: the Metanorma-JIS XML representation is processed to generate the following outputs
 as end deliverable JIS documents.
 ** HTML (`.html`)
-** Word (`.doc`)
 ** PDF (`.pdf`)
 
 == Structure
 
-This gem inherits from the https://github.com/metanorma/metanorma-iso
+This gem inherits from the https://github.com/metanorma/metanorma-jis
 gem, and aligns closely to it.
 
 
@@ -55,9 +54,9 @@ Using the `metanorma` CLI:
 
 [source,console]
 ----
-$ metanorma --type jis a.adoc                   # output HTML
-$ metanorma --type jis --extensions html a.adoc # output just HTML
-$ metanorma --type jis --extensions xml a.adoc  # output Metanorma XML
+$ metanorma --type plateau a.adoc                   # output HTML
+$ metanorma --type plateau --extensions html a.adoc # output just HTML
+$ metanorma --type plateau --extensions xml a.adoc  # output Metanorma XML
 ----
 
 
@@ -76,6 +75,6 @@ See https://www.metanorma.com/author/iso/[Write ISO documents with Metanorma]
 
 == Examples
 
-* Example documents are avalable at the https://github.com/metanorma/mn-samples-jis[mn-samples-jis] repository.
-* Document templates are available at the https://github.com/metanorma/mn-templates-jis[mn-templates-jis] repository.
+* Example documents are avalable at the https://github.com/metanorma/mn-samples-plateau[mn-samples-plateau] repository.
+* Document templates are available at the https://github.com/metanorma/mn-templates-plateau[mn-templates-plateau] repository.
 
