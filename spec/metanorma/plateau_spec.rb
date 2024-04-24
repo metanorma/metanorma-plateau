@@ -1,5 +1,5 @@
 require "spec_helper"
-require "relaton-jis"
+require "relaton_iso"
 
 RSpec.describe Metanorma::Plateau do
   before do
@@ -203,14 +203,14 @@ RSpec.describe Metanorma::Plateau do
          <sections> </sections>
        </jis-standard>
     OUTPUT
-    xml = Nokogiri::XML(Asciidoctor.convert(input, *PLATEAU_OPTIONS))
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
     xml = Nokogiri::XML(Asciidoctor.convert(
                           input.sub(":docfile: test.adoc",
                                     ":docfile: test.adoc\n:language: en"),
-                          *PLATEAU_OPTIONS,
+                          *OPTIONS,
                         ))
     xml.at("//xmlns:metanorma-extension")&.remove
     output = <<~OUTPUT

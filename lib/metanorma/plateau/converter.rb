@@ -6,12 +6,12 @@ module Metanorma
       register_for "plateau"
 
       def version
-        flavour = "Plateau"
+        flavour = "JIS"
         Metanorma.versioned(Metanorma, flavour)[-1]::VERSION
       end
 
       def schema_version
-        f = File.read(File.join(File.dirname(__FILE__), "..", "jis", "isodoc.rng"))
+        f = File.read(File.join(File.dirname(__FILE__), "..", "plateau", "isodoc.rng"))
         m = / VERSION (v\S+)/.match(f)
         m[1]
       end
