@@ -208,7 +208,8 @@ TERMS_BOILERPLATE = "".freeze
 
 def boilerplate_read(file)
   HTMLEntities.new.decode(
-    Metanorma::Plateau::Converter.new(:plateau, {}).boilerplate_file_restructure(file)
+    Metanorma::Plateau::Converter
+    .new(:plateau, {}).boilerplate_file_restructure(file)
     .to_xml.gsub(/<(\/)?sections>/, "<\\1boilerplate>")
       .gsub(/ id="_[^"]+"/, " id='_'"),
   )
@@ -217,6 +218,7 @@ end
 ASCIIDOCTOR_ISO_DIR = Pathname
   .new(File.dirname(__FILE__)) / "../lib/metanorma/plateau"
 
+=begin
 BOILERPLATE_EN =
   boilerplate_read(
     File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-en.adoc", encoding: "utf-8")
@@ -239,6 +241,9 @@ BOILERPLATE =
     .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
     .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   ).freeze
+=end
+
+BOILERPLATE = "".freeze
 
 BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>

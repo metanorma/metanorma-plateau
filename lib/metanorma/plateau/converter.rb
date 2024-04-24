@@ -6,7 +6,7 @@ module Metanorma
       register_for "plateau"
 
       def version
-        flavour = "JIS"
+        flavour = "Plateau"
         Metanorma.versioned(Metanorma, flavour)[-1]::VERSION
       end
 

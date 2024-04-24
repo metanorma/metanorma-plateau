@@ -1,4 +1,6 @@
 require "spec_helper"
+require "relaton-jis"
+
 RSpec.describe Metanorma::Plateau do
   before do
     # Force to download Relaton index file
