@@ -2,23 +2,23 @@
 
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "metanorma/jis/version"
+require "metanorma/plateau/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "metanorma-jis"
-  spec.version       = Metanorma::JIS::VERSION
+  spec.name          = "metanorma-plateau"
+  spec.version       = Metanorma::Plateau::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "metanorma-jis lets you write BSI standards "\
+  spec.summary       = "metanorma-plateau lets you write Plateau standards "\
                        "in AsciiDoc."
   spec.description   = <<~DESCRIPTION
-    metanorma-jis lets you write JIS standards in AsciiDoc syntax.
+    metanorma-plateau lets you write MLIT Plateau standards in AsciiDoc syntax.
 
     This gem is in active development.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/metanorma/metanorma-jis"
+  spec.homepage      = "https://github.com/metanorma/metanorma-plateau"
   spec.license       = "BSD-2-Clause"
 
   spec.bindir        = "bin"
