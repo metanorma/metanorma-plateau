@@ -363,9 +363,10 @@ RSpec.describe IsoDoc::Plateau do
                 </p>
               </div>
               <div id="K">
-                <span class="zzMoveToFollowing">
+                <span class="zzMoveToFollowing inline-header">
                   <b>3.2  </b>
                 </span>
+                <div class="figdl">
                 <dl>
                   <dt>
                     <p>Symbol</p>
@@ -373,15 +374,18 @@ RSpec.describe IsoDoc::Plateau do
                   <dd>Definition</dd>
                 </dl>
               </div>
+              </div>
             </div>
             <div id="L" class="Symbols">
               <h1>4</h1>
+              <div class="figdl">
               <dl>
                 <dt>
                   <p>Symbol</p>
                 </dt>
                 <dd>Definition</dd>
               </dl>
+            </div>
             </div>
             <div id="M">
               <h1>
@@ -550,7 +554,7 @@ RSpec.describe IsoDoc::Plateau do
                   </p>
                 </div>
                 <div id="K">
-                  <span class="zzMoveToFollowing">
+                  <span class="zzMoveToFollowing inline-header">
                     <b>
                       3.2
                       <span style="mso-tab-count:1">  </span>
