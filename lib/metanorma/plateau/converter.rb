@@ -5,10 +5,8 @@ module Metanorma
     class Converter < JIS::Converter
       register_for "plateau"
 
-      def version
-        flavour = "JIS"
-        Metanorma.versioned(Metanorma, flavour)[-1]::VERSION
-      end
+      XML_ROOT_TAG = "plateau-standard".freeze
+      XML_NAMESPACE = "https://www.metanorma.org/ns/plateau".freeze
 
       def schema_version
         f = File.read(File.join(File.dirname(__FILE__), "..", "plateau", "isodoc.rng"))
