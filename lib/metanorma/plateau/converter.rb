@@ -1,4 +1,5 @@
 require "metanorma-jis"
+require_relative "cleanup"
 
 module Metanorma
   module Plateau
@@ -12,6 +13,29 @@ module Metanorma
         f = File.read(File.join(File.dirname(__FILE__), "..", "plateau", "isodoc.rng"))
         m = / VERSION (v\S+)/.match(f)
         m[1]
+      end
+
+      def validate(doc)
+        content_validate(doc)
+        schema_validate(formattedstr_strip(doc.dup),
+                        File.join(File.dirname(__FILE__), "plateau.rng"))
+      end
+
+      def metadata_ext(node, xml)
+        super
+        metadata_coverpage_images(node, xml)
+      end
+
+      def metadata_coverpage_images(node, xml)
+        %w(coverpage-image).each do |n|
+          if a = node.attr(n)
+            xml.send n do |c|
+              a.split(",").each do |x|
+                c.image src: x
+              end
+            end
+          end
+        end
       end
 
       def html_converter(node)
