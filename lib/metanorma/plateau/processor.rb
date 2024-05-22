@@ -22,7 +22,6 @@ module Metanorma
           "Yu Gothic" => nil,
           "Noto Sans JP" => nil,
           "Noto Sans Condensed" => nil,
-          "Tokyo CityFont Cond StdN R" => nil,
           "STIX Two Math" => nil,
           "Courier New" => nil,
           "Cambria Math" => nil,
