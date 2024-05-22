@@ -10,16 +10,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "metanorma-plateau lets you write Plateau standards "\
-                       "in AsciiDoc."
+  spec.summary       = "Metanorma for MLIT Project PLATEAU (private)"\
   spec.description   = <<~DESCRIPTION
-    metanorma-plateau lets you write MLIT Plateau standards in AsciiDoc syntax.
+    Metanorma standards authoring environment for MLIT Project PLATEAU.
 
-    This gem is in active development.
+    WARNING: Usage of this software is restricted to authorized users of
+    MLIT Project PLATEAU.
   DESCRIPTION
 
   spec.homepage      = "https://github.com/metanorma/metanorma-plateau"
-  spec.license       = "BSD-2-Clause"
+  spec.license       = "No-License"
+  spec.metadata      = { "github_repo" => "ssh://github.com/metanorma/metanorma-plateau" }
 
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]
