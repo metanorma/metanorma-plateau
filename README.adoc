@@ -9,13 +9,19 @@ image:https://img.shields.io/github/commits-since/metanorma/metanorma-plateau/la
 == Functionality
 
 This gem processes https://www.metanorma.com[Metanorma documents] following
-the Metanorma model for generating MLIT Plateau standards.
+the Metanorma model for generating MLIT Project PLATEAU documents.
 
-The gem is basically the https://github.com/metanorma/metanorma-jis gem, with some tweaking of rendering to meet the particular requirements of the MLIT Plateau project.
+Project PLATEAU documents are found at:
+
+* https://www.mlit.go.jp/plateau/libraries
+
+The gem is built on top of
+https://github.com/metanorma/metanorma-jis[metanorma-jis] with customized
+rendering to meet requirements of MLIT's Project PLATEAU.
 
 It provides the following functions:
 
-. Compiles Metanorma input into the Metanorma-Plateau XML format
+. Compiles Metanorma input into the Metanorma-PLATEAU XML format
 . Validates XML output against the Metanorma-Plateau document model
 ** Errors are reported to console against the XML, and are intended for users to
 check that they have provided all necessary components of the
@@ -24,21 +30,22 @@ document.
 
 The following outputs are supported:
 
-* Primary: the canonical Metanorma-JIS XML representation (`.xml`).
-* Secondary: the Metanorma-JIS XML representation is processed to generate the following outputs
-as end deliverable JIS documents.
+* Primary: the canonical Metanorma-PLATEAU XML representation (`.xml`).
+* Secondary: the Metanorma-PLATEAU XML representation is processed to generate the following outputs
+as end deliverable PLATEAU documents.
 ** HTML (`.html`)
 ** PDF (`.pdf`)
 
 == Structure
 
-This gem inherits from the https://github.com/metanorma/metanorma-jis
-gem, and aligns closely to it.
+This gem inherits from the
+https://github.com/metanorma/metanorma-jis[metanorma-jis] gem, and aligns
+closely to it.
 
 
 === Quickstart
 
-Please see https://www.metanorma.com for instructions to get started.
+Please see https://www.metanorma.org for instructions to get started.
 
 You will need to setup your Git credentials for bundler or for HTTPS in order
 to fetch the software. Please refer to the following articles for details:
@@ -62,12 +69,7 @@ $ metanorma --type plateau --extensions xml a.adoc  # output Metanorma XML
 
 == Authoring
 
-Please refer to the Metanorma-ISO documentation for general documentation.
-
-* Metanorma-ISO general documentation: https://www.metanorma.com/software/metanorma-iso/
-
-* Metanorma-ISO guidance: https://www.metanorma.com/software/metanorma-iso/docs/guidance/
-
+Please refer to Metanorma for ISO documentation for general information.
 
 == Documentation
 
@@ -75,6 +77,6 @@ See https://www.metanorma.com/author/iso/[Write ISO documents with Metanorma]
 
 == Examples
 
-* Example documents are avalable at the https://github.com/metanorma/mn-samples-plateau[mn-samples-plateau] repository.
-* Document templates are available at the https://github.com/metanorma/mn-templates-plateau[mn-templates-plateau] repository.
+* Example documents: https://github.com/metanorma/mn-samples-plateau[mn-samples-plateau].
+* Document templates: https://github.com/metanorma/mn-templates-plateau[mn-templates-plateau].
 
