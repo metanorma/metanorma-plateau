@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "Metanorma for MLIT Project PLATEAU (private)"\
+  spec.summary       = "Metanorma for MLIT Project PLATEAU (private)"
   spec.description   = <<~DESCRIPTION
     Metanorma standards authoring environment for MLIT Project PLATEAU.
 
