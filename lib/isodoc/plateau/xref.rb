@@ -24,7 +24,7 @@ module IsoDoc
         sequential_formula_names(clause, container: container)
         sequential_permission_names(clause, container: container)
         clause.each do |c|
-          num = @klass.get_clause_id(c)
+          num = @anchors[c["id"]][:label] || @anchors[c["id"]][:xref]
           hierarchical_table_names(clause, num)
         hierarchical_figure_names(clause, num)
         end
