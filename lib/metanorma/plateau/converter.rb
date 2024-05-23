@@ -30,7 +30,12 @@ def org_abbrev
       def metadata_ext(node, xml)
         super
         metadata_coverpage_images(node, xml)
+        metadata_author_cooperation(node, xml)
       end
+
+        def metadata_author_cooperation(node, xml)
+          a = node.attr("author-cooperation") and xml.author_cooperation a
+        end
 
       def metadata_coverpage_images(node, xml)
         %w(coverpage-image).each do |n|
