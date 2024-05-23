@@ -1,6 +1,7 @@
 require "isodoc"
 require_relative "metadata"
 require_relative "i18n"
+require_relative "xref"
 
 module IsoDoc
   module Plateau
