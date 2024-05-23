@@ -1,3 +1,5 @@
+require_relative "base_convert"
+
 module IsoDoc
   module Plateau
     class WordConvert < IsoDoc::JIS::WordConvert
