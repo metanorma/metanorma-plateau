@@ -28,10 +28,10 @@ module IsoDoc
         sequential_formula_names(clause, container: container)
         sequential_permission_names(clause, container: container)
         clause.each do |c|
-          num = @anchors.fetch(c["id"], :label) || @anchors.fetch(c["id"], :xref) ||
+          num = @anchors.dig(c["id"], :label) || @anchors.dig(c["id"], :xref) ||
             c.at(ns("./title"))&.text
-          hierarchical_table_names(clause, num)
-          hierarchical_figure_names(clause, num)
+          hierarchical_table_names(c, num)
+          hierarchical_figure_names(c, num)
         end
       end
     end
