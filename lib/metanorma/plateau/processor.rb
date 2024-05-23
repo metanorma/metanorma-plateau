@@ -19,9 +19,10 @@ module Metanorma
 
       def fonts_manifest
         {
+          "Yu Gothic" => nil,
+          "Noto Sans JP" => nil,
+          "Noto Sans Condensed" => nil,
           "STIX Two Math" => nil,
-          "IPAexGothic" => nil,
-          "IPAexMincho" => nil,
           "Courier New" => nil,
           "Cambria Math" => nil,
           "Times New Roman" => nil,
