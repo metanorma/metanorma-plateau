@@ -9,17 +9,23 @@ module Metanorma
       XML_ROOT_TAG = "plateau-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/plateau".freeze
 
-      def schema_version
-        f = File.read(File.join(File.dirname(__FILE__), "..", "plateau", "isodoc.rng"))
-        m = / VERSION (v\S+)/.match(f)
-        m[1]
-      end
-
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
                         File.join(File.dirname(__FILE__), "plateau.rng"))
       end
+
+def org_abbrev
+        super.merge("Japanese Ministry of Land, Infrastructure, Transport and Tourism" => "MLIT")
+      end
+
+      def default_publisher
+        "MLIT"
+      end
+
+      # Plateau reuse of the JIS publisher default setting
+      JIS_HASH =
+        { "ja" => "国土交通省都市局", "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
 
       def metadata_ext(node, xml)
         super
@@ -36,18 +42,6 @@ module Metanorma
             end
           end
         end
-      end
-
-      def sectiontype(node, level = true)
-        ret = sectiontype1(node)
-        ret1 = preface_main_filter(sectiontype_streamline(ret), node)
-        ret1 == "symbols and abbreviated terms" and return ret1
-        #!level || node.attr("heading") or return nil
-        !level || node.level == 1 || node.attr("heading") or return nil
-        @seen_headers.include? ret and return nil
-        @seen_headers << ret unless ret1.nil?
-        @seen_headers_canonical << ret1 unless ret1.nil?
-        ret1
       end
 
       def html_converter(node)

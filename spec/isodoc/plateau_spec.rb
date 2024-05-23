@@ -22,7 +22,7 @@ RSpec.describe IsoDoc::Plateau do
           </ext>
         </bibdata>
         <preface>
-          <foreword obligation="informative">
+          <foreword id="foreword" obligation="informative">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
@@ -119,7 +119,7 @@ RSpec.describe IsoDoc::Plateau do
         </bibdata>
 
         <preface>
-          <foreword obligation="informative" displayorder="1">
+          <foreword id="foreword" obligation="informative" displayorder="1">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
