@@ -15,8 +15,12 @@ module IsoDoc
           "//clause[@type = 'scope'] | #{@klass.norm_ref_xpath} | " \
           "//sections/terms | //preface/* | " \
           "//sections/definitions | //clause[parent::sections]"
-        #sequential_asset_names(doc.xpath(ns(middle_sections)))
+        # sequential_asset_names(doc.xpath(ns(middle_sections)))
         middle_asset_names(doc.xpath(ns(middle_sections)))
+      end
+
+      def hiersep
+        "-"
       end
 
       # container makes numbering be prefixed with the parent clause reference
@@ -26,7 +30,7 @@ module IsoDoc
         clause.each do |c|
           num = @anchors[c["id"]][:label] || @anchors[c["id"]][:xref]
           hierarchical_table_names(clause, num)
-        hierarchical_figure_names(clause, num)
+          hierarchical_figure_names(clause, num)
         end
       end
     end
