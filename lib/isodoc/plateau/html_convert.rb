@@ -7,6 +7,8 @@ module IsoDoc
         super
         @libdir = File.dirname(__FILE__)
       end
+
+      include Init
     end
   end
 end
