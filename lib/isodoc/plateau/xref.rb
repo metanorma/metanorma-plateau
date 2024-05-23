@@ -21,10 +21,13 @@ module IsoDoc
 
       # container makes numbering be prefixed with the parent clause reference
       def middle_asset_names(clause, container: false)
-        sequential_table_names(clause, container: true)
-        sequential_figure_names(clause, container: true)
         sequential_formula_names(clause, container: container)
         sequential_permission_names(clause, container: container)
+        clause.each do |c|
+          num = @klass.get_clause_id(c)
+          hierarchical_table_names(clause, num)
+        hierarchical_figure_names(clause, num)
+        end
       end
     end
   end
