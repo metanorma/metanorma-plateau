@@ -6,7 +6,7 @@ module IsoDoc
   module Plateau
     module BaseConvert
 def convert_init(file, input_filename, debug)
-  require "debug"; binding.b
+  super
 end
 
       include Init

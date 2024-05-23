@@ -5,7 +5,7 @@ module IsoDoc
     class PresentationXMLConvert < IsoDoc::JIS::PresentationXMLConvert
  def convert(input_filename, file = nil, debug = false,
                 output_filename = nil)
-   require "debug"; binding.b
+   super
  end
 
 
