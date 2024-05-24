@@ -20,8 +20,8 @@ module Metanorma
       def fonts_manifest
         {
           "Yu Gothic" => nil,
-          "Noto Sans JP" => nil,
           "Noto Sans Condensed" => nil,
+          "Noto Sans CJK JP" => nil,
           "STIX Two Math" => nil,
           "Courier New" => nil,
           "Cambria Math" => nil,
