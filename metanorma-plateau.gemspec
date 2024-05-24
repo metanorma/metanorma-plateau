@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.metadata      = {
     "allowed_push_host" => "https://rubygems.pkg.github.com",
     "rubygems_mfa_required" => "true",
-    "github_repo" => "ssh://github.com/metanorma/metanorma-plateau",
+    "github_repo" => "git@github.com:metanorma/metanorma-plateau.git",
   }
 
   spec.bindir        = "bin"
