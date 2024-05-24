@@ -31,7 +31,7 @@ module Metanorma
       end
 
       def version
-        "Metanorma::JIS #{Metanorma::JIS::VERSION}"
+        "Metanorma::Plateau #{Metanorma::Plateau::VERSION}"
       end
 
       def output(xml, inname, outname, format, options = {})

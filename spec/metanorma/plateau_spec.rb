@@ -79,7 +79,7 @@ RSpec.describe Metanorma::Plateau do
       :investigative-committee: 日本産業標準調査会 標準第一部会
     INPUT
     output = <<~OUTPUT
-      <plateau-standard type="semantic" version="#{Metanorma::JIS::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
+      <plateau-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -214,7 +214,7 @@ RSpec.describe Metanorma::Plateau do
                         ))
     xml.at("//xmlns:metanorma-extension")&.remove
     output = <<~OUTPUT
-      <plateau-standard type="semantic" version="#{Metanorma::JIS::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
+      <plateau-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
