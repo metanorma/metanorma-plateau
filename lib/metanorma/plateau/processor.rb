@@ -19,9 +19,10 @@ module Metanorma
 
       def fonts_manifest
         {
+          "Yu Gothic" => nil,
+          "Noto Sans Condensed" => nil,
+          "Noto Sans CJK JP" => nil,
           "STIX Two Math" => nil,
-          "IPAexGothic" => nil,
-          "IPAexMincho" => nil,
           "Courier New" => nil,
           "Cambria Math" => nil,
           "Times New Roman" => nil,
@@ -30,7 +31,7 @@ module Metanorma
       end
 
       def version
-        "Metanorma::JIS #{Metanorma::JIS::VERSION}"
+        "Metanorma::Plateau #{Metanorma::Plateau::VERSION}"
       end
 
       def output(xml, inname, outname, format, options = {})

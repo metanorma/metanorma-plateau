@@ -19,8 +19,13 @@ Gem::Specification.new do |spec|
   DESCRIPTION
 
   spec.homepage      = "https://github.com/metanorma/metanorma-plateau"
-  spec.license       = "No-License"
-  spec.metadata      = { "github_repo" => "ssh://github.com/metanorma/metanorma-plateau" }
+  spec.license       = "LicenseRef-Ribose-Commercial"
+
+  spec.metadata      = {
+    "allowed_push_host" => "https://rubygems.pkg.github.com",
+    "rubygems_mfa_required" => "true",
+    "github_repo" => "git@github.com:metanorma/metanorma-plateau.git",
+  }
 
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]
