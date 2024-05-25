@@ -15,7 +15,7 @@ module Metanorma
                         File.join(File.dirname(__FILE__), "plateau.rng"))
       end
 
-def org_abbrev
+      def org_abbrev
         super.merge("Japanese Ministry of Land, Infrastructure, Transport and Tourism" => "MLIT")
       end
 
@@ -25,7 +25,8 @@ def org_abbrev
 
       # Plateau reuse of the JIS publisher default setting
       JIS_HASH =
-        { "ja" => "国土交通省都市局", "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
+        { "ja" => "国土交通省都市局",
+          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
 
       def metadata_ext(node, xml)
         super
@@ -33,9 +34,9 @@ def org_abbrev
         metadata_author_cooperation(node, xml)
       end
 
-        def metadata_author_cooperation(node, xml)
-          a = node.attr("author-cooperation") and xml.author_cooperation a
-        end
+      def metadata_author_cooperation(node, xml)
+        a = node.attr("author-cooperation") and xml.author_cooperation a
+      end
 
       def metadata_coverpage_images(node, xml)
         %w(coverpage-image).each do |n|

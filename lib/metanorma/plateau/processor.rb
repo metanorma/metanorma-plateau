@@ -38,17 +38,17 @@ module Metanorma
         options_preprocess(options)
         case format
         when :html
-          IsoDoc::Plateau::HtmlConvert.new(options).convert(inname, xml, nil,
-                                                            outname)
+          IsoDoc::Plateau::HtmlConvert.new(options)
+            .convert(inname, xml, nil, outname)
         when :doc
-          IsoDoc::Plateau::WordConvert.new(options).convert(inname, xml, nil,
-                                                            outname)
+          IsoDoc::Plateau::WordConvert.new(options)
+            .convert(inname, xml, nil, outname)
         when :pdf
-          IsoDoc::Plateau::PdfConvert.new(options).convert(inname, xml, nil,
-                                                           outname)
+          IsoDoc::Plateau::PdfConvert.new(options)
+            .convert(inname, xml, nil, outname)
         when :presentation
-          IsoDoc::Plateau::PresentationXMLConvert.new(options).convert(inname, xml,
-                                                                       nil, outname)
+          IsoDoc::Plateau::PresentationXMLConvert.new(options)
+            .convert(inname, xml, nil, outname)
         else
           super
         end

@@ -61,29 +61,24 @@ def xmlpp(xml)
     end
   end.join
   xsl = <<~XSL
-    <!--
-        <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-          <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-          <xsl:strip-space elements="*"/>
-          <xsl:template match="/">
-            <xsl:copy-of select="."/>
-          </xsl:template>
-        </xsl:stylesheet>
-    -->
       <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:output method="xml" encoding="ISO-8859-1"/>
       <xsl:param name="indent-increment" select="'  '"/>
 
       <xsl:template name="newline">
         <xsl:text disable-output-escaping="yes">
-    </xsl:text>
+      </xsl:text>
       </xsl:template>
-
+      <!-- WHY ON EARTH WOULD I WANT TO PRESERVE COMMENTS?!
       <xsl:template match="comment() | processing-instruction()">
         <xsl:param name="indent" select="''"/>
         <xsl:call-template name="newline"/>
         <xsl:value-of select="$indent"/>
         <xsl:copy />
+      </xsl:template>
+     -->
+      <xsl:template match="comment() | processing-instruction()">
+      <xsl:text>?????</xsl:text>
       </xsl:template>
 
       <xsl:template match="text()">
