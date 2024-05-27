@@ -23,10 +23,21 @@ module Metanorma
         "MLIT"
       end
 
+      def init_misc(node)
+        super
+        @default_doctype = "technical-report"
+      end
+
       # Plateau reuse of the JIS publisher default setting
       JIS_HASH =
         { "ja" => "国土交通省都市局",
           "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
+
+      def doctype_validate(_xmldoc)
+        %w(handbook technical-report annex).include? @doctype or
+          @log.add("Document Attributes", nil,
+                   "#{@doctype} is not a recognised document type")
+      end
 
       def metadata_ext(node, xml)
         super

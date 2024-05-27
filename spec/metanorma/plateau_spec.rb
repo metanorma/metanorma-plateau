@@ -89,7 +89,7 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
-           <docidentifier primary="true" type="JIS">Z 1000-1:2000</docidentifier>
+           <docidentifier primary="true" type="JIS">TRZ 1000-1:2000</docidentifier>
            <docnumber>1000</docnumber>
            <date type="announced">
               <on>2000-02-01</on>
@@ -158,7 +158,7 @@ RSpec.describe Metanorma::Plateau do
              </owner>
            </copyright>
            <ext>
-             <doctype>japanese-industrial-standard</doctype>
+             <doctype>technical-report</doctype>
              <horizontal>true</horizontal>
              <editorialgroup>
                <agency>JIS</agency>
@@ -224,7 +224,7 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
-           <docidentifier primary="true" type="JIS">Z 1000-1:2000(E)</docidentifier>
+           <docidentifier primary="true" type="JIS">TRZ 1000-1:2000(E)</docidentifier>
            <docnumber>1000</docnumber>
            <date type="announced">
               <on>2000-02-01</on>
@@ -293,7 +293,7 @@ RSpec.describe Metanorma::Plateau do
              </owner>
            </copyright>
            <ext>
-             <doctype>japanese-industrial-standard</doctype>
+             <doctype>technical-report</doctype>
              <horizontal>true</horizontal>
              <editorialgroup>
                <agency>JIS</agency>
