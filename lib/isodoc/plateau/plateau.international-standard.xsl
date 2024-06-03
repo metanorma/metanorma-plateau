@@ -6,6 +6,8 @@
 
 	<xsl:variable name="debug">false</xsl:variable>
 
+	<xsl:variable name="i18n_doctype_dict_annex"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.annex</xsl:with-param></xsl:call-template></xsl:variable>
+
 	<xsl:variable name="contents_">
 		<xsl:variable name="bundle" select="count(//plateau:plateau-standard) &gt; 1"/>
 
@@ -433,6 +435,8 @@
 		<xsl:param name="num"/>
 		<fo:page-sequence master-reference="cover-page" force-page-count="no-force" font-family="Noto Sans Condensed">
 
+			<xsl:variable name="doctype" select="/*/plateau:bibdata/plateau:ext/plateau:doctype[@language = '' or not(@language)]"/>
+
 			<fo:static-content flow-name="header" role="artifact" id="__internal_layout__coverpage_header_{generate-id()}">
 				<!-- background cover image -->
 				<xsl:call-template name="insertBackgroundPageImage"/>
@@ -447,7 +451,14 @@
 						<fo:table-body>
 							<fo:table-row>
 								<fo:table-cell>
-									<fo:block font-size="28pt" font-family="Noto Sans JP"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']/node()"/></fo:block>
+									<fo:block font-size="28pt" font-family="Noto Sans JP">
+										<xsl:if test="$doctype = 'annex'">
+											<xsl:attribute name="text-indent">-7mm</xsl:attribute>
+											<xsl:value-of select="concat('（', $i18n_doctype_dict_annex)"/>
+											<fo:inline letter-spacing="-3mm">）</fo:inline>
+										</xsl:if>
+										<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']/node()"/>
+									</fo:block>
 									<fo:block font-size="14pt" margin-top="3mm"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-main']/node()"/></fo:block>
 								</fo:table-cell>
 								<fo:table-cell text-align="right" font-size="8.5pt" padding-right="2mm">
@@ -475,7 +486,14 @@
 				</fo:block>
 				<fo:block-container reference-orientation="-90" width="205mm" height="36mm" margin-top="6mm">
 					<fo:block font-size="21.2pt" margin-top="7mm"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-intro']/node()"/></fo:block>
-					<fo:block font-family="Noto Sans JP" font-size="14.2pt" margin-top="2mm"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-intro']/node()"/></fo:block>
+					<fo:block font-family="Noto Sans JP" font-size="14.2pt" margin-top="2mm">
+						<xsl:if test="$doctype = 'annex'">
+							<xsl:attribute name="text-indent">-3.5mm</xsl:attribute>
+							<xsl:value-of select="concat('（', $i18n_doctype_dict_annex)"/>
+							<fo:inline letter-spacing="-1mm">）</fo:inline>
+						</xsl:if>
+						<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-intro']/node()"/>
+					</fo:block>
 				</fo:block-container>
 			</fo:static-content>
 
@@ -902,16 +920,16 @@
 
 					<xsl:call-template name="refine_list-item-label-style"/>
 
+					<xsl:variable name="list_item_label">
+						<xsl:call-template name="getListItemFormat"/>
+					</xsl:variable>
+
 					<!-- <xsl:attribute name="line-height">2</xsl:attribute> -->
 
 					<!-- if 'p' contains all text in 'add' first and last elements in first p are 'add' -->
 					<xsl:if test="*[1][count(node()[normalize-space() != '']) = 1 and *[local-name() = 'add']]">
 						<xsl:call-template name="append_add-style"/>
 					</xsl:if>
-
-					<xsl:variable name="list_item_label">
-						<xsl:call-template name="getListItemFormat"/>
-					</xsl:variable>
 
 					<xsl:choose>
 						<xsl:when test="contains($list_item_label, ')')">
@@ -920,7 +938,18 @@
 							<xsl:value-of select="substring-after($list_item_label,')')"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="$list_item_label"/>
+							<xsl:choose>
+								<xsl:when test="parent::*[local-name() = 'ul'] and @ancestor = 'sections' and $list_item_label = '・'">
+									<fo:inline>
+										<fo:instream-foreign-object content-width="2.5mm" fox:alt-text="ul list label">
+											<xsl:copy-of select="$black_circle"/>
+										</fo:instream-foreign-object>
+									</fo:inline>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$list_item_label"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:otherwise>
 					</xsl:choose>
 
@@ -1331,6 +1360,12 @@
 		</svg>
 	</xsl:variable>
 
+	<xsl:variable name="black_circle">
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+			<circle cx="10" cy="10" r="5" stroke="black" stroke-width="5" fill="black"/>
+		</svg>
+	</xsl:variable>
+
 			<xsl:strip-space elements="plateau:xref"/>
 
 	<xsl:variable name="namespace_full" select="namespace-uri(/*)"/> <!-- example: https://www.metanorma.org/ns/iso -->
@@ -1391,7 +1426,7 @@
 	<xsl:param name="table_if_debug">false</xsl:param> <!-- set 'true' to put debug width data before table or dl -->
 
 	<xsl:variable name="isApplyAutolayoutAlgorithm_">
-		skip
+		true
 	</xsl:variable>
 	<xsl:variable name="isApplyAutolayoutAlgorithm" select="normalize-space($isApplyAutolayoutAlgorithm_)"/>
 
@@ -2404,6 +2439,8 @@
 		<xsl:attribute name="content-height">100%</xsl:attribute>
 		<xsl:attribute name="scaling">uniform</xsl:attribute>
 
+			<xsl:attribute name="content-width">scale-to-fit</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="tt-style">
@@ -3306,7 +3343,9 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:param name="table_only_with_id"/><!-- Example: table1, for table auto-layout algorithm -->
+	<!-- for table auto-layout algorithm -->
+	<xsl:param name="table_only_with_id"/> <!-- Example: 'table1' -->
+	<xsl:param name="table_only_with_ids"/> <!-- Example: 'table1 table2 table3 ' -->
 
 	<xsl:template match="*[local-name()='table']" priority="2">
 		<xsl:choose>
@@ -3314,6 +3353,10 @@
 				<xsl:call-template name="table"/>
 			</xsl:when>
 			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:when test="$table_only_with_ids != '' and contains($table_only_with_ids, concat(@id, ' '))">
+				<xsl:call-template name="table"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_ids != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="table"/>
 			</xsl:otherwise>
@@ -4751,6 +4794,10 @@
 				<xsl:call-template name="dl"/>
 			</xsl:when>
 			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:when test="$table_only_with_ids != '' and contains($table_only_with_ids, concat(@id, ' '))">
+				<xsl:call-template name="dl"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_ids != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="dl"/>
 			</xsl:otherwise>
@@ -4914,7 +4961,7 @@
 
 										<!-- create virtual html table for dl/[dt and dd] -->
 										<xsl:variable name="simple-table">
-
+											<!-- initial='<xsl:copy-of select="."/>' -->
 											<xsl:variable name="dl_table">
 												<tbody>
 													<xsl:apply-templates mode="dl_if">
@@ -7637,17 +7684,19 @@
 							</xsl:variable>
 							<xsl:value-of select="concat('scale=', $scale,', indent=', $indent)"/>
 							</fo:block> -->
-							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style">
-								<xsl:if test="not(@mimetype = 'image/svg+xml') and (../*[local-name() = 'name'] or parent::*[local-name() = 'figure'][@unnumbered = 'true']) and not(ancestor::*[local-name() = 'table'])">
 
-									<xsl:call-template name="setImageWidthHeight"/>
+							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}">
 
-									<xsl:choose>
-										<xsl:when test="@width != '' and @width != 'auto' and @height != '' and @height != 'auto'">
-											<xsl:attribute name="scaling">non-uniform</xsl:attribute>
-										</xsl:when>
-										<xsl:otherwise>
+								<xsl:choose>
+									<!-- default -->
+									<xsl:when test="((@width = 'auto' or @width = 'text-width' or @width = 'full-page-width' or @width = 'narrow') and @height = 'auto') or            (normalize-space(@width) = '' and normalize-space(@height) = '') ">
+										<!-- add attribute for automatic scaling -->
+										<xsl:variable name="image-graphic-style_attributes">
+											<attributes xsl:use-attribute-sets="image-graphic-style"/>
+										</xsl:variable>
+										<xsl:copy-of select="xalan:nodeset($image-graphic-style_attributes)/attributes/@*"/>
 
+										<xsl:if test="not(@mimetype = 'image/svg+xml') and not(ancestor::*[local-name() = 'table'])">
 											<xsl:variable name="scale">
 												<xsl:call-template name="getImageScale">
 													<xsl:with-param name="indent" select="$indent"/>
@@ -7661,10 +7710,30 @@
 											<xsl:if test="number($scale) &lt; 100">
 												<xsl:attribute name="content-width"><xsl:value-of select="number($scale) * number($scaleRatio)"/>%</xsl:attribute>
 											</xsl:if>
-										</xsl:otherwise>
-									</xsl:choose>
+										</xsl:if>
 
-								</xsl:if>
+									</xsl:when> <!-- default -->
+									<xsl:otherwise>
+
+										<xsl:variable name="width_height_">
+											<attributes>
+												<xsl:call-template name="setImageWidthHeight"/>
+											</attributes>
+										</xsl:variable>
+										<xsl:variable name="width_height" select="xalan:nodeset($width_height_)"/>
+
+										<xsl:copy-of select="$width_height/attributes/@*"/>
+
+										<xsl:if test="$width_height/attributes/@content-width != '' and             $width_height/attributes/@content-height != ''">
+											<xsl:attribute name="scaling">non-uniform</xsl:attribute>
+										</xsl:if>
+
+									</xsl:otherwise>
+								</xsl:choose>
+
+								<!-- 
+								<xsl:if test="not(@mimetype = 'image/svg+xml') and (../*[local-name() = 'name'] or parent::*[local-name() = 'figure'][@unnumbered = 'true']) and not(ancestor::*[local-name() = 'table'])">
+								-->
 
 							</fo:external-graphic>
 						</xsl:otherwise>
@@ -7690,7 +7759,7 @@
 			<xsl:call-template name="setImageWidth"/>
 		</xsl:variable>
 		<xsl:if test="$width != ''">
-			<xsl:attribute name="width">
+			<xsl:attribute name="content-width">
 				<xsl:value-of select="$width"/>
 			</xsl:attribute>
 		</xsl:if>
@@ -7698,7 +7767,7 @@
 			<xsl:call-template name="setImageHeight"/>
 		</xsl:variable>
 		<xsl:if test="$height != ''">
-			<xsl:attribute name="height">
+			<xsl:attribute name="content-height">
 				<xsl:value-of select="$height"/>
 			</xsl:attribute>
 		</xsl:if>
@@ -11536,7 +11605,20 @@
 	<!-- optimization: remove clause if table_only_with_id isn't empty and clause doesn't contain table or dl with table_only_with_id -->
 	<xsl:template match="*[local-name() = 'clause' or local-name() = 'p' or local-name() = 'definitions' or local-name() = 'annex']" mode="update_xml_step1">
 		<xsl:choose>
+			<xsl:when test="($table_only_with_id != '' or $table_only_with_ids != '') and local-name() = 'p' and (ancestor::*[local-name() = 'table' or local-name() = 'dl' or local-name() = 'toc'])">
+				<xsl:copy>
+					<xsl:copy-of select="@*"/>
+					<xsl:apply-templates mode="update_xml_step1"/>
+				</xsl:copy>
+			</xsl:when>
+			<!-- for table auto-layout algorithm -->
 			<xsl:when test="$table_only_with_id != '' and not(.//*[local-name() = 'table' or local-name() = 'dl'][@id = $table_only_with_id])">
+				<xsl:copy>
+					<xsl:copy-of select="@*"/>
+				</xsl:copy>
+			</xsl:when>
+			<!-- for table auto-layout algorithm -->
+			<xsl:when test="$table_only_with_ids != '' and not(.//*[local-name() = 'table' or local-name() = 'dl'][contains($table_only_with_ids, concat(@id, ' '))])">
 				<xsl:copy>
 					<xsl:copy-of select="@*"/>
 				</xsl:copy>
@@ -12004,6 +12086,25 @@
 					<xsl:when test="ancestor::*[local-name() = 'preface']">preface</xsl:when>
 					<xsl:otherwise><xsl:value-of select="$ancestor"/></xsl:otherwise>
 				</xsl:choose>
+			</xsl:attribute>
+
+			<xsl:apply-templates mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'li']" mode="linear_xml" priority="2">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+
+			<xsl:variable name="ancestor">
+				<xsl:choose>
+					<xsl:when test="ancestor::*[local-name() = 'preface']">preface</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'sections']">sections</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'annex']">annex</xsl:when>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:attribute name="ancestor">
+				<xsl:value-of select="$ancestor"/>
 			</xsl:attribute>
 
 			<xsl:apply-templates mode="linear_xml"/>
