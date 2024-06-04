@@ -92,11 +92,11 @@
 
 				<!-- landscape -->
 				<fo:simple-page-master master-name="document-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
-					<fo:region-body margin-top="{$marginLeftRight1}mm" margin-bottom="{$marginLeftRight2}mm" margin-left="{$marginBottom}mm" margin-right="{$marginTop}mm"/>
-					<fo:region-before region-name="header-odd" extent="{$marginLeftRight1}mm" precedence="true"/>
-					<fo:region-after region-name="footer" extent="{$marginLeftRight2}mm" precedence="true"/>
-					<fo:region-start region-name="left-region-landscape" extent="{$marginBottom}mm"/>
-					<fo:region-end region-name="right-region-landscape" extent="{$marginTop}mm"/>
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-before region-name="header-odd" extent="{$marginTop}mm" precedence="true"/>
+					<fo:region-after region-name="footer" extent="{$marginBottom}mm" precedence="true"/>
+					<fo:region-start region-name="left-region-landscape" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="right-region-landscape" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
 
 				<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
@@ -192,7 +192,7 @@
 
 					<xsl:if test="$paged_xml_preface/*[local-name()='page'] and count($paged_xml_preface/*[local-name()='page']/*) != 0">
 						<!-- Preface pages -->
-						<fo:page-sequence master-reference="document_preface" force-page-count="no-force" font-family="Noto Sans JP">
+						<fo:page-sequence master-reference="document_preface" force-page-count="no-force" font-family="Noto Sans JP" font-size="10pt">
 
 							<fo:static-content flow-name="header" role="artifact" id="__internal_layout__preface_header_{generate-id()}">
 								<!-- grey background  -->
@@ -254,9 +254,33 @@
 									<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name() = 'p' and @type = 'section-title'][not(following-sibling::*) or following-sibling::*[1][local-name() = 'clause' and @type = 'corrigenda']]" mode="linear_xml"/>
 								</xsl:otherwise>
 							</xsl:choose>
-
-							<xsl:apply-templates select="/*/*[local-name()='sections']/*" mode="linear_xml"/>
 						</item>
+
+						<item>
+							<xsl:apply-templates select="/*/*[local-name()='sections']/*[1]" mode="linear_xml"/>
+						</item>
+						<!-- second clause is scope -->
+						<xsl:choose>
+							<xsl:when test="count(/*/*[local-name()='sections']/*[2]/*) = 2"> <!-- title and paragraph -->
+								<item>
+									<xsl:apply-templates select="/*/*[local-name()='sections']/*[2]" mode="linear_xml"/>
+									<xsl:apply-templates select="/*/*[local-name()='sections']/*[3]" mode="linear_xml"/>
+								</item>
+							</xsl:when>
+							<xsl:otherwise>
+								<item>
+									<xsl:apply-templates select="/*/*[local-name()='sections']/*[2]" mode="linear_xml"/>
+								</item>
+								<item>
+									<xsl:apply-templates select="/*/*[local-name()='sections']/*[3]" mode="linear_xml"/>
+								</item>
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:for-each select="/*/*[local-name()='sections']/*[position() &gt; 3]">
+							<item>
+									<xsl:apply-templates select="." mode="linear_xml"/>
+								</item>
+						</xsl:for-each>
 
 						<!-- Annexes -->
 						<!-- <xsl:for-each select="/*/*[local-name()='annex']">
@@ -343,7 +367,7 @@
 								<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:date[@type = 'published']"/><xsl:text> 発行</xsl:text></fo:block>
 								<!-- MLIT Department -->
 								<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'author']/plateau:organization/plateau:name"/></fo:block>
-								<fo:block margin-left="9mm"><xsl:value-of select="/*/plateau:bibdata/plateau:ext/plateau:author-cooperation"/></fo:block>
+								<fo:block margin-left="9mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'enabler']/plateau:organization/plateau:name"/></fo:block>
 							</fo:block-container>
 						</fo:flow>
 					</fo:page-sequence>
@@ -744,6 +768,7 @@
 
 		<xsl:variable name="margin-bottom">
 			<xsl:choose>
+				<xsl:when test="@parent = 'preface'">6pt</xsl:when>
 				<xsl:when test="@ancestor = 'foreword' and $level = 1">9mm</xsl:when>
 				<xsl:when test="@ancestor = 'annex' and $level = '1' and preceding-sibling::*[local-name() = 'annex'][1][@commentary = 'true']">7mm</xsl:when>
 				<xsl:when test="@ancestor = 'annex' and $level = 1">1mm</xsl:when>
@@ -782,6 +807,10 @@
 
 					<xsl:if test="@type = 'floating-title' or @type = 'section-title'">
 						<xsl:copy-of select="@id"/>
+					</xsl:if>
+
+					<xsl:if test="$level = '3'">
+						<xsl:attribute name="margin-left">7.5mm</xsl:attribute>
 					</xsl:if>
 
 					<!-- if first and last childs are `add` ace-tag, then move start ace-tag before title -->
@@ -861,12 +890,20 @@
 						<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
 					</xsl:if>
 
-					<xsl:if test="parent::plateau:li or following-sibling::*[1][self::plateau:ol or self::plateau:ul or self::plateau:note or self::plateau:example] or parent::plateau:quote">
-						<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+					<xsl:if test="parent::plateau:li or parent::plateau:quote">
+						<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 					</xsl:if>
 
-					<xsl:if test="parent::plateau:td or parent::plateau:th or parent::plateau:dd">
+					<xsl:if test="parent::plateau:li and following-sibling::*[1][self::plateau:ol or self::plateau:ul or self::plateau:note or self::plateau:example]">
+						<xsl:attribute name="margin-bottom">4pt</xsl:attribute>
+					</xsl:if>
+
+					<xsl:if test="ancestor::plateau:td or ancestor::plateau:th">
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+					</xsl:if>
+
+					<xsl:if test="parent::plateau:dd">
+						<xsl:attribute name="margin-bottom">5pt</xsl:attribute>
 					</xsl:if>
 
 					<xsl:if test="parent::plateau:clause[@type = 'inner-cover-note'] or ancestor::plateau:boilerplate">
@@ -939,7 +976,7 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:choose>
-								<xsl:when test="parent::*[local-name() = 'ul'] and @ancestor = 'sections' and $list_item_label = '・'">
+								<xsl:when test="parent::*[local-name() = 'ul'] and @ancestor = 'sections' and $list_item_label = '・' and not(ancestor::*[local-name() = 'table'])">
 									<fo:inline>
 										<fo:instream-foreign-object content-width="2.5mm" fox:alt-text="ul list label">
 											<xsl:copy-of select="$black_circle"/>
@@ -1232,11 +1269,17 @@
 		<xsl:copy-of select="xalan:nodeset($text_en)/text/node()"/>
 	</xsl:template>
 
+	<!-- Key title after the table -->
+	<xsl:template match="plateau:table/plateau:p[@class = 'ListTitle']" priority="2" mode="update_xml_step1"/>
+
 	<xsl:template match="*[local-name() = 'font_en_bold'][normalize-space() != '']">
 		<xsl:if test="ancestor::*[local-name() = 'td' or local-name() = 'th']"><xsl:value-of select="$zero_width_space"/></xsl:if>
 		<fo:inline font-family="Noto Sans Condensed" font-weight="300"> <!--  font-weight="bold" -->
-			<xsl:if test="ancestor::*[local-name() = 'preferred']">
+			<!-- <xsl:if test="ancestor::*[local-name() = 'preferred']">
 				<xsl:attribute name="font-weight">normal</xsl:attribute>
+			</xsl:if> -->
+			<xsl:if test="(ancestor::*[local-name() = 'figure'] or ancestor::*[local-name() = 'table']) and parent::*[local-name() = 'name']">
+				<xsl:attribute name="font-weight">bold</xsl:attribute>
 			</xsl:if>
 			<xsl:apply-templates/>
 		</fo:inline>
@@ -1261,6 +1304,21 @@
 	<!-- ========================= -->
 	<!-- END: Allocate non-Japanese text -->
 	<!-- ========================= -->
+
+	<!-- Table key -->
+	<xsl:template match="plateau:table/plateau:p[@class = 'dl']" priority="2">
+		<fo:block-container margin-left="90mm">
+			<xsl:if test="not(following-sibling::*[1][self::plateau:p[@class = 'dl']])"> <!-- last dl -->
+				<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+			</xsl:if>
+			<fo:block-container margin-left="0mm">
+				<fo:block font-size="10pt">
+					<xsl:copy-of select="@id"/>
+					<xsl:apply-templates/>
+				</fo:block>
+			</fo:block-container>
+		</fo:block-container>
+	</xsl:template>
 
 	<!-- background cover image -->
 	<xsl:template name="insertBackgroundPageImage">
@@ -2013,6 +2071,7 @@
 
 			<xsl:attribute name="font-weight">bold</xsl:attribute>
 			<xsl:attribute name="text-align">center</xsl:attribute>
+			<xsl:attribute name="margin-top">20pt</xsl:attribute>
 			<xsl:attribute name="margin-bottom">4pt</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-name-style -->
@@ -2140,7 +2199,7 @@
 	<xsl:attribute-set name="table-fn-style">
 		<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
 
-			<xsl:attribute name="font-size">inherit</xsl:attribute>
+			<xsl:attribute name="font-size">10.5pt</xsl:attribute>
 			<xsl:attribute name="margin-bottom">1pt</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-fn-style -->
@@ -2153,8 +2212,7 @@
 		<xsl:attribute name="font-size">80%</xsl:attribute>
 		<xsl:attribute name="padding-right">5mm</xsl:attribute>
 
-			<xsl:attribute name="font-size">67%</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="font-size">100%</xsl:attribute>
 			<xsl:attribute name="padding-right">0mm</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-fn-number-style -->
@@ -2194,6 +2252,8 @@
 	<!-- ========================== -->
 
 	<xsl:attribute-set name="dl-block-style">
+
+			<xsl:attribute name="margin-bottom">16pt</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -2354,11 +2414,16 @@
 
 	<xsl:attribute-set name="term-style">
 
+			<xsl:attribute name="space-after">12pt</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="term-name-style">
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
+
+			<xsl:attribute name="font-weight">normal</xsl:attribute>
+			<xsl:attribute name="space-after">2pt</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -2464,6 +2529,8 @@
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
 
+			<xsl:attribute name="font-weight">normal</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="domain-style">
@@ -2532,6 +2599,11 @@
 
 	<xsl:template name="refine_list-style">
 
+			<xsl:if test="ancestor::*[local-name() = 'table']">
+				<xsl:attribute name="provisional-distance-between-starts">4.5mm</xsl:attribute>
+				<xsl:attribute name="space-after">0pt</xsl:attribute>
+			</xsl:if>
+
 	</xsl:template> <!-- refine_list-style -->
 
 	<xsl:attribute-set name="list-name-style">
@@ -2571,9 +2643,8 @@
 		<xsl:attribute name="font-size">80%</xsl:attribute>
 		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
 
-			<xsl:attribute name="font-size">67%</xsl:attribute>
-			<xsl:attribute name="font-weight">bold</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="font-size">6pt</xsl:attribute>
+			<xsl:attribute name="baseline-shift">25%</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -2588,9 +2659,8 @@
 	<xsl:attribute-set name="fn-num-style">
 		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
 
-			<xsl:attribute name="font-size">67%</xsl:attribute>
-			<xsl:attribute name="font-weight">bold</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="font-size">6pt</xsl:attribute>
+			<xsl:attribute name="baseline-shift">25%</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -2609,9 +2679,8 @@
 	<xsl:attribute-set name="fn-body-num-style">
 		<xsl:attribute name="keep-with-next.within-line">always</xsl:attribute>
 
-			<xsl:attribute name="font-size">67%</xsl:attribute>
-			<xsl:attribute name="font-weight">bold</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="font-size">6pt</xsl:attribute>
+			<xsl:attribute name="baseline-shift">25%</xsl:attribute>
 
 	</xsl:attribute-set> <!-- fn-body-num-style -->
 
@@ -2670,7 +2739,7 @@
 		<xsl:attribute name="provisional-distance-between-starts">12mm</xsl:attribute>
 		<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
 
-			<xsl:attribute name="provisional-distance-between-starts">8mm</xsl:attribute>
+			<xsl:attribute name="provisional-distance-between-starts">9.5mm</xsl:attribute>
 			<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
 			<xsl:attribute name="line-height">1.5</xsl:attribute>
 
@@ -2695,9 +2764,8 @@
 		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
 		<xsl:attribute name="font-size">65%</xsl:attribute>
 
-			<xsl:attribute name="font-size">67%</xsl:attribute>
-			<xsl:attribute name="font-weight">bold</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="font-size">6pt</xsl:attribute>
+			<xsl:attribute name="baseline-shift">25%</xsl:attribute>
 
 	</xsl:attribute-set> <!-- bibitem-note-fn-style -->
 
@@ -3475,7 +3543,7 @@
 
 					<xsl:variable name="isNoteOrFnExist" select="./*[local-name()='note'][not(@type = 'units')] or ./*[local-name()='example'] or .//*[local-name()='fn'][local-name(..) != 'name'] or ./*[local-name()='source']"/>
 					<xsl:if test="$isNoteOrFnExist = 'true'">
-						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute><!-- set 0pt border, because there is a separete table below for footer -->
+
 					</xsl:if>
 
 					<xsl:choose>
@@ -3532,13 +3600,16 @@
 				</fo:table>
 
 				<xsl:variable name="colgroup" select="*[local-name()='colgroup']"/>
-				<xsl:for-each select="*[local-name()='tbody']"><!-- select context to tbody -->
-					<xsl:call-template name="insertTableFooterInSeparateTable">
-						<xsl:with-param name="table_attributes" select="$table_attributes"/>
-						<xsl:with-param name="colwidths" select="$colwidths"/>
-						<xsl:with-param name="colgroup" select="$colgroup"/>
-					</xsl:call-template>
-				</xsl:for-each>
+
+				<!-- table footer after table -->
+
+					<xsl:apply-templates select="*[not(local-name()='thead') and not(local-name()='tbody') and not(local-name()='tfoot')]"/>
+					<xsl:for-each select="*[local-name()='tbody']"> <!-- select context to tbody -->
+						<xsl:variable name="table_fn_block">
+							<xsl:call-template name="table_fn_display"/>
+						</xsl:variable>
+						<xsl:copy-of select="$table_fn_block"/>
+					</xsl:for-each>
 
 				<xsl:if test="*[local-name()='bookmark']"> <!-- special case: table/bookmark -->
 					<fo:block keep-with-previous="always" line-height="0.1">
@@ -3558,6 +3629,27 @@
 			<xsl:when test="@width and @width != 'full-page-width' and @width != 'text-width'">
 
 				<!-- centered table when table name is centered (see table-name-style) -->
+
+					<fo:table table-layout="fixed" width="100%" xsl:use-attribute-sets="table-container-style">
+
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="{@width}"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-body>
+							<fo:table-row>
+								<fo:table-cell column-number="2">
+									<xsl:copy-of select="$table-preamble"/>
+									<fo:block role="SKIP">
+										<xsl:call-template name="setTrackChangesStyles">
+											<xsl:with-param name="isAdded" select="$isAdded"/>
+											<xsl:with-param name="isDeleted" select="$isDeleted"/>
+										</xsl:call-template>
+										<xsl:copy-of select="$table"/>
+									</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+						</fo:table-body>
+					</fo:table>
 
 			</xsl:when>
 			<xsl:otherwise>
@@ -3907,8 +3999,10 @@
 					<width_min><xsl:value-of select="@width_min"/></width_min>
 					<e><xsl:value-of select="$d * $W div $D"/></e>
 					<!-- set the column's width to the minimum width plus d times W over D.  -->
+					<xsl:variable name="column_width_" select="round(@width_min + $d * $W div $D)"/> <!--  * 10 -->
+					<xsl:variable name="column_width" select="$column_width_*($column_width_ &gt;= 0) - $column_width_*($column_width_ &lt; 0)"/> <!-- absolute value -->
 					<column divider="100">
-						<xsl:value-of select="round(@width_min + $d * $W div $D)"/> <!--  * 10 -->
+						<xsl:value-of select="$column_width"/>
 					</column>
 				</xsl:for-each>
 
@@ -4316,6 +4410,22 @@
 
 			<xsl:call-template name="refine_table-header-cell-style"/>
 
+			<!-- experimental feature, see https://github.com/metanorma/metanorma-plateau/issues/30#issuecomment-2145461828 -->
+			<!-- <xsl:choose>
+				<xsl:when test="count(node()) = 1 and *[local-name() = 'span'][contains(@style, 'text-orientation')]">
+					<fo:block-container reference-orientation="270">
+						<fo:block role="SKIP" text-align="start">
+							<xsl:apply-templates />
+						</fo:block>
+					</fo:block-container>
+				</xsl:when>
+				<xsl:otherwise>
+					<fo:block role="SKIP">
+						<xsl:apply-templates />
+					</fo:block>
+				</xsl:otherwise>
+			</xsl:choose> -->
+
 			<fo:block role="SKIP">
 				<xsl:apply-templates/>
 			</fo:block>
@@ -4605,7 +4715,11 @@
 							<fo:inline id="{@id}" xsl:use-attribute-sets="table-fn-number-style">
 								<xsl:call-template name="refine_table-fn-number-style"/>
 
+									<xsl:text>※</xsl:text>
+
 								<xsl:value-of select="@reference"/>
+
+									<xsl:text>：</xsl:text>
 
 							</fo:inline>
 							<fo:inline xsl:use-attribute-sets="table-fn-body-style">
@@ -4763,6 +4877,8 @@
 			<xsl:call-template name="refine_fn-reference-style"/>
 
 			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="{@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
+
+					<xsl:text>※</xsl:text>
 
 				<xsl:value-of select="@reference"/>
 
@@ -10510,11 +10626,18 @@
 			</xsl:when>
 			<xsl:otherwise>
 
-						<fo:block role="SKIP">
-							<xsl:apply-templates select="." mode="list">
-								<xsl:with-param name="indent" select="$indent"/>
-							</xsl:apply-templates>
-						</fo:block>
+						<fo:block-container role="SKIP">
+							<xsl:if test="local-name() = 'ol' and (ancestor::plateau:li)">
+								<xsl:attribute name="margin-left"><xsl:value-of select="count(ancestor::plateau:li) * 6 + 6"/>mm</xsl:attribute>
+							</xsl:if>
+							<fo:block-container margin-left="0mm" role="SKIP">
+								<fo:block>
+									<xsl:apply-templates select="." mode="list">
+										<xsl:with-param name="indent" select="$indent"/>
+									</xsl:apply-templates>
+								</fo:block>
+							</fo:block-container>
+						</fo:block-container>
 
 			</xsl:otherwise>
 		</xsl:choose>
