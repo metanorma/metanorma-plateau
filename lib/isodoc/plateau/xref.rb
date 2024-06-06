@@ -34,6 +34,42 @@ module IsoDoc
           hierarchical_figure_names(c, num)
         end
       end
+
+      def section_name_anchors(clause, num, level)
+        super
+        if level >= 4 && level <= 6
+          label, xref = section_name_anchors_deep(num, level)
+          @anchors[clause["id"]][:label] = label
+          @anchors[clause["id"]][:xref] = l10n(xref)
+        end
+      end
+
+      def section_name_anchors_deep(num, level)
+        numparts = num.split(".")
+        core = numparts[0..2].join(".")
+        (4..level).each do |l|
+          core += " #{section_name_label_deep(numparts[l - 1], l)}"
+        end
+        [section_name_label_deep(numparts[-1], level), l10n(core)]
+      end
+
+      def section_name_label_deep(num, level)
+        case level
+        when 4 then l10n("(#{num})")
+        when 5 then l10n("#{num})")
+        when 6
+          ("" << (num.to_i + 0x245f))
+        end
+      end
+
+      def annex_name_anchors1(clause, num, level)
+        super
+        if level >= 4 && level <= 6
+          label, xref = section_name_anchors_deep(num, level)
+          @anchors[clause["id"]][:label] = label
+          @anchors[clause["id"]][:xref] = l10n(xref)
+        end
+      end
     end
   end
 end

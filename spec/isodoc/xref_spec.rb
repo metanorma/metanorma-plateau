@@ -428,4 +428,284 @@ RSpec.describe IsoDoc do
       .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)
   end
+
+  it "cross-references sections" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <preface>
+      <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="A">This is a preamble
+         <xref target="C"/>
+         <xref target="C1"/>
+         <xref target="D"/>
+         <xref target="H"/>
+         <xref target="I"/>
+         <xref target="J"/>
+         <xref target="K"/>
+         <xref target="L"/>
+         <xref target="M"/>
+         <xref target="N"/>
+         <xref target="O"/>
+         <xref target="P"/>
+         <xref target="Q"/>
+         <xref target="Q1"/>
+         <xref target="QQ"/>
+         <xref target="QQ1"/>
+         <xref target="QQ2"/>
+         <xref target="R"/>
+         <xref target="S"/>
+         </p>
+       </foreword>
+        <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
+         <title>Introduction Subsection</title>
+       </clause>
+       <clause id="C1" inline-header="false" obligation="informative">Text</clause>
+       </introduction></preface><sections>
+       <clause id="D" obligation="normative" type="scope">
+         <title>Scope</title>
+         <p id="E">Text</p>
+       </clause>
+
+       <terms id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
+         <title>Normal Terms</title>
+         <term id="J">
+         <preferred><expression><name>Term2</name></expression></preferred>
+       </term>
+       </terms>
+       <definitions id="K">
+         <dl>
+         <dt>Symbol</dt>
+         <dd>Definition</dd>
+         </dl>
+       </definitions>
+       </terms>
+       <definitions id="L">
+         <dl>
+         <dt>Symbol</dt>
+         <dd>Definition</dd>
+         </dl>
+       </definitions>
+       <clause id="M" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
+         <title>Introduction</title>
+       </clause>
+       <clause id="O" inline-header="false" obligation="normative">
+         <title>Clause 4.2</title>
+       </clause></clause>
+       </sections><annex id="P" inline-header="false" obligation="normative">
+         <title>Annex</title>
+         <clause id="Q" inline-header="false" obligation="normative">
+         <title>Annex A.1</title>
+         <clause id="Q1" inline-header="false" obligation="normative">
+         <title>Annex A.1a</title>
+         </clause>
+       </clause>
+       </annex>
+       <annex id="QQ">
+       <terms id="QQ1">
+       <term id="QQ2"/>
+       </terms>
+      </annex>
+        <bibliography><references normative="false" id="R" obligation="informative" normative="true">
+         <title>Normative References</title>
+       </references><clause id="S" obligation="informative">
+         <title>Bibliography</title>
+         <references normative="false" id="T" obligation="informative" normative="false">
+         <title>Bibliography Subsection</title>
+       </references>
+       </clause>
+       </bibliography>
+       </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword obligation="informative" displayorder="1">
+           <title>Foreword</title>
+           <p id="A">
+             This is a preamble
+             <xref target="C">
+               <span class="citesec">0.1</span>
+             </xref>
+             <xref target="C1">
+               <span class="citesec">0.2</span>
+             </xref>
+             <xref target="D">
+               <span class="citesec">Clause 1</span>
+             </xref>
+             <xref target="H">
+               <span class="citesec">Clause 2</span>
+             </xref>
+             <xref target="I">
+               <span class="citesec">2.1</span>
+             </xref>
+             <xref target="J">
+               <span class="citesec">2.1.1</span>
+             </xref>
+             <xref target="K">
+               <span class="citesec">2.2</span>
+             </xref>
+             <xref target="L">[L]</xref>
+             <xref target="M">
+               <span class="citesec">Clause 3</span>
+             </xref>
+             <xref target="N">
+               <span class="citesec">3.1</span>
+             </xref>
+             <xref target="O">
+               <span class="citesec">3.2</span>
+             </xref>
+             <xref target="P">
+               <span class="citeapp">Annex A</span>
+             </xref>
+             <xref target="Q">
+               <span class="citeapp">A.1</span>
+             </xref>
+             <xref target="Q1">
+               <span class="citeapp">A.1.1</span>
+             </xref>
+             <xref target="QQ">
+               <span class="citeapp">Annex B</span>
+             </xref>
+             <xref target="QQ1">
+               <span class="citeapp">B</span>
+             </xref>
+             <xref target="QQ2">
+               <span class="citeapp">B.1</span>
+             </xref>
+             <xref target="R">
+               <span class="citesec">Clause 4</span>
+             </xref>
+             <xref target="S">
+               <span class="citesec">Bibliography</span>
+             </xref>
+           </p>
+         </foreword>
+    OUTPUT
+    expect(xmlpp(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "cross-references deep-nested sections" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <preface>
+      <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="A">This is a preamble
+         <xref target="S1"/>
+         <xref target="S2"/>
+         <xref target="S3"/>
+         <xref target="S4"/>
+         <xref target="S5"/>
+         <xref target="S6"/>
+         <xref target="S7"/>
+         <xref target="A1"/>
+         <xref target="A2"/>
+         <xref target="A3"/>
+         <xref target="A4"/>
+         <xref target="A5"/>
+         <xref target="A6"/>
+         </p>
+       </foreword>
+       </preface><sections>
+       <clause id="S1" obligation="normative">
+         <title>Scope</title>
+       <clause id="S2" obligation="normative">
+         <title>Scope</title>
+       <clause id="S3" obligation="normative">
+         <title>Scope</title>
+       <clause id="S4" obligation="normative">
+         <title>Scope</title>
+       <clause id="S5" obligation="normative">
+         <title>Scope</title>
+       <clause id="S6" obligation="normative">
+         <title>Scope</title>
+       <clause id="S7" obligation="normative">
+         <title>Scope</title>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </sections>
+        <annex id="P" inline-header="false" obligation="normative">
+         <title>Annex</title>
+       <clause id="A1" obligation="normative">
+         <title>Scope</title>
+       <clause id="A2" obligation="normative">
+         <title>Scope</title>
+       <clause id="A3" obligation="normative">
+         <title>Scope</title>
+       <clause id="A4" obligation="normative">
+         <title>Scope</title>
+       <clause id="A5" obligation="normative">
+         <title>Scope</title>
+       <clause id="A6" obligation="normative">
+         <title>Scope</title>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </clause>
+       </annex>
+       </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword obligation="informative" displayorder="1">
+         <title>Foreword</title>
+         <p id="A">
+           This is a preamble
+           <xref target="S1">
+             <span class="citesec">Clause 1</span>
+           </xref>
+           <xref target="S2">
+             <span class="citesec">1.1</span>
+           </xref>
+           <xref target="S3">
+             <span class="citesec">1.1.1</span>
+           </xref>
+           <xref target="S4">
+             <span class="citesec">1.1.1 (1)</span>
+           </xref>
+           <xref target="S5">
+             <span class="citesec">1.1.1 (1) 1)</span>
+           </xref>
+           <xref target="S6">
+             <span class="citesec">1.1.1 (1) 1) ①</span>
+           </xref>
+           <xref target="S7">
+              <span class="citesec">1.1.1.1.1.1.1</span>
+           </xref>
+           <xref target="A1">
+             <span class="citeapp">A.1</span>
+           </xref>
+           <xref target="A2">
+             <span class="citeapp">A.1.1</span>
+           </xref>
+           <xref target="A3">
+             <span class="citeapp">A.1.1 (1)</span>
+           </xref>
+           <xref target="A4">
+             <span class="citeapp">A.1.1 (1) 1)</span>
+           </xref>
+           <xref target="A5">
+             <span class="citeapp">A.1.1 (1) 1) ①</span>
+           </xref>
+           <xref target="A6">
+             <span class="citeapp">A.1.1.1.1.1.1</span>
+           </xref>
+         </p>
+       </foreword>
+    OUTPUT
+    expect(xmlpp(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to xmlpp(output)
+  end
 end
