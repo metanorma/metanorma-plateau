@@ -6,7 +6,19 @@
 
 	<xsl:variable name="debug">false</xsl:variable>
 
+	<xsl:variable name="doctype" select="//plateau:plateau-standard[1]/plateau:bibdata/plateau:ext/plateau:doctype[@language = '' or not(@language)]"/>
+
 	<xsl:variable name="i18n_doctype_dict_annex"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.annex</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_doctype_dict_technical_report"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.technical-report</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_table_of_contents"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">table_of_contents</xsl:with-param></xsl:call-template></xsl:variable>
+
+	<xsl:variable name="page_header">
+		<xsl:value-of select="/*/plateau:metanorma-extension/plateau:presentation-metadata/plateau:use-case"/>
+		<xsl:text>_</xsl:text>
+		<xsl:value-of select="$i18n_doctype_dict_technical_report"/>
+		<xsl:text>_</xsl:text>
+		<xsl:value-of select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']"/>
+	</xsl:variable>
 
 	<xsl:variable name="contents_">
 		<xsl:variable name="bundle" select="count(//plateau:plateau-standard) &gt; 1"/>
@@ -54,14 +66,23 @@
 			<xsl:call-template name="insertRootStyle">
 				<xsl:with-param name="root-style" select="$root-style"/>
 			</xsl:call-template>
+			<xsl:if test="$doctype = 'technical-report'">
+				<xsl:attribute name="font-size">10pt</xsl:attribute>
+			</xsl:if>
 
 			<fo:layout-master-set>
 
 				<!-- Cover page -->
+				<xsl:variable name="cover_page_margin_bottom">
+					<xsl:choose>
+						<xsl:when test="$doctype = 'technical-report'">48</xsl:when>
+						<xsl:otherwise>45</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
 				<fo:simple-page-master master-name="cover-page" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="15mm" margin-bottom="45mm" margin-left="36mm" margin-right="8.5mm"/>
+					<fo:region-body margin-top="15mm" margin-bottom="{$cover_page_margin_bottom}mm" margin-left="36mm" margin-right="8.5mm"/>
 					<fo:region-before region-name="header" extent="15mm"/>
-					<fo:region-after region-name="footer" extent="45mm"/>
+					<fo:region-after region-name="footer" extent="{$cover_page_margin_bottom}mm"/>
 					<fo:region-start region-name="left-region" extent="36mm"/>
 					<fo:region-end region-name="right-region" extent="8.5mm"/>
 				</fo:simple-page-master>
@@ -84,7 +105,7 @@
 
 				<fo:simple-page-master master-name="document" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
-					<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/>
+					<fo:region-before region-name="header" extent="{$marginTop}mm"/>
 					<fo:region-after region-name="footer" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
 					<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
@@ -93,7 +114,7 @@
 				<!-- landscape -->
 				<fo:simple-page-master master-name="document-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
 					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
-					<fo:region-before region-name="header-odd" extent="{$marginTop}mm" precedence="true"/>
+					<fo:region-before region-name="header" extent="{$marginTop}mm" precedence="true"/>
 					<fo:region-after region-name="footer" extent="{$marginBottom}mm" precedence="true"/>
 					<fo:region-start region-name="left-region-landscape" extent="{$marginLeftRight1}mm"/>
 					<fo:region-end region-name="right-region-landscape" extent="{$marginLeftRight2}mm"/>
@@ -105,6 +126,14 @@
 					<fo:region-after region-name="footer" extent="30mm"/>
 					<fo:region-start region-name="left-region" extent="15mm"/>
 					<fo:region-end region-name="right-region" extent="22.7mm"/>
+				</fo:simple-page-master>
+
+				<fo:simple-page-master master-name="last-page_technical-report" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="191mm" margin-bottom="41mm" margin-left="26mm" margin-right="26mm"/>
+					<fo:region-before region-name="header" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="footer" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
 			</fo:layout-master-set>
 
@@ -215,6 +244,10 @@
 					</xsl:if>
 
 					<fo:page-sequence master-reference="document_toc" initial-page-number="1" force-page-count="no-force">
+						<xsl:if test="$doctype = 'technical-report'">
+							<xsl:attribute name="master-reference">document</xsl:attribute>
+						</xsl:if>
+						<xsl:call-template name="insertHeader"/>
 						<fo:flow flow-name="xsl-region-body">
 							<!-- <xsl:if test="$debug = 'true'"> -->
 							<!-- <xsl:message>start contents redirect</xsl:message>
@@ -341,36 +374,58 @@
 								</fo:block>
 							</fo:static-content>
 
-							<fo:static-content flow-name="footer">
-								<fo:block-container height="24mm" display-align="after">
-									<fo:block text-align="center" margin-bottom="16mm"><fo:page-number/></fo:block>
-								</fo:block-container>
-							</fo:static-content>
+							<xsl:call-template name="insertHeaderFooter"/>
 
 							<fo:flow flow-name="xsl-region-body">
 								<xsl:apply-templates select="*" mode="page"/>
 
-								<xsl:if test="not(*)">
+								<xsl:if test="not(*[normalize-space() != ''])">
 									<fo:block><!-- prevent fop error for empty document --></fo:block>
 								</xsl:if>
 							</fo:flow>
 						</fo:page-sequence>
 					</xsl:for-each>
 
-					<fo:page-sequence master-reference="last-page" force-page-count="no-force">
-						<fo:flow flow-name="xsl-region-body">
-							<fo:block-container width="100%" border="0.75pt solid black" font-size="10pt" line-height="1.7">
-								<fo:block margin-left="4.5mm" margin-top="1mm">
-									<xsl:value-of select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']"/>
-									<fo:inline padding-left="4mm"><xsl:value-of select="/*/plateau:bibdata/plateau:edition[@language = 'ja']"/></fo:inline>
-								</fo:block>
-								<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:date[@type = 'published']"/><xsl:text> 発行</xsl:text></fo:block>
-								<!-- MLIT Department -->
-								<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'author']/plateau:organization/plateau:name"/></fo:block>
-								<fo:block margin-left="9mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'enabler']/plateau:organization/plateau:name"/></fo:block>
-							</fo:block-container>
-						</fo:flow>
-					</fo:page-sequence>
+					<xsl:choose>
+						<xsl:when test="$doctype = 'technical-report'">
+							<fo:page-sequence master-reference="last-page_technical-report" force-page-count="no-force">
+								<xsl:call-template name="insertHeaderFooter"/>
+								<fo:flow flow-name="xsl-region-body">
+									<fo:block-container width="100%" height="64mm" border="0.75pt solid black" font-size="14pt" text-align="center" display-align="center" line-height="1.7">
+										<fo:block>
+											<xsl:value-of select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']"/>
+										</fo:block>
+										<fo:block>
+											<xsl:value-of select="$i18n_doctype_dict_technical_report"/>
+										</fo:block>
+										<fo:block font-size="12pt" margin-top="18pt">
+											<fo:block><xsl:value-of select="/*/plateau:bibdata/plateau:date[@type = 'published']"/><xsl:text> 発行</xsl:text></fo:block>
+											<!-- 委託者 (Contractor) -->
+											<fo:block>委託者：<xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'author']/plateau:organization/plateau:name"/></fo:block>
+											<!-- 受託者 (Trustees) -->
+											<fo:block>受託者：<xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'enabler']/plateau:organization/plateau:name"/></fo:block>
+										</fo:block>
+									</fo:block-container>
+								</fo:flow>
+							</fo:page-sequence>
+						</xsl:when>
+						<xsl:otherwise> <!-- handbook -->
+							<fo:page-sequence master-reference="last-page" force-page-count="no-force">
+								<fo:flow flow-name="xsl-region-body">
+									<fo:block-container width="100%" border="0.75pt solid black" font-size="10pt" line-height="1.7">
+										<fo:block margin-left="4.5mm" margin-top="1mm">
+											<xsl:value-of select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']"/>
+											<fo:inline padding-left="4mm"><xsl:value-of select="/*/plateau:bibdata/plateau:edition[@language = 'ja']"/></fo:inline>
+										</fo:block>
+										<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:date[@type = 'published']"/><xsl:text> 発行</xsl:text></fo:block>
+										<!-- MLIT Department -->
+										<fo:block margin-left="7.7mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'author']/plateau:organization/plateau:name"/></fo:block>
+										<fo:block margin-left="9mm"><xsl:value-of select="/*/plateau:bibdata/plateau:contributor[plateau:role/@type = 'enabler']/plateau:organization/plateau:name"/></fo:block>
+									</fo:block-container>
+								</fo:flow>
+							</fo:page-sequence>
+						</xsl:otherwise>
+					</xsl:choose>
 
 				</xsl:for-each>
 
@@ -395,41 +450,68 @@
 
 	<xsl:template match="*[local-name()='preface']/*[local-name() = 'clause'][@type = 'toc']" priority="4">
 		<xsl:param name="num"/>
+		<xsl:if test="$doctype = 'technical-report'">
+			<fo:block font-size="16pt" margin-top="5mm"><xsl:value-of select="$i18n_table_of_contents"/></fo:block>
+			<fo:block><fo:leader leader-pattern="rule" rule-style="double" rule-thickness="1.5pt" leader-length="100%"/></fo:block>
+		</xsl:if>
 		<xsl:apply-templates/>
 		<xsl:if test="count(*) = 1 and *[local-name() = 'title']"> <!-- if there isn't user ToC -->
 			<!-- fill ToC -->
 			<fo:block role="TOC" font-weight="bold">
+				<xsl:if test="$doctype = 'technical-report'">
+					<xsl:attribute name="font-weight">normal</xsl:attribute>
+					<xsl:attribute name="line-height">1.2</xsl:attribute>
+				</xsl:if>
 				<xsl:if test="$contents/doc[@num = $num]//item[@display = 'true']">
 					<xsl:for-each select="$contents/doc[@num = $num]//item[@display = 'true'][@level &lt;= $toc_level or @type='figure' or @type = 'table']">
 						<fo:block role="TOCI">
 							<xsl:choose>
-								<xsl:when test="@type = 'annex' or @type = 'bibliography'">
+								<xsl:when test="$doctype = 'technical-report'">
 									<fo:block space-after="5pt">
-										<xsl:call-template name="insertTocItem"/>
+										<xsl:attribute name="margin-left">
+											<xsl:choose>
+												<xsl:when test="@level = 1">1mm</xsl:when>
+												<xsl:when test="@level = 2">3.5mm</xsl:when>
+												<xsl:when test="@level = 3">7mm</xsl:when>
+												<xsl:otherwise>10mm</xsl:otherwise>
+											</xsl:choose>
+										</xsl:attribute>
+										<xsl:call-template name="insertTocItem">
+											<xsl:with-param name="printSection">true</xsl:with-param>
+										</xsl:call-template>
 									</fo:block>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:variable name="margin_left" select="number(@level - 1) * 3"/>
-									<fo:list-block space-after="2pt" margin-left="{$margin_left}mm">
-										<xsl:attribute name="provisional-distance-between-starts">
-											<xsl:choose>
-												<xsl:when test="@level = 1">7mm</xsl:when>
-												<xsl:when test="@level = 2">10mm</xsl:when>
-												<xsl:when test="@level = 3">14mm</xsl:when>
-												<xsl:otherwise>14mm</xsl:otherwise>
-											</xsl:choose>
-										</xsl:attribute>
-										<fo:list-item>
-											<fo:list-item-label end-indent="label-end()">
-												<fo:block>
-													<xsl:value-of select="@section"/>
-												</fo:block>
-											</fo:list-item-label>
-											<fo:list-item-body start-indent="body-start()">
+									<xsl:choose>
+										<xsl:when test="@type = 'annex' or @type = 'bibliography'">
+											<fo:block space-after="5pt">
 												<xsl:call-template name="insertTocItem"/>
-											</fo:list-item-body>
-										</fo:list-item>
-									</fo:list-block>
+											</fo:block>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:variable name="margin_left" select="number(@level - 1) * 3"/>
+											<fo:list-block space-after="2pt" margin-left="{$margin_left}mm">
+												<xsl:attribute name="provisional-distance-between-starts">
+													<xsl:choose>
+														<xsl:when test="@level = 1">7mm</xsl:when>
+														<xsl:when test="@level = 2">10mm</xsl:when>
+														<xsl:when test="@level = 3">14mm</xsl:when>
+														<xsl:otherwise>14mm</xsl:otherwise>
+													</xsl:choose>
+												</xsl:attribute>
+												<fo:list-item>
+													<fo:list-item-label end-indent="label-end()">
+														<fo:block>
+															<xsl:value-of select="@section"/>
+														</fo:block>
+													</fo:list-item-label>
+													<fo:list-item-body start-indent="body-start()">
+														<xsl:call-template name="insertTocItem"/>
+													</fo:list-item-body>
+												</fo:list-item>
+											</fo:list-block>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:otherwise>
 							</xsl:choose>
 						</fo:block>
@@ -442,13 +524,20 @@
 	<xsl:template match="*[local-name() = 'clause'][@type = 'toc']/*[local-name() = 'title']" priority="3"/>
 
 	<xsl:template name="insertTocItem">
+		<xsl:param name="printSection">false</xsl:param>
 		<fo:block text-align-last="justify" role="TOCI">
 			<fo:basic-link internal-destination="{@id}" fox:alt-text="{title}">
-				<fo:inline><xsl:apply-templates select="title"/></fo:inline>
+				<xsl:if test="$printSection = 'true' and @section != ''">
+					<xsl:value-of select="@section"/>
+					<xsl:text>. </xsl:text>
+				</xsl:if>
+				<fo:inline><xsl:apply-templates select="title"/><xsl:text> </xsl:text></fo:inline>
 				<fo:inline keep-together.within-line="always">
 					<fo:leader leader-pattern="dots"/>
 					<fo:inline>
+						<xsl:if test="$doctype = 'technical-report'"><xsl:text>- </xsl:text></xsl:if>
 						<fo:page-number-citation ref-id="{@id}"/>
+						<xsl:if test="$doctype = 'technical-report'"><xsl:text> -</xsl:text></xsl:if>
 					</fo:inline>
 				</fo:inline>
 			</fo:basic-link>
@@ -459,7 +548,12 @@
 		<xsl:param name="num"/>
 		<fo:page-sequence master-reference="cover-page" force-page-count="no-force" font-family="Noto Sans Condensed">
 
-			<xsl:variable name="doctype" select="/*/plateau:bibdata/plateau:ext/plateau:doctype[@language = '' or not(@language)]"/>
+			<xsl:if test="$doctype = 'annex'">
+				<xsl:attribute name="color">white</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="$doctype = 'technical-report'">
+				<xsl:attribute name="font-family">Noto Sans</xsl:attribute>
+			</xsl:if>
 
 			<fo:static-content flow-name="header" role="artifact" id="__internal_layout__coverpage_header_{generate-id()}">
 				<!-- background cover image -->
@@ -471,7 +565,14 @@
 					<fo:table table-layout="fixed" width="100%">
 						<fo:table-column column-width="proportional-column-width(140)"/>
 						<fo:table-column column-width="proportional-column-width(13.5)"/>
-						<fo:table-column column-width="proportional-column-width(11)"/>
+						<xsl:choose>
+							<xsl:when test="$doctype = 'technical-report'">
+								<fo:table-column column-width="proportional-column-width(20)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<fo:table-column column-width="proportional-column-width(11)"/>
+							</xsl:otherwise>
+						</xsl:choose>
 						<fo:table-body>
 							<fo:table-row>
 								<fo:table-cell>
@@ -481,17 +582,49 @@
 											<xsl:value-of select="concat('（', $i18n_doctype_dict_annex)"/>
 											<fo:inline letter-spacing="-3mm">）</fo:inline>
 										</xsl:if>
-										<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']/node()"/>
+										<xsl:if test="$doctype = 'technical-report'">
+											<xsl:attribute name="font-size">18pt</xsl:attribute>
+											<xsl:attribute name="line-height">1.8</xsl:attribute>
+										</xsl:if>
+										<xsl:variable name="title">
+											<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-main']/node()"/>
+										</xsl:variable>
+										<xsl:copy-of select="$title"/>
+										<xsl:if test="$doctype = 'technical-report'">
+											<xsl:choose>
+												<xsl:when test="string-length($title) &gt; 60">
+													<fo:inline> <xsl:value-of select="$i18n_doctype_dict_technical_report"/></fo:inline>
+												</xsl:when>
+												<xsl:otherwise>
+													<fo:block><xsl:value-of select="$i18n_doctype_dict_technical_report"/></fo:block>
+												</xsl:otherwise>
+											</xsl:choose>
+										</xsl:if>
 									</fo:block>
-									<fo:block font-size="14pt" margin-top="3mm"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-main']/node()"/></fo:block>
+									<fo:block font-size="14pt" margin-top="3mm">
+										<xsl:if test="$doctype = 'technical-report'">
+											<xsl:attribute name="font-size">9pt</xsl:attribute>
+											<xsl:attribute name="margin-top">1mm</xsl:attribute>
+										</xsl:if>
+										<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-main']/node()"/>
+									</fo:block>
 								</fo:table-cell>
-								<fo:table-cell text-align="right" font-size="8.5pt" padding-right="2mm">
-									<fo:block> </fo:block>
+								<fo:table-cell text-align="right" font-size="8.5pt" padding-top="3mm" padding-right="2mm">
+									<xsl:if test="$doctype = 'technical-report'">
+										<xsl:attribute name="font-size">9.5pt</xsl:attribute>
+										<xsl:attribute name="padding-top">2mm</xsl:attribute>
+									</xsl:if>
 									<fo:block>series</fo:block>
 									<fo:block>No.</fo:block>
 								</fo:table-cell>
 								<fo:table-cell text-align="right">
+									<xsl:if test="$doctype = 'technical-report'">
+										<xsl:attribute name="text-align">center</xsl:attribute>
+									</xsl:if>
 									<fo:block font-size="32pt">
+										<xsl:if test="$doctype = 'technical-report'">
+											<xsl:attribute name="font-size">28pt</xsl:attribute>
+										</xsl:if>
 										<xsl:variable name="docnumber" select="/*/plateau:bibdata/plateau:docnumber"/>
 										<xsl:if test="string-length($docnumber) = 1">0</xsl:if><xsl:value-of select="$docnumber"/>
 									</fo:block>
@@ -504,17 +637,42 @@
 
 			<fo:static-content flow-name="left-region" role="artifact" id="__internal_layout__coverpage_left_region_{generate-id()}">
 				<fo:block text-align="center" margin-top="14.5mm" margin-left="2mm">
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:attribute name="margin-left">5.5mm</xsl:attribute>
+					</xsl:if>
 					<fo:instream-foreign-object content-width="24mm" fox:alt-text="PLATEAU Logo">
-						<xsl:copy-of select="$PLATEAU-Logo"/>
+						<xsl:if test="$doctype = 'technical-report'">
+							<xsl:attribute name="content-width">20.5mm</xsl:attribute>
+						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="$doctype = 'annex'">
+								<xsl:copy-of select="$PLATEAU-Logo-inverted"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:copy-of select="$PLATEAU-Logo"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</fo:instream-foreign-object>
 				</fo:block>
 				<fo:block-container reference-orientation="-90" width="205mm" height="36mm" margin-top="6mm">
-					<fo:block font-size="21.2pt" margin-top="7mm"><xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-intro']/node()"/></fo:block>
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:attribute name="margin-top">2mm</xsl:attribute>
+					</xsl:if>
+					<fo:block font-size="21.2pt" margin-top="7mm">
+						<xsl:if test="$doctype = 'technical-report'">
+							<xsl:attribute name="font-size">16pt</xsl:attribute>
+							<xsl:attribute name="margin-top">8mm</xsl:attribute>
+						</xsl:if>
+						<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'en' and @type = 'title-intro']/node()"/>
+					</fo:block>
 					<fo:block font-family="Noto Sans JP" font-size="14.2pt" margin-top="2mm">
 						<xsl:if test="$doctype = 'annex'">
 							<xsl:attribute name="text-indent">-3.5mm</xsl:attribute>
 							<xsl:value-of select="concat('（', $i18n_doctype_dict_annex)"/>
 							<fo:inline letter-spacing="-1mm">）</fo:inline>
+						</xsl:if>
+						<xsl:if test="$doctype = 'technical-report'">
+							<xsl:attribute name="font-size">12pt</xsl:attribute>
 						</xsl:if>
 						<xsl:apply-templates select="/*/plateau:bibdata/plateau:title[@language = 'ja' and @type = 'title-intro']/node()"/>
 					</fo:block>
@@ -700,29 +858,11 @@
 		<xsl:variable name="font-size">
 			<xsl:choose>
 				<xsl:when test="@parent = 'preface'">10pt</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level = 1">16pt</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level = 2">14pt</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level = 3">12pt</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level &gt;= 4">10pt</xsl:when>
 				<xsl:when test="@ancestor = 'sections'">12pt</xsl:when>
-				<!-- <xsl:when test="@type = 'section-title'">18pt</xsl:when>
-				<xsl:when test="@ancestor = 'foreword' and $level = '1'">14pt</xsl:when>
-				<xsl:when test="@ancestor = 'annex' and $level = '1' and preceding-sibling::*[local-name() = 'annex'][1][@commentary = 'true']">16pt</xsl:when>
-				<xsl:when test="@ancestor = 'annex' and $level = '1'">14pt</xsl:when> -->
-				<!-- <xsl:when test="@ancestor = 'foreword' and $level &gt;= '2'">12pt</xsl:when>
-				<xsl:when test=". = 'Executive summary'">18pt</xsl:when>
-				<xsl:when test="@ancestor = 'introduction' and $level = '1'">18pt</xsl:when>
-				<xsl:when test="@ancestor = 'introduction' and $level &gt;= '2'">11pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level = '1'">14pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level = '2'">11pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level &gt;= '3'">10pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level = '2' and preceding-sibling::*[1][local-name() = 'references']">inherit</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level = '2'">11pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level &gt;= '3' and preceding-sibling::*[1][local-name() = 'terms']">11pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level = '3'">10.5pt</xsl:when>
-				<xsl:when test="@ancestor = 'sections' and $level &gt;= '4'">10pt</xsl:when>
-				
-				<xsl:when test="@ancestor = 'annex' and $level = '2'">13pt</xsl:when>
-				<xsl:when test="@ancestor = 'annex' and $level &gt;= '3'">11.5pt</xsl:when>
-				<xsl:when test="@ancestor = 'bibliography' and $level = '1' and preceding-sibling::*[local-name() = 'references']">11.5pt</xsl:when>
-				<xsl:when test="@ancestor = 'bibliography' and $level = '1'">13pt</xsl:when>
-				<xsl:when test="@ancestor = 'bibliography' and $level &gt;= '2'">10pt</xsl:when> -->
 				<xsl:otherwise>10pt</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -753,6 +893,8 @@
 				<xsl:when test="@ancestor = 'foreword' and $level = 2">0mm</xsl:when>
 				<xsl:when test="@ancestor = 'annex' and $level = 2">4.5mm</xsl:when>
 				<xsl:when test="@ancestor = 'bibliography' and $level = 2">0mm</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level = 2 and preceding-sibling::*[2][self::plateau:title]">0mm</xsl:when>
+				<xsl:when test="$doctype = 'technical-report' and $level = 3 and preceding-sibling::*[2][self::plateau:title]">0mm</xsl:when>
 				<xsl:when test="$level = 2">2mm</xsl:when>
 				<xsl:when test="$level &gt;= 3">2mm</xsl:when>
 				<xsl:otherwise>0mm</xsl:otherwise>
@@ -768,17 +910,28 @@
 
 		<xsl:variable name="margin-bottom">
 			<xsl:choose>
-				<xsl:when test="@parent = 'preface'">6pt</xsl:when>
-				<xsl:when test="@ancestor = 'foreword' and $level = 1">9mm</xsl:when>
-				<xsl:when test="@ancestor = 'annex' and $level = '1' and preceding-sibling::*[local-name() = 'annex'][1][@commentary = 'true']">7mm</xsl:when>
-				<xsl:when test="@ancestor = 'annex' and $level = 1">1mm</xsl:when>
-				<xsl:when test="$level = 1 and following-sibling::plateau:clause">8pt</xsl:when>
-				<xsl:when test="$level = 1">12pt</xsl:when>
-				<xsl:when test="$level = 2 and following-sibling::plateau:clause">8pt</xsl:when>
-				<xsl:when test="$level &gt;= 2">12pt</xsl:when>
-				<xsl:when test="@type = 'section-title'">6mm</xsl:when>
-				<xsl:when test="@inline-header = 'true'">0pt</xsl:when>
-				<xsl:otherwise>0mm</xsl:otherwise>
+				<xsl:when test="$doctype = 'technical-report'">
+					<xsl:choose>
+						<xsl:when test="following-sibling::*[1][self::plateau:clause]">0</xsl:when>
+						<xsl:when test="following-sibling::*[1][self::plateau:p]">16pt</xsl:when>
+						<xsl:otherwise>12pt</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="@parent = 'preface'">6pt</xsl:when>
+						<xsl:when test="@ancestor = 'foreword' and $level = 1">9mm</xsl:when>
+						<xsl:when test="@ancestor = 'annex' and $level = '1' and preceding-sibling::*[local-name() = 'annex'][1][@commentary = 'true']">7mm</xsl:when>
+						<xsl:when test="@ancestor = 'annex' and $level = 1">1mm</xsl:when>
+						<xsl:when test="$level = 1 and following-sibling::plateau:clause">8pt</xsl:when>
+						<xsl:when test="$level = 1">12pt</xsl:when>
+						<xsl:when test="$level = 2 and following-sibling::plateau:clause">8pt</xsl:when>
+						<xsl:when test="$level &gt;= 2">12pt</xsl:when>
+						<xsl:when test="@type = 'section-title'">6mm</xsl:when>
+						<xsl:when test="@inline-header = 'true'">0pt</xsl:when>
+						<xsl:otherwise>0mm</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 
@@ -813,6 +966,19 @@
 						<xsl:attribute name="margin-left">7.5mm</xsl:attribute>
 					</xsl:if>
 
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:choose>
+							<xsl:when test="$level = 2">
+								<xsl:attribute name="background-color">rgb(229,229,229)</xsl:attribute>
+								<xsl:attribute name="padding-top">2mm</xsl:attribute>
+								<xsl:attribute name="padding-bottom">2mm</xsl:attribute>
+							</xsl:when>
+							<xsl:when test="$level = 3">
+								<xsl:attribute name="background-color">rgb(204,204,204)</xsl:attribute>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:if>
+
 					<!-- if first and last childs are `add` ace-tag, then move start ace-tag before title -->
 					<xsl:if test="*[local-name() = 'tab'][1]/following-sibling::node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]">
 						<xsl:apply-templates select="*[local-name() = 'tab'][1]/following-sibling::node()[1][local-name() = 'add'][starts-with(text(), $ace_tag)]">
@@ -833,6 +999,9 @@
 					<xsl:call-template name="extractTitle"/>
 
 					<xsl:apply-templates select="following-sibling::*[1][local-name() = 'variant-title'][@type = 'sub']" mode="subtitle"/>
+					<xsl:if test="$doctype = 'technical-report' and $level = 1">
+						<fo:block margin-top="-3mm" margin-bottom="-1.5mm"><fo:leader leader-pattern="rule" rule-style="double" rule-thickness="1.5pt" leader-length="100%"/></fo:block>
+					</xsl:if>
 				</xsl:element>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -864,6 +1033,9 @@
 						<xsl:with-param name="text_align_default">justify</xsl:with-param>
 					</xsl:call-template>
 					<xsl:attribute name="margin-bottom">10pt</xsl:attribute>
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:attribute name="margin-bottom">18pt</xsl:attribute>
+					</xsl:if>
 
 					<!--
 					<xsl:if test="not(parent::plateau:note or parent::plateau:li or ancestor::plateau:table)">
@@ -873,9 +1045,11 @@
 
 					<xsl:copy-of select="@id"/>
 
-					<!-- <xsl:attribute name="line-height">2</xsl:attribute> -->
-					<!-- bookmarks only in paragraph -->
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:attribute name="line-height">1.8</xsl:attribute>
+					</xsl:if>
 
+					<!-- bookmarks only in paragraph -->
 					<xsl:if test="count(plateau:bookmark) != 0 and count(*) = count(plateau:bookmark) and normalize-space() = ''">
 						<xsl:attribute name="font-size">0</xsl:attribute>
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
@@ -957,6 +1131,10 @@
 
 					<xsl:call-template name="refine_list-item-label-style"/>
 
+					<xsl:if test="$doctype = 'technical-report'">
+						<xsl:attribute name="line-height">1.8</xsl:attribute>
+					</xsl:if>
+
 					<xsl:variable name="list_item_label">
 						<xsl:call-template name="getListItemFormat"/>
 					</xsl:variable>
@@ -979,7 +1157,21 @@
 								<xsl:when test="parent::*[local-name() = 'ul'] and @ancestor = 'sections' and $list_item_label = '・' and not(ancestor::*[local-name() = 'table'])">
 									<fo:inline>
 										<fo:instream-foreign-object content-width="2.5mm" fox:alt-text="ul list label">
-											<xsl:copy-of select="$black_circle"/>
+											<xsl:copy-of select="$list_label_black_circle"/>
+										</fo:instream-foreign-object>
+									</fo:inline>
+								</xsl:when>
+								<xsl:when test="parent::*[local-name() = 'ul'] and $list_item_label = '→'">
+									<fo:inline>
+										<fo:instream-foreign-object content-width="2.5mm" fox:alt-text="ul list label">
+											<xsl:copy-of select="$list_label_arrow"/>
+										</fo:instream-foreign-object>
+									</fo:inline>
+								</xsl:when>
+								<xsl:when test="parent::*[local-name() = 'ul'] and $list_item_label = '☆'">
+									<fo:inline>
+										<fo:instream-foreign-object content-width="2.5mm" fox:alt-text="ul list label">
+											<xsl:copy-of select="$list_label_star"/>
 										</fo:instream-foreign-object>
 									</fo:inline>
 								</xsl:when>
@@ -1280,6 +1472,9 @@
 			</xsl:if> -->
 			<xsl:if test="(ancestor::*[local-name() = 'figure'] or ancestor::*[local-name() = 'table']) and parent::*[local-name() = 'name']">
 				<xsl:attribute name="font-weight">bold</xsl:attribute>
+				<xsl:if test="$doctype = 'technical-report'">
+					<xsl:attribute name="font-weight">normal</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:apply-templates/>
 		</fo:inline>
@@ -1320,67 +1515,34 @@
 		</fo:block-container>
 	</xsl:template>
 
-	<!-- background cover image -->
-	<xsl:template name="insertBackgroundPageImage">
-		<xsl:param name="number">1</xsl:param>
-		<xsl:param name="name">coverpage-image</xsl:param>
-		<xsl:variable name="num" select="number($number)"/>
-		<!-- background image -->
-		<fo:block-container absolute-position="fixed" left="0mm" top="0mm" font-size="0" id="__internal_layout__coverpage_{$name}_{$number}_{generate-id()}">
-			<fo:block>
-				<xsl:for-each select="/plateau:plateau-standard/plateau:metanorma-extension/plateau:presentation-metadata[plateau:name = $name][1]/plateau:value/plateau:image[$num]">
-					<xsl:choose>
-						<xsl:when test="*[local-name() = 'svg'] or java:endsWith(java:java.lang.String.new(@src), '.svg')">
-							<fo:instream-foreign-object fox:alt-text="Image Front">
-								<xsl:attribute name="content-height"><xsl:value-of select="$pageHeight"/>mm</xsl:attribute>
-								<xsl:call-template name="getSVG"/>
-							</fo:instream-foreign-object>
-						</xsl:when>
-						<xsl:when test="starts-with(@src, 'data:application/pdf;base64')">
-							<fo:external-graphic src="{@src}" fox:alt-text="Image Front"/>
-						</xsl:when>
-						<xsl:otherwise> <!-- bitmap image -->
-							<xsl:variable name="coverimage_src" select="normalize-space(@src)"/>
-							<xsl:if test="$coverimage_src != ''">
-								<xsl:variable name="coverpage">
-									<xsl:call-template name="getImageURL">
-										<xsl:with-param name="src" select="$coverimage_src"/>
-									</xsl:call-template>
-								</xsl:variable>
-								<!-- <xsl:variable name="coverpage" select="concat('url(file:',$basepath, 'coverpage1.png', ')')"/> --> <!-- for DEBUG -->
-								<fo:external-graphic src="{$coverpage}" width="{$pageWidth}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image Front"/>
-							</xsl:if>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each>
-			</fo:block>
-		</fo:block-container>
+	<xsl:template name="insertHeaderFooter">
+		<xsl:call-template name="insertHeader"/>
+		<fo:static-content flow-name="footer">
+			<xsl:choose>
+				<xsl:when test="$doctype = 'technical-report'">
+					<fo:block-container height="23mm" display-align="after">
+						<fo:block text-align="center" margin-bottom="16mm">- <fo:page-number/> -</fo:block>
+					</fo:block-container>
+				</xsl:when>
+				<xsl:otherwise>
+					<fo:block-container height="24mm" display-align="after">
+						<fo:block text-align="center" margin-bottom="16mm"><fo:page-number/></fo:block>
+					</fo:block-container>
+				</xsl:otherwise>
+			</xsl:choose>
+		</fo:static-content>
 	</xsl:template>
 
-	<xsl:template name="getImageURL">
-		<xsl:param name="src"/>
-		<xsl:choose>
-			<xsl:when test="starts-with($src, 'data:image')">
-				<xsl:value-of select="$src"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="concat('url(file:///',$basepath, $src, ')')"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template name="getSVG">
-		<xsl:choose>
-			<xsl:when test="*[local-name() = 'svg']">
-				<xsl:apply-templates select="*[local-name() = 'svg']" mode="svg_update"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:variable name="svg_content" select="document(@src)"/>
-				<xsl:for-each select="xalan:nodeset($svg_content)/node()">
-					<xsl:apply-templates select="." mode="svg_update"/>
-				</xsl:for-each>
-			</xsl:otherwise>
-		</xsl:choose>
+	<xsl:template name="insertHeader">
+		<xsl:if test="$doctype = 'technical-report'">
+			<fo:static-content flow-name="header">
+				<fo:block-container height="19.5mm" display-align="after">
+					<fo:block>
+						<xsl:value-of select="$page_header"/>
+					</fo:block>
+				</fo:block-container>
+			</fo:static-content>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:variable name="PLATEAU-Logo">
@@ -1418,16 +1580,82 @@
 		</svg>
 	</xsl:variable>
 
-	<xsl:variable name="black_circle">
+	<xsl:variable name="PLATEAU-Logo-inverted">
+		<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 141.72 172.64">
+			<defs>
+				<style>
+					.cls-1 {
+						fill: #ffffff;
+						fill-rule: evenodd;
+						stroke-width: 0px;
+					}
+				</style>
+			</defs>
+			<rect width="100%" height="100%" fill="black"/>
+			<polygon class="cls-1" points="27.54 25.75 60.03 44.51 69.57 50.02 79.53 55.77 91.88 62.9 96.85 65.77 114.18 75.78 114.18 124.32 27.54 74.29 27.54 25.75"/>
+			<polygon class="cls-1" points="69.57 0 69.57 47.05 59.39 41.17 28.83 23.52 69.57 0"/>
+			<polygon class="cls-1" points="72.15 0 112.9 23.52 91.88 35.66 91.88 59.93 80.04 53.09 72.15 48.53 72.15 0"/>
+			<polygon class="cls-1" points="114.18 25.75 114.18 72.8 98.4 63.69 94.45 61.41 94.45 37.14 114.18 25.75"/>
+			<polygon class="cls-1" points="0 137.06 2.97 137.06 3.84 137.14 3.84 139.1 2.97 138.96 2.06 138.96 2.06 143.16 2.99 143.16 3.84 142.91 3.84 144.96 2.99 145.06 2.06 145.06 2.06 150.53 0 150.53 0 137.06"/>
+			<path class="cls-1" d="m3.84,137.14l.55.05c.51.1,1.04.28,1.53.6,1.13.75,1.68,2.04,1.68,3.27,0,.79-.2,2-1.31,2.95-.54.46-1.11.72-1.68.87l-.77.08v-2.05l1.13-.34c.43-.37.65-.9.65-1.53,0-.56-.17-1.45-1.24-1.86l-.53-.08v-1.96Z"/>
+			<polygon class="cls-1" points="21.93 137.06 23.99 137.06 23.99 148.59 27.95 148.59 27.95 150.53 21.93 150.53 21.93 137.06"/>
+			<polygon class="cls-1" points="47.63 136.54 47.63 140.87 45.59 145.34 47.63 145.34 47.63 147.28 44.74 147.28 43.27 150.53 41.05 150.53 47.63 136.54"/>
+			<polygon class="cls-1" points="47.75 136.28 54.13 150.53 51.91 150.53 50.5 147.28 47.63 147.28 47.63 145.34 49.67 145.34 47.67 140.78 47.63 140.87 47.63 136.54 47.75 136.28"/>
+			<polygon class="cls-1" points="65.99 137.07 74.22 137.07 74.22 139 71.13 139 71.13 150.53 69.07 150.53 69.07 139 65.99 139 65.99 137.07"/>
+			<polygon class="cls-1" points="88.4 137.07 95.83 137.07 95.83 139 90.46 139 90.46 142.42 95.67 142.42 95.67 144.35 90.46 144.35 90.46 148.59 95.83 148.59 95.83 150.53 88.4 150.53 88.4 137.07"/>
+			<polygon class="cls-1" points="114.26 136.53 114.26 140.87 112.23 145.34 114.26 145.34 114.26 147.28 111.38 147.28 109.9 150.53 107.68 150.53 114.26 136.53"/>
+			<polygon class="cls-1" points="114.38 136.28 120.77 150.53 118.54 150.53 117.13 147.28 114.26 147.28 114.26 145.34 116.3 145.34 114.3 140.78 114.26 140.87 114.26 136.53 114.38 136.28"/>
+			<path class="cls-1" d="m131.75,137.06h2.06v8.12c0,.73.02,1.62.42,2.32.41.69,1.32,1.4,2.51,1.4s2.1-.71,2.5-1.4c.4-.7.42-1.59.42-2.32v-8.12h2.06v8.67c0,1.07-.22,2.36-1.25,3.49-.7.77-1.9,1.58-3.73,1.58s-3.03-.81-3.74-1.58c-1.03-1.13-1.25-2.42-1.25-3.49v-8.67Z"/>
+			<path class="cls-1" d="m37.65,161.31h1.7v3.94c.22-.29.48-.48.77-.6l.46-.09v1.39l-.96.39c-.2.21-.37.52-.37.97s.19.75.39.94l.94.38v1.37l-.65-.16c-.26-.15-.45-.36-.58-.55v.64h-1.7v-8.62Z"/>
+			<path class="cls-1" d="m40.99,164.48c.73,0,1.38.27,1.84.71.51.49.82,1.21.82,2.08,0,.82-.28,1.57-.82,2.12-.46.47-1.03.72-1.81.72l-.44-.11v-1.37h.02c.3,0,.63-.11.89-.35.25-.24.42-.58.42-.97,0-.43-.17-.77-.42-1.01-.27-.26-.57-.35-.91-.35v-1.39l.41-.08Z"/>
+			<polygon class="cls-1" points="47.39 164.66 49.35 164.66 50.84 167.52 52.3 164.66 54.21 164.66 49.97 172.64 48.05 172.64 49.91 169.26 47.39 164.66"/>
+			<polygon class="cls-1" points="66.6 162.05 68.11 162.05 70.07 166.76 72.03 162.05 73.55 162.05 74.81 169.93 72.99 169.93 72.36 165.23 70.39 169.93 69.75 169.93 67.78 165.23 67.15 169.93 65.33 169.93 66.6 162.05"/>
+			<polygon class="cls-1" points="80.9 162.05 82.72 162.05 82.72 168.39 85.16 168.39 85.16 169.93 80.9 169.93 80.9 162.05"/>
+			<polyline class="cls-1" points="91.43 162.05 93.25 162.05 93.25 169.93 91.43 169.93 91.43 162.05"/>
+			<polygon class="cls-1" points="99.44 162.05 104.69 162.05 104.69 163.58 102.98 163.58 102.98 169.93 101.16 169.93 101.16 163.58 99.44 163.58 99.44 162.05"/>
+		</svg>
+	</xsl:variable>
+
+	<xsl:variable name="list_label_black_circle">
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 			<circle cx="10" cy="10" r="5" stroke="black" stroke-width="5" fill="black"/>
+		</svg>
+	</xsl:variable>
+
+	<xsl:variable name="list_label_arrow">
+		<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 7.51 8.67">
+			<defs>
+				<style>
+					.cls-1 {
+						fill: #231f20;
+						stroke-width: 0px;
+					}
+				</style>
+			</defs>
+			<path class="cls-1" d="m2.51,4.34L0,0l7.51,4.34L0,8.67l2.51-4.34ZM.78.77l2.06,3.56h4.1L.78.77Z"/>
+		</svg>
+	</xsl:variable>
+
+	<xsl:variable name="list_label_star">
+		<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 8.68 8.68">
+			<defs>
+				<style>
+					.cls-1 {
+						fill: #231f20;
+						stroke-width: 0px;
+					}
+				</style>
+			</defs>
+			<path class="cls-1" d="m0,4.04c1.04-.05,1.92-.37,2.63-.97.88-.75,1.36-1.77,1.43-3.07h.58c.08,1.31.56,2.34,1.42,3.07.7.6,1.57.92,2.62.97v.58c-1.05.05-1.92.38-2.62.97-.88.75-1.36,1.78-1.42,3.08h-.58c-.05-1.04-.37-1.92-.98-2.63-.75-.89-1.78-1.36-3.07-1.43v-.58Zm7.09.29c-1.33-.5-2.24-1.42-2.75-2.75-.47,1.32-1.39,2.24-2.75,2.75.65.23,1.21.58,1.68,1.06s.83,1.04,1.07,1.69c.24-.65.6-1.22,1.07-1.7s1.04-.83,1.68-1.06Z"/>
 		</svg>
 	</xsl:variable>
 
 			<xsl:strip-space elements="plateau:xref"/>
 
 	<xsl:variable name="namespace_full" select="namespace-uri(/*)"/> <!-- example: https://www.metanorma.org/ns/iso -->
-	<xsl:variable name="root_element" select="local-name(/*)"/>
+	<xsl:variable name="root_element" select="local-name(/*)"/> <!-- example: iso-standard -->
+
+	<xsl:variable name="document_scheme" select="normalize-space(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'document-scheme']/*[local-name() = 'value'])"/>
 
 	<!-- external parameters -->
 
@@ -1570,22 +1798,42 @@
 	<!-- marginLeftRight1 and marginLeftRight2 - is left or right margin depends on odd/even page,
 	for example, left margin on odd page and right margin on even page -->
 	<xsl:variable name="marginLeftRight1_">
-		15.4
+
+				<xsl:choose>
+					<xsl:when test="$doctype = 'technical-report'">19.5</xsl:when>
+					<xsl:otherwise>15.4</xsl:otherwise> <!-- handbook -->
+				</xsl:choose>
+
 	</xsl:variable>
 	<xsl:variable name="marginLeftRight1" select="normalize-space($marginLeftRight1_)"/>
 
 	<xsl:variable name="marginLeftRight2_">
-		15.4
+
+				<xsl:choose>
+					<xsl:when test="$doctype = 'technical-report'">18</xsl:when>
+					<xsl:otherwise>15.4</xsl:otherwise> <!-- handbook -->
+				</xsl:choose>
+
 	</xsl:variable>
 	<xsl:variable name="marginLeftRight2" select="normalize-space($marginLeftRight2_)"/>
 
 	<xsl:variable name="marginTop_">
-		16
+
+				<xsl:choose>
+					<xsl:when test="$doctype = 'technical-report'">26</xsl:when>
+					<xsl:otherwise>16</xsl:otherwise> <!-- handbook -->
+				</xsl:choose>
+
 	</xsl:variable>
 	<xsl:variable name="marginTop" select="normalize-space($marginTop_)"/>
 
 	<xsl:variable name="marginBottom_">
-		32
+
+				<xsl:choose>
+					<xsl:when test="$doctype = 'technical-report'">26</xsl:when>
+					<xsl:otherwise>32</xsl:otherwise> <!-- handbook -->
+				</xsl:choose>
+
 	</xsl:variable>
 	<xsl:variable name="marginBottom" select="normalize-space($marginBottom_)"/>
 
@@ -2079,6 +2327,10 @@
 	<xsl:template name="refine_table-name-style">
 		<xsl:param name="continued"/>
 
+			<xsl:if test="$doctype = 'technical-report'">
+				<xsl:attribute name="font-weight">normal</xsl:attribute>
+			</xsl:if>
+
 	</xsl:template> <!-- refine_table-name-style -->
 
 	<xsl:attribute-set name="table-row-style">
@@ -2452,6 +2704,10 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_figure-name-style">
+
+			<xsl:if test="$doctype = 'technical-report'">
+				<xsl:attribute name="font-weight">normal</xsl:attribute>
+			</xsl:if>
 
 	</xsl:template> <!-- refine_figure-name-style -->
 
@@ -3054,7 +3310,7 @@
 
 	<xsl:template name="processPrefaceSectionsDefault_items">
 
-		<xsl:variable name="updated_xml_step_move_pagebreak_">
+		<xsl:variable name="updated_xml_step_move_pagebreak">
 
 			<xsl:element name="{$root_element}" namespace="{$namespace_full}">
 
@@ -3072,17 +3328,32 @@
 		</xsl:variable>
 
 		<xsl:variable name="updated_xml_step_move_pagebreak_filename" select="concat($output_path,'_preface_', java:getTime(java:java.util.Date.new()), '.xml')"/>
-
+		<!-- <xsl:message>updated_xml_step_move_pagebreak_filename=<xsl:value-of select="$updated_xml_step_move_pagebreak_filename"/></xsl:message>
+		<xsl:message>start write updated_xml_step_move_pagebreak_filename</xsl:message> -->
 		<redirect:write file="{$updated_xml_step_move_pagebreak_filename}">
-			<xsl:copy-of select="$updated_xml_step_move_pagebreak_"/>
+			<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
 		</redirect:write>
+		<!-- <xsl:message>end write updated_xml_step_move_pagebreak_filename</xsl:message> -->
 
 		<xsl:copy-of select="document($updated_xml_step_move_pagebreak_filename)"/>
 
+		<!-- TODO: instead of 
+		<xsl:for-each select=".//*[local-name() = 'page_sequence'][normalize-space() != '' or .//image or .//svg]">
+		in each template, add removing empty page_sequence here
+		-->
+
+		<xsl:if test="$debug = 'true'">
+			<redirect:write file="page_sequence_preface.xml">
+				<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
+			</redirect:write>
+		</xsl:if>
+
+		<!-- <xsl:message>start delete updated_xml_step_move_pagebreak_filename</xsl:message> -->
 		<xsl:call-template name="deleteFile">
 			<xsl:with-param name="filepath" select="$updated_xml_step_move_pagebreak_filename"/>
 		</xsl:call-template>
-	</xsl:template>
+		<!-- <xsl:message>end delete updated_xml_step_move_pagebreak_filename</xsl:message> -->
+	</xsl:template> <!-- END: processPrefaceSectionsDefault_items -->
 
 	<xsl:template name="copyCommonElements">
 		<!-- copy bibdata, localized-strings, metanorma-extension and boilerplate -->
@@ -3107,37 +3378,7 @@
 		</xsl:for-each>
 	</xsl:template><!-- END: processMainSectionsDefault -->
 
-	<xsl:template name="processMainSectionsDefault_flatxml">
-		<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']">
-			<xsl:sort select="@displayorder" data-type="number"/>
-			<xsl:variable name="flatxml">
-				<xsl:apply-templates select="." mode="flatxml"/>
-			</xsl:variable>
-			<!-- debug_flatxml='<xsl:copy-of select="$flatxml"/>' -->
-			<xsl:apply-templates select="xalan:nodeset($flatxml)/*"/>
-
-		</xsl:for-each>
-
-		<xsl:for-each select="/*/*[local-name()='annex']">
-			<xsl:sort select="@displayorder" data-type="number"/>
-			<xsl:variable name="flatxml">
-				<xsl:apply-templates select="." mode="flatxml"/>
-			</xsl:variable>
-			<!-- debug_flatxml='<xsl:copy-of select="$flatxml"/>' -->
-			<xsl:apply-templates select="xalan:nodeset($flatxml)/*"/>
-		</xsl:for-each>
-
-		<xsl:for-each select="/*/*[local-name()='bibliography']/*[not(@normative='true')] |          /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]">
-			<xsl:sort select="@displayorder" data-type="number"/>
-			<xsl:variable name="flatxml">
-				<xsl:apply-templates select="." mode="flatxml"/>
-			</xsl:variable>
-			<!-- debug_flatxml='<xsl:copy-of select="$flatxml"/>' -->
-			<xsl:apply-templates select="xalan:nodeset($flatxml)/*"/>
-		</xsl:for-each>
-	</xsl:template>
-
-	<!-- Example:
+  <!-- Example:
 	<iso-standard>
 		<sections>
 			<page_sequence>
@@ -3157,7 +3398,7 @@
 	-->
 	<xsl:template name="processMainSectionsDefault_items">
 
-		<xsl:variable name="updated_xml_step_move_pagebreak_">
+		<xsl:variable name="updated_xml_step_move_pagebreak">
 
 			<xsl:element name="{$root_element}" namespace="{$namespace_full}">
 
@@ -3194,21 +3435,113 @@
 		<xsl:variable name="updated_xml_step_move_pagebreak_filename" select="concat($output_path,'_main_', java:getTime(java:java.util.Date.new()), '.xml')"/>
 
 		<redirect:write file="{$updated_xml_step_move_pagebreak_filename}">
-			<xsl:copy-of select="$updated_xml_step_move_pagebreak_"/>
+			<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
 		</redirect:write>
 
 		<xsl:copy-of select="document($updated_xml_step_move_pagebreak_filename)"/>
+
+		<xsl:if test="$debug = 'true'">
+			<redirect:write file="page_sequence_main.xml">
+				<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
+			</redirect:write>
+		</xsl:if>
 
 		<xsl:call-template name="deleteFile">
 			<xsl:with-param name="filepath" select="$updated_xml_step_move_pagebreak_filename"/>
 		</xsl:call-template>
 	</xsl:template> <!-- END: processMainSectionsDefault_items -->
 
+	<xsl:template name="processAllSectionsDefault_items">
+
+		<xsl:variable name="updated_xml_step_move_pagebreak">
+
+			<xsl:element name="{$root_element}" namespace="{$namespace_full}">
+
+				<xsl:call-template name="copyCommonElements"/>
+
+				<xsl:element name="page_sequence" namespace="{$namespace_full}">
+
+					<xsl:element name="preface" namespace="{$namespace_full}"> <!-- save context element -->
+						<xsl:for-each select="/*/*[local-name()='preface']/*[not(local-name() = 'note' or local-name() = 'admonition')]">
+							<xsl:sort select="@displayorder" data-type="number"/>
+							<xsl:apply-templates select="." mode="update_xml_step_move_pagebreak">
+								<xsl:with-param name="page_sequence_at_top">true</xsl:with-param>
+							</xsl:apply-templates>
+						</xsl:for-each>
+					</xsl:element>
+
+					<xsl:element name="sections" namespace="{$namespace_full}"> <!-- save context element -->
+
+						<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']">
+							<xsl:sort select="@displayorder" data-type="number"/>
+							<xsl:apply-templates select="." mode="update_xml_step_move_pagebreak">
+								<xsl:with-param name="page_sequence_at_top">true</xsl:with-param>
+							</xsl:apply-templates>
+
+						</xsl:for-each>
+					</xsl:element>
+
+					<xsl:for-each select="/*/*[local-name()='annex']">
+						<xsl:sort select="@displayorder" data-type="number"/>
+						<xsl:apply-templates select="." mode="update_xml_step_move_pagebreak">
+								<xsl:with-param name="page_sequence_at_top">true</xsl:with-param>
+							</xsl:apply-templates>
+					</xsl:for-each>
+
+					<xsl:element name="bibliography" namespace="{$namespace_full}"> <!-- save context element -->
+						<xsl:for-each select="/*/*[local-name()='bibliography']/*[not(@normative='true')] |              /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]">
+							<xsl:sort select="@displayorder" data-type="number"/>
+							<xsl:apply-templates select="." mode="update_xml_step_move_pagebreak">
+								<xsl:with-param name="page_sequence_at_top">true</xsl:with-param>
+							</xsl:apply-templates>
+						</xsl:for-each>
+					</xsl:element>
+
+				</xsl:element>
+			</xsl:element>
+		</xsl:variable>
+
+		<xsl:variable name="updated_xml_step_move_pagebreak_filename" select="concat($output_path,'_preface_and_main_', java:getTime(java:java.util.Date.new()), '.xml')"/>
+		<!-- <xsl:message>updated_xml_step_move_pagebreak_filename=<xsl:value-of select="$updated_xml_step_move_pagebreak_filename"/></xsl:message>
+		<xsl:message>start write updated_xml_step_move_pagebreak_filename</xsl:message> -->
+		<redirect:write file="{$updated_xml_step_move_pagebreak_filename}">
+			<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
+		</redirect:write>
+		<!-- <xsl:message>end write updated_xml_step_move_pagebreak_filename</xsl:message> -->
+
+		<xsl:copy-of select="document($updated_xml_step_move_pagebreak_filename)"/>
+
+		<!-- TODO: instead of 
+		<xsl:for-each select=".//*[local-name() = 'page_sequence'][normalize-space() != '' or .//image or .//svg]">
+		in each template, add removing empty page_sequence here
+		-->
+
+		<xsl:if test="$debug = 'true'">
+			<redirect:write file="page_sequence_preface_and_main.xml">
+				<xsl:copy-of select="$updated_xml_step_move_pagebreak"/>
+			</redirect:write>
+		</xsl:if>
+
+		<!-- <xsl:message>start delete updated_xml_step_move_pagebreak_filename</xsl:message> -->
+		<xsl:call-template name="deleteFile">
+			<xsl:with-param name="filepath" select="$updated_xml_step_move_pagebreak_filename"/>
+		</xsl:call-template>
+		<!-- <xsl:message>end delete updated_xml_step_move_pagebreak_filename</xsl:message> -->
+	</xsl:template> <!-- END: processAllSectionsDefault_items -->
+
 	<xsl:template name="deleteFile">
 		<xsl:param name="filepath"/>
 		<xsl:variable name="xml_file" select="java:java.io.File.new($filepath)"/>
 		<xsl:variable name="xml_file_path" select="java:toPath($xml_file)"/>
 		<xsl:variable name="deletefile" select="java:java.nio.file.Files.deleteIfExists($xml_file_path)"/>
+	</xsl:template>
+
+	<xsl:template name="getPageSequenceOrientation">
+		<xsl:variable name="previous_orientation" select="preceding-sibling::*[local-name() = 'page_sequence'][@orientation][1]/@orientation"/>
+		<xsl:choose>
+			<xsl:when test="@orientation = 'landscape'">-<xsl:value-of select="@orientation"/></xsl:when>
+			<xsl:when test="$previous_orientation = 'landscape' and not(@orientation = 'portrait')">-<xsl:value-of select="$previous_orientation"/></xsl:when>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:variable name="regex_standard_reference">([A-Z]{2,}(/[A-Z]{2,})* \d+(-\d+)*(:\d{4})?)</xsl:variable>
@@ -3239,9 +3572,16 @@
 				<xsl:value-of select="substring-before($text, $tag_open)"/>
 				<!-- <xsl:text disable-output-escaping="yes">&lt;fo:inline keep-together.within-line="always"&gt;</xsl:text> -->
 				<xsl:variable name="text_after" select="substring-after($text, $tag_open)"/>
-				<fo:inline keep-together.within-line="always">
-					<xsl:value-of select="substring-before($text_after, $tag_close)"/>
-				</fo:inline>
+				<xsl:choose>
+					<xsl:when test="local-name(..) = 'keep-together_within-line'"> <!-- prevent two nested <fo:inline keep-together.within-line="always"><fo:inline keep-together.within-line="always" -->
+						<xsl:value-of select="substring-before($text_after, $tag_close)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<fo:inline keep-together.within-line="always" role="SKIP">
+							<xsl:value-of select="substring-before($text_after, $tag_close)"/>
+						</fo:inline>
+					</xsl:otherwise>
+				</xsl:choose>
 				<!-- <xsl:text disable-output-escaping="yes">&lt;/fo:inline&gt;</xsl:text> -->
 				<xsl:call-template name="replace_fo_inline_tags">
 					<xsl:with-param name="tag_open" select="$tag_open"/>
@@ -3603,7 +3943,7 @@
 
 				<!-- table footer after table -->
 
-					<xsl:apply-templates select="*[not(local-name()='thead') and not(local-name()='tbody') and not(local-name()='tfoot')]"/>
+					<xsl:apply-templates select="*[not(local-name()='thead') and not(local-name()='tbody') and not(local-name()='tfoot') and not(local-name()='name')]"/>
 					<xsl:for-each select="*[local-name()='tbody']"> <!-- select context to tbody -->
 						<xsl:variable name="table_fn_block">
 							<xsl:call-template name="table_fn_display"/>
@@ -4496,6 +4836,7 @@
 	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
+					<xsl:copy-of select="@id"/>
 
 					<xsl:call-template name="refine_table-note-style"/>
 
@@ -4656,7 +4997,7 @@
 						<xsl:copy-of select="node()"/>
 					</fn>
 				</xsl:for-each>
-				<xsl:for-each select="ancestor::*[contains(local-name(), '-standard')]/*[local-name()='boilerplate']/* |       ancestor::*[contains(local-name(), '-standard')]/*[local-name()='preface']/* |      ancestor::*[contains(local-name(), '-standard')]/*[local-name()='sections']/* |       ancestor::*[contains(local-name(), '-standard')]//*[local-name()='annex'] |      ancestor::*[contains(local-name(), '-standard')]//*[local-name()='bibliography']/*">
+				<xsl:for-each select="ancestor::*[contains(local-name(), '-standard')]/*[local-name()='boilerplate']/* |       ancestor::*[contains(local-name(), '-standard')]//*[local-name()='preface']/* |      ancestor::*[contains(local-name(), '-standard')]//*[local-name()='sections']/* |       ancestor::*[contains(local-name(), '-standard')]//*[local-name()='annex'] |      ancestor::*[contains(local-name(), '-standard')]//*[local-name()='bibliography']/*">
 					<xsl:sort select="@displayorder" data-type="number"/>
 					<!-- commented:
 					 .//*[local-name() = 'bibitem'][ancestor::*[local-name() = 'references']]/*[local-name() = 'note'] |
@@ -7921,6 +8262,15 @@
 			<xsl:when test="@mimetype = 'image/svg+xml' and $images/images/image[@id = current()/@id]">
 				<xsl:value-of select="$images/images/image[@id = current()/@id]/@src"/>
 			</xsl:when>
+			<!-- in WebP format, then convert image into PNG -->
+			<xsl:when test="starts-with(@src, 'data:image/webp')">
+				<xsl:variable name="src_png" select="java:org.metanorma.fop.utils.ImageUtils.convertWebPtoPNG(@src)"/>
+				<xsl:value-of select="$src_png"/>
+			</xsl:when>
+			<xsl:when test="not(starts-with(@src, 'data:')) and        (java:endsWith(java:java.lang.String.new(@src), '.webp') or       java:endsWith(java:java.lang.String.new(@src), '.WEBP'))">
+				<xsl:variable name="src_png" select="java:org.metanorma.fop.utils.ImageUtils.convertWebPtoPNG(@src)"/>
+				<xsl:value-of select="concat('url(file:///',$basepath, $src_png, ')')"/>
+			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
 				<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
 			</xsl:when>
@@ -10321,6 +10671,11 @@
 		<xsl:call-template name="sections_node"/>
 	</xsl:template>
 
+	<!-- page_sequence/sections/clause -->
+	<xsl:template match="*[local-name() = 'page_sequence']/*[local-name() = 'sections']/*[not(@top-level)]" priority="2">
+		<xsl:call-template name="sections_node"/>
+	</xsl:template>
+
 	<xsl:template name="sections_element_style">
 
 	</xsl:template> <!-- sections_element_style -->
@@ -10335,7 +10690,13 @@
 		</fo:block>
 	</xsl:template>
 
-	<xsl:template match="*[local-name() = 'preface']/*[local-name() = 'page_sequence']/*" priority="2"> <!-- /*/*[local-name() = 'preface']/* -->
+	<!-- preface/ page_sequence/clause -->
+	<xsl:template match="*[local-name() = 'preface']/*[local-name() = 'page_sequence']/*[not(@top-level)]" priority="2"> <!-- /*/*[local-name() = 'preface']/* -->
+		<xsl:call-template name="preface_node"/>
+	</xsl:template>
+
+	<!-- page_sequence/preface/clause -->
+	<xsl:template match="*[local-name() = 'page_sequence']/*[local-name() = 'preface']/*[not(@top-level)]" priority="2"> <!-- /*/*[local-name() = 'preface']/* -->
 		<xsl:call-template name="preface_node"/>
 	</xsl:template>
 
@@ -10432,9 +10793,18 @@
 	<!-- ===================================== -->
 	<xsl:variable name="ul_labels_">
 
-				<label level="1" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
-				<label level="2">－</label> <!-- full-width hyphen minus -->
-				<label level="3" font-size="130%" line-height="1.2">・</label>
+				<xsl:choose>
+					<xsl:when test="$doctype = 'technical-report'">
+						<label level="1" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
+						<label level="2">→</label> <!-- will be replaced in the template 'li' -->
+						<label level="3">☆</label> <!-- will be replaced in the template 'li' -->
+					</xsl:when>
+					<xsl:otherwise>
+						<label level="1" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
+						<label level="2">－</label> <!-- full-width hyphen minus -->
+						<label level="3" font-size="130%" line-height="1.2">・</label>
+					</xsl:otherwise>
+				</xsl:choose>
 
 	</xsl:variable>
 	<xsl:variable name="ul_labels" select="xalan:nodeset($ul_labels_)"/>
@@ -11585,6 +11955,75 @@
 	<!-- ===================================== -->
 	<!-- Update xml -->
 	<!-- ===================================== -->
+
+	<xsl:template name="updateXML">
+		<xsl:if test="$debug = 'true'"><xsl:message>START updated_xml_step1</xsl:message></xsl:if>
+		<xsl:variable name="startTime1" select="java:getTime(java:java.util.Date.new())"/>
+
+		<!-- STEP1: Re-order elements in 'preface', 'sections' based on @displayorder -->
+		<xsl:variable name="updated_xml_step1">
+			<xsl:if test="$table_if = 'false'">
+				<xsl:apply-templates mode="update_xml_step1"/>
+			</xsl:if>
+		</xsl:variable>
+
+		<xsl:variable name="endTime1" select="java:getTime(java:java.util.Date.new())"/>
+		<xsl:if test="$debug = 'true'">
+			<xsl:message>DEBUG: processing time <xsl:value-of select="$endTime1 - $startTime1"/> msec.</xsl:message>
+			<xsl:message>END updated_xml_step1</xsl:message>
+			<!-- <redirect:write file="updated_xml_step1_{java:getTime(java:java.util.Date.new())}.xml">
+				<xsl:copy-of select="$updated_xml_step1"/>
+			</redirect:write> -->
+		</xsl:if>
+
+		<xsl:if test="$debug = 'true'"><xsl:message>START updated_xml_step2</xsl:message></xsl:if>
+		<xsl:variable name="startTime2" select="java:getTime(java:java.util.Date.new())"/>
+
+		<!-- STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
+		<xsl:variable name="updated_xml_step2">
+
+					<xsl:if test="$table_if = 'false'">
+						<xsl:apply-templates select="xalan:nodeset($updated_xml_step1)" mode="update_xml_step2"/>
+					</xsl:if>
+
+		</xsl:variable>
+
+		<xsl:variable name="endTime2" select="java:getTime(java:java.util.Date.new())"/>
+		<xsl:if test="$debug = 'true'">
+			<xsl:message>DEBUG: processing time <xsl:value-of select="$endTime2 - $startTime2"/> msec.</xsl:message>
+			<xsl:message>END updated_xml_step2</xsl:message>
+			<!-- <redirect:write file="updated_xml_step2_{java:getTime(java:java.util.Date.new())}.xml">
+				<xsl:copy-of select="$updated_xml_step2"/>
+			</redirect:write> -->
+		</xsl:if>
+
+		<xsl:if test="$debug = 'true'"><xsl:message>START updated_xml_step3</xsl:message></xsl:if>
+		<xsl:variable name="startTime3" select="java:getTime(java:java.util.Date.new())"/>
+
+		<xsl:variable name="updated_xml_step3">
+			<xsl:choose>
+				<xsl:when test="$table_if = 'false'">
+					<xsl:apply-templates select="xalan:nodeset($updated_xml_step2)" mode="update_xml_enclose_keep-together_within-line"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates select="." mode="update_xml_enclose_keep-together_within-line"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:variable name="endTime3" select="java:getTime(java:java.util.Date.new())"/>
+		<xsl:if test="$debug = 'true'">
+			<xsl:message>DEBUG: processing time <xsl:value-of select="$endTime3 - $startTime3"/> msec.</xsl:message>
+			<xsl:message>END updated_xml_step3</xsl:message>
+			<!-- <redirect:write file="updated_xml_step3_{java:getTime(java:java.util.Date.new())}.xml">
+				<xsl:copy-of select="$updated_xml_step3"/>
+			</redirect:write> -->
+		</xsl:if>
+
+		<xsl:copy-of select="$updated_xml_step3"/>
+
+	</xsl:template>
+
 	<!-- =========================================================================== -->
 	<!-- STEP1:  -->
 	<!--   - Re-order elements in 'preface', 'sections' based on @displayorder -->
@@ -11763,14 +12202,17 @@
 	<!-- STEP MOVE PAGEBREAK: move <pagebreak/> at top level under 'preface' and 'sections' -->
 	<!-- =========================================================================== -->
 	<xsl:template match="@*|node()" mode="update_xml_step_move_pagebreak">
+		<xsl:param name="page_sequence_at_top">false</xsl:param>
 		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" mode="update_xml_step_move_pagebreak"/>
+			<xsl:apply-templates select="@*|node()" mode="update_xml_step_move_pagebreak">
+				<xsl:with-param name="page_sequence_at_top" select="$page_sequence_at_top"/>
+			</xsl:apply-templates>
 		</xsl:copy>
 	</xsl:template>
 
 	<!-- replace 'pagebreak' by closing tags + page_sequence and  opening page_sequence + tags -->
 	<xsl:template match="*[local-name() = 'pagebreak'][not(following-sibling::*[1][local-name() = 'pagebreak'])]" mode="update_xml_step_move_pagebreak">
-
+		<xsl:param name="page_sequence_at_top"/>
 		<!-- <xsl:choose>
 			<xsl:when test="ancestor::*[local-name() = 'sections']">
 			
@@ -11784,7 +12226,7 @@
 
 		<!-- determine pagebreak is last element before </fo:flow> or not -->
 		<xsl:variable name="isLast">
-			<xsl:for-each select="ancestor-or-self::*[ancestor::*[local-name() = 'sections'] or ancestor-or-self::*[local-name() = 'annex']]">
+			<xsl:for-each select="ancestor-or-self::*[ancestor::*[local-name() = 'preface'] or ancestor::*[local-name() = 'sections'] or ancestor-or-self::*[local-name() = 'annex']]">
 				<xsl:if test="following-sibling::*">false</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
@@ -11794,7 +12236,9 @@
 			<xsl:variable name="orientation" select="normalize-space(@orientation)"/>
 
 			<xsl:variable name="tree_">
-				<xsl:call-template name="makeAncestorsElementsTree"/>
+				<xsl:call-template name="makeAncestorsElementsTree">
+					<xsl:with-param name="page_sequence_at_top" select="$page_sequence_at_top"/>
+				</xsl:call-template>
 			</xsl:variable>
 			<xsl:variable name="tree" select="xalan:nodeset($tree_)"/>
 
@@ -11806,7 +12250,7 @@
 			<xsl:text disable-output-escaping="yes">&lt;/page_sequence&gt;</xsl:text>
 
 			<!-- create a new page_sequence (opening elements) -->
-			<xsl:text disable-output-escaping="yes">&lt;page_sequence namespace="</xsl:text><xsl:value-of select="$namespace_full"/>"<xsl:if test="$orientation != ''"> orientation="<xsl:value-of select="$orientation"/>"</xsl:if><xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+			<xsl:text disable-output-escaping="yes">&lt;page_sequence xmlns="</xsl:text><xsl:value-of select="$namespace_full"/>"<xsl:if test="$orientation != ''"> orientation="<xsl:value-of select="$orientation"/>"</xsl:if><xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 
 			<xsl:call-template name="insertOpeningElements">
 				<xsl:with-param name="tree" select="$tree"/>
@@ -11816,12 +12260,26 @@
 	</xsl:template>
 
 	<xsl:template name="makeAncestorsElementsTree">
-		<xsl:for-each select="ancestor::*[ancestor::*[local-name() = 'sections'] or ancestor-or-self::*[local-name() = 'annex']]">
-			<element pos="{position()}">
-				<xsl:copy-of select="@*[local-name() != 'id']"/>
-				<xsl:value-of select="name()"/>
-			</element>
-		</xsl:for-each>
+		<xsl:param name="page_sequence_at_top"/>
+
+		<xsl:choose>
+			<xsl:when test="$page_sequence_at_top = 'true'">
+				<xsl:for-each select="ancestor::*[ancestor::*[contains(local-name(), '-standard')]]">
+					<element pos="{position()}">
+						<xsl:copy-of select="@*[local-name() != 'id']"/>
+						<xsl:value-of select="name()"/>
+					</element>
+				</xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:for-each select="ancestor::*[ancestor::*[local-name() = 'preface'] or ancestor::*[local-name() = 'sections'] or ancestor-or-self::*[local-name() = 'annex']]">
+					<element pos="{position()}">
+						<xsl:copy-of select="@*[local-name() != 'id']"/>
+						<xsl:value-of select="name()"/>
+					</element>
+				</xsl:for-each>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="insertClosingElements">
@@ -11859,11 +12317,14 @@
 
 	<!-- move full page width figures, tables at top level -->
 	<xsl:template match="*[local-name() = 'figure' or local-name() = 'table'][normalize-space(@width) != 'text-width']" mode="update_xml_step_move_pagebreak">
+		<xsl:param name="page_sequence_at_top">false</xsl:param>
 		<xsl:choose>
 			<xsl:when test="$layout_columns != 1">
 
 				<xsl:variable name="tree_">
-				<xsl:call-template name="makeAncestorsElementsTree"/>
+					<xsl:call-template name="makeAncestorsElementsTree">
+						<xsl:with-param name="page_sequence_at_top" select="$page_sequence_at_top"/>
+					</xsl:call-template>
 				</xsl:variable>
 				<xsl:variable name="tree" select="xalan:nodeset($tree_)"/>
 
@@ -12101,7 +12562,7 @@
 				<xsl:value-of select="substring-before($text, $tag_open)"/>
 				<xsl:variable name="text_after" select="substring-after($text, $tag_open)"/>
 
-				<xsl:element name="{substring-before(substring-after($tag_open, '###'),'###')}">
+				<xsl:element name="{substring-before(substring-after($tag_open, '###'),'###')}" namespace="{$namespace_full}">
 					<xsl:value-of select="substring-before($text_after, $tag_close)"/>
 				</xsl:element>
 
@@ -12608,6 +13069,15 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:for-each>
+		<!-- references to external attachments (no binary-encoded within the Metanorma XML file) -->
+		<xsl:if test="not(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment'])">
+			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
+				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
+				<xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath, $attachment_path, ')')"/>
+				<xsl:variable name="filename_embedded" select="substring-after($attachment_path, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/>
+				<pdf:embedded-file src="{$url}" filename="{$filename_embedded}"/>
+			</xsl:for-each>
+		</xsl:if>
 	</xsl:template> <!-- addPDFUAmeta -->
 
 	<xsl:template name="getId">
@@ -12921,7 +13391,10 @@
 		<xsl:call-template name="setTextAlignment">
 			<xsl:with-param name="default" select="$text_align_default"/>
 		</xsl:call-template>
+		<xsl:call-template name="setKeepAttributes"/>
+	</xsl:template>
 
+	<xsl:template name="setKeepAttributes">
 		<!-- https://www.metanorma.org/author/topics/document-format/text/#avoiding-page-breaks -->
 		<!-- Example: keep-lines-together="true" -->
 		<xsl:if test="@keep-lines-together = 'true'">
@@ -12932,6 +13405,72 @@
 			<xsl:attribute name="keep-with-next">always</xsl:attribute>
 		</xsl:if>
 	</xsl:template>
+
+	<!-- insert cover page image -->
+		<!-- background cover image -->
+	<xsl:template name="insertBackgroundPageImage">
+		<xsl:param name="number">1</xsl:param>
+		<xsl:param name="name">coverpage-image</xsl:param>
+		<xsl:variable name="num" select="number($number)"/>
+		<!-- background image -->
+		<fo:block-container absolute-position="fixed" left="0mm" top="0mm" font-size="0" id="__internal_layout__coverpage_{$name}_{$number}_{generate-id()}">
+			<fo:block>
+				<xsl:for-each select="/*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = $name][1]/*[local-name() = 'value']/*[local-name() = 'image'][$num]">
+					<xsl:choose>
+						<xsl:when test="*[local-name() = 'svg'] or java:endsWith(java:java.lang.String.new(@src), '.svg')">
+							<fo:instream-foreign-object fox:alt-text="Image Front">
+								<xsl:attribute name="content-height"><xsl:value-of select="$pageHeight"/>mm</xsl:attribute>
+								<xsl:call-template name="getSVG"/>
+							</fo:instream-foreign-object>
+						</xsl:when>
+						<xsl:when test="starts-with(@src, 'data:application/pdf;base64')">
+							<fo:external-graphic src="{@src}" fox:alt-text="Image Front"/>
+						</xsl:when>
+						<xsl:otherwise> <!-- bitmap image -->
+							<xsl:variable name="coverimage_src" select="normalize-space(@src)"/>
+							<xsl:if test="$coverimage_src != ''">
+								<xsl:variable name="coverpage">
+									<xsl:call-template name="getImageURL">
+										<xsl:with-param name="src" select="$coverimage_src"/>
+									</xsl:call-template>
+								</xsl:variable>
+								<!-- <xsl:variable name="coverpage" select="concat('url(file:',$basepath, 'coverpage1.png', ')')"/> --> <!-- for DEBUG -->
+								<fo:external-graphic src="{$coverpage}" width="{$pageWidth}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image Front"/>
+							</xsl:if>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:for-each>
+			</fo:block>
+		</fo:block-container>
+	</xsl:template>
+
+	<xsl:template name="getImageURL">
+		<xsl:param name="src"/>
+		<xsl:choose>
+			<xsl:when test="starts-with($src, 'data:image')">
+				<xsl:value-of select="$src"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="concat('url(file:///',$basepath, $src, ')')"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="getSVG">
+		<xsl:choose>
+			<xsl:when test="*[local-name() = 'svg']">
+				<xsl:apply-templates select="*[local-name() = 'svg']" mode="svg_update"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="svg_content" select="document(@src)"/>
+				<xsl:for-each select="xalan:nodeset($svg_content)/node()">
+					<xsl:apply-templates select="." mode="svg_update"/>
+				</xsl:for-each>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<!-- END: insert cover page image -->
 
 	<xsl:template name="number-to-words">
 		<xsl:param name="number"/>
