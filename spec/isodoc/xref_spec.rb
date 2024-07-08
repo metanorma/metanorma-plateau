@@ -518,7 +518,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword obligation="informative" displayorder="1">
+          <foreword obligation="informative" displayorder="1">
            <title>Foreword</title>
            <p id="A">
              This is a preamble
@@ -543,15 +543,17 @@ RSpec.describe IsoDoc do
              <xref target="K">
                <span class="citesec">2.2</span>
              </xref>
-             <xref target="L">[L]</xref>
-             <xref target="M">
+             <xref target="L">
                <span class="citesec">Clause 3</span>
              </xref>
+             <xref target="M">
+               <span class="citesec">Clause 4</span>
+             </xref>
              <xref target="N">
-               <span class="citesec">3.1</span>
+               <span class="citesec">4.1</span>
              </xref>
              <xref target="O">
-               <span class="citesec">3.2</span>
+               <span class="citesec">4.2</span>
              </xref>
              <xref target="P">
                <span class="citeapp">Annex A</span>
@@ -572,7 +574,7 @@ RSpec.describe IsoDoc do
                <span class="citeapp">B.1</span>
              </xref>
              <xref target="R">
-               <span class="citesec">Clause 4</span>
+               <span class="citesec">Clause 5</span>
              </xref>
              <xref target="S">
                <span class="citesec">Bibliography</span>

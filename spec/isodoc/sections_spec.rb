@@ -97,7 +97,7 @@ RSpec.describe IsoDoc::Plateau do
     INPUT
 
     presxml = <<~OUTPUT
-          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <bibdata>
           <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
           <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -127,127 +127,128 @@ RSpec.describe IsoDoc::Plateau do
             <title depth="1">目　次</title>
           </clause>
         </preface>
-        <sections>
-          <introduction id="B" obligation="informative" unnumbered="true" displayorder="3">
-            <title>Introduction</title>
-            <clause id="C" inline-header="false" obligation="informative">
-              <title depth="2">
-                0.1
-                <tab/>
-                Introduction Subsection
-              </title>
-            </clause>
-            <p>This is patent boilerplate</p>
-          </introduction>
-          <clause id="D" obligation="normative" type="scope" displayorder="4">
-            <title depth="1">
-              1
-              <tab/>
-              Scope
-            </title>
-            <p id="E">Text</p>
-          </clause>
-          <clause id="H" obligation="normative" displayorder="5">
-            <title depth="1">
-              2
-              <tab/>
-              Terms, definitions, symbols and abbreviated terms
-            </title>
-            <terms id="I" obligation="normative">
-              <title depth="2">
-                2.1
-                <tab/>
-                Normal Terms
-              </title>
-              <term id="J">
-                <name>2.1.1</name>
-                <preferred>
-                  <strong>Term2</strong>
-                </preferred>
-              </term>
-            </terms>
-            <definitions id="K" inline-header="true">
-              <title>2.2</title>
-              <dl>
-                <dt>Symbol</dt>
-                <dd>Definition</dd>
-              </dl>
-            </definitions>
-          </clause>
-          <definitions id="L">
-            <dl>
-              <dt>Symbol</dt>
-              <dd>Definition</dd>
-            </dl>
-          </definitions>
-          <clause id="M" inline-header="false" obligation="normative" displayorder="6">
-            <title depth="1">
-              3
-              <tab/>
-              Clause 4
-            </title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <title depth="2">
-                3.1
-                <tab/>
-                Introduction
-              </title>
-            </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <title depth="2">
-                3.2
-                <tab/>
-                Clause 4.2
-              </title>
-            </clause>
-          </clause>
-          <references id="R" normative="true" obligation="informative" displayorder="7">
-            <title depth="1">
-              4
-              <tab/>
-              Normative References
-            </title>
-          </references>
-        </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder="8">
-          <title>
-            附属書 A
-            <br/>
-            (規定)
-            <br/>
-            <strong>Annex</strong>
-          </title>
-          <clause id="Q" inline-header="false" obligation="normative">
-            <title depth="2">
-              A.1
-              <tab/>
-              Annex A.1
-            </title>
-            <clause id="Q1" inline-header="false" obligation="normative">
-              <title depth="3">
-                A.1.1
-                <tab/>
-                Annex A.1a
-              </title>
-            </clause>
-          </clause>
-          <appendix id="Q2" inline-header="false" obligation="normative">
-            <title depth="2">
-              Appendix 1
-              <tab/>
-              An Appendix
-            </title>
-          </appendix>
-        </annex>
-        <bibliography>
-          <clause id="S" obligation="informative" displayorder="9">
-            <title depth="1">Bibliography</title>
-            <references id="T" normative="false" obligation="informative">
-              <title depth="2">Bibliography Subsection</title>
-            </references>
-          </clause>
-        </bibliography>
-      </iso-standard>
+                   <sections>
+             <introduction id="B" obligation="informative" unnumbered="true" displayorder="3">
+               <title>Introduction</title>
+               <clause id="C" inline-header="false" obligation="informative">
+                 <title depth="2">
+                   0.1
+                   <tab/>
+                   Introduction Subsection
+                 </title>
+               </clause>
+               <p>This is patent boilerplate</p>
+             </introduction>
+             <clause id="D" obligation="normative" type="scope" displayorder="4">
+               <title depth="1">
+                 1
+                 <tab/>
+                 Scope
+               </title>
+               <p id="E">Text</p>
+             </clause>
+             <clause id="H" obligation="normative" displayorder="5">
+               <title depth="1">
+                 2
+                 <tab/>
+                 Terms, definitions, symbols and abbreviated terms
+               </title>
+               <terms id="I" obligation="normative">
+                 <title depth="2">
+                   2.1
+                   <tab/>
+                   Normal Terms
+                 </title>
+                 <term id="J">
+                   <name>2.1.1</name>
+                   <preferred>
+                     <strong>Term2</strong>
+                   </preferred>
+                 </term>
+               </terms>
+               <definitions id="K" inline-header="true">
+                 <title>2.2</title>
+                 <dl>
+                   <dt>Symbol</dt>
+                   <dd>Definition</dd>
+                 </dl>
+               </definitions>
+             </clause>
+             <definitions id="L" displayorder="6">
+               <title>3</title>
+               <dl>
+                 <dt>Symbol</dt>
+                 <dd>Definition</dd>
+               </dl>
+             </definitions>
+             <clause id="M" inline-header="false" obligation="normative" displayorder="7">
+               <title depth="1">
+                 4
+                 <tab/>
+                 Clause 4
+               </title>
+               <clause id="N" inline-header="false" obligation="normative">
+                 <title depth="2">
+                   4.1
+                   <tab/>
+                   Introduction
+                 </title>
+               </clause>
+               <clause id="O" inline-header="false" obligation="normative">
+                 <title depth="2">
+                   4.2
+                   <tab/>
+                   Clause 4.2
+                 </title>
+               </clause>
+             </clause>
+             <references id="R" normative="true" obligation="informative" displayorder="8">
+               <title depth="1">
+                 5
+                 <tab/>
+                 Normative References
+               </title>
+             </references>
+           </sections>
+           <annex id="P" inline-header="false" obligation="normative" displayorder="9">
+             <title>
+               附属書 A
+               <br/>
+               (規定)
+               <br/>
+               <strong>Annex</strong>
+             </title>
+             <clause id="Q" inline-header="false" obligation="normative">
+               <title depth="2">
+                 A.1
+                 <tab/>
+                 Annex A.1
+               </title>
+               <clause id="Q1" inline-header="false" obligation="normative">
+                 <title depth="3">
+                   A.1.1
+                   <tab/>
+                   Annex A.1a
+                 </title>
+               </clause>
+             </clause>
+             <appendix id="Q2" inline-header="false" obligation="normative">
+               <title depth="2">
+                 Appendix 1
+                 <tab/>
+                 An Appendix
+               </title>
+             </appendix>
+           </annex>
+           <bibliography>
+             <clause id="S" obligation="informative" displayorder="10">
+               <title depth="1">Bibliography</title>
+               <references id="T" normative="false" obligation="informative">
+                 <title depth="2">Bibliography Subsection</title>
+               </references>
+             </clause>
+           </bibliography>
+         </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -323,75 +324,86 @@ RSpec.describe IsoDoc::Plateau do
                  </div>
                </div>
              </div>
-             <div id="M">
-               <h1>
-               3
-                
-               Clause 4
-             </h1>
-               <div id="N">
-                 <h2>
-                 3.1
-                  
-                 Introduction
-               </h2>
-               </div>
-               <div id="O">
-                 <h2>
-                 3.2
-                  
-                 Clause 4.2
-               </h2>
-               </div>
-             </div>
-             <div>
-               <h1>
-               4
-                
-               Normative References
-             </h1>
-             </div>
-             <br/>
-             <div id="P" class="Section3">
-               <h1 class="Annex">
-                 附属書 A
-                 <br/>
-                 (規定)
-                 <br/>
-                 <b>Annex</b>
-               </h1>
-               <div id="Q">
-                 <h2>
-               A.1
-                
-               Annex A.1
-             </h2>
-                 <div id="Q1">
-                   <h3>
-                 A.1.1
-                  
-                 Annex A.1a
-               </h3>
+                           <div id="L" class="Symbols">
+                 <h1>3</h1>
+                 <div class="figdl">
+                   <dl>
+                     <dt>
+                       <p>Symbol</p>
+                     </dt>
+                     <dd>Definition</dd>
+                   </dl>
                  </div>
                </div>
-               <div id="Q2">
-                 <h2>
-               Appendix 1
-                
-               An Appendix
-             </h2>
+               <div id="M">
+                 <h1>
+                4
+                 
+                Clause 4
+              </h1>
+                 <div id="N">
+                   <h2>
+                  4.1
+                   
+                  Introduction
+                </h2>
+                 </div>
+                 <div id="O">
+                   <h2>
+                  4.2
+                   
+                  Clause 4.2
+                </h2>
+                 </div>
                </div>
-             </div>
-             <br/>
-             <div>
-               <h1 class="Section3">Bibliography</h1>
                <div>
-                 <h2 class="Section3">Bibliography Subsection</h2>
+                 <h1>
+                5
+                 
+                Normative References
+              </h1>
+               </div>
+               <br/>
+               <div id="P" class="Section3">
+                 <h1 class="Annex">
+                   附属書 A
+                   <br/>
+                   (規定)
+                   <br/>
+                   <b>Annex</b>
+                 </h1>
+                 <div id="Q">
+                   <h2>
+                A.1
+                 
+                Annex A.1
+              </h2>
+                   <div id="Q1">
+                     <h3>
+                  A.1.1
+                   
+                  Annex A.1a
+                </h3>
+                   </div>
+                 </div>
+                 <div id="Q2">
+                   <h2>
+                Appendix 1
+                 
+                An Appendix
+              </h2>
+                 </div>
+               </div>
+               <br/>
+               <div>
+                 <h1 class="Section3">Bibliography</h1>
+                 <div>
+                   <h2 class="Section3">Bibliography Subsection</h2>
+                 </div>
                </div>
              </div>
-           </div>
-         </body>
-       </html>
+           </body>
+         </html>
     OUTPUT
     word = <<~WORD
       <html xmlns:epub='http://www.idpf.org/2007/ops' lang='ja'>
@@ -479,81 +491,91 @@ RSpec.describe IsoDoc::Plateau do
                 </table>
               </div>
             </div>
-            <div id="M">
-              <h1>
-                3
-                <span style="mso-tab-count:1">  </span>
-                Clause 4
-              </h1>
-              <div id="N">
-                <h2>
-                  3.1
-                  <span style="mso-tab-count:1">  </span>
-                  Introduction
-                </h2>
-              </div>
-              <div id="O">
-                <h2>
-                  3.2
-                  <span style="mso-tab-count:1">  </span>
-                  Clause 4.2
-                </h2>
-              </div>
-            </div>
-            <div class="normref_div">
-              <h1>
-                4
-                <span style="mso-tab-count:1">  </span>
-                Normative References
-              </h1>
-            </div>
-            <p class="page-break">
-              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-            </p>
-            <div id="P" class="Section3">
-              <h1 class="Annex">
-                附属書 A
-                <br/>
-                (規定)
-                <br/>
-                <b>Annex</b>
-              </h1>
-              <div id="Q">
-                <h2>
-                  A.1
-                  <span style="mso-tab-count:1">  </span>
-                  Annex A.1
-                </h2>
-                <div id="Q1">
-                  <h3>
-                    A.1.1
-                    <span style="mso-tab-count:1">  </span>
-                    Annex A.1a
-                  </h3>
-                </div>
-              </div>
-              <div id="Q2">
-                <h2>
-                  Appendix 1
-                  <span style="mso-tab-count:1">  </span>
-                  An Appendix
-                </h2>
-              </div>
-            </div>
-            <p class="page-break">
-              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-            </p>
-            <div class="bibliography">
-              <h1 class="Section3">Bibliography</h1>
-              <div>
-                <h2 class="BiblioTitle">Bibliography Subsection</h2>
-              </div>
-            </div>
-          </div>
-          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-          <div class="colophon"/>
-        </body>
-      </html>
+                          <div id="L" class="Symbols">
+                 <h1>3</h1>
+                 <table class="dl">
+                   <tr>
+                     <td valign="top" align="left">
+                       <p align="left" style="margin-left:0pt;text-align:left;">Symbol</p>
+                     </td>
+                     <td valign="top">Definition</td>
+                   </tr>
+                 </table>
+               </div>
+               <div id="M">
+                 <h1>
+                   4
+                   <span style="mso-tab-count:1">  </span>
+                   Clause 4
+                 </h1>
+                 <div id="N">
+                   <h2>
+                     4.1
+                     <span style="mso-tab-count:1">  </span>
+                     Introduction
+                   </h2>
+                 </div>
+                 <div id="O">
+                   <h2>
+                     4.2
+                     <span style="mso-tab-count:1">  </span>
+                     Clause 4.2
+                   </h2>
+                 </div>
+               </div>
+               <div class="normref_div">
+                 <h1>
+                   5
+                   <span style="mso-tab-count:1">  </span>
+                   Normative References
+                 </h1>
+               </div>
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div id="P" class="Section3">
+                 <h1 class="Annex">
+                   附属書 A
+                   <br/>
+                   (規定)
+                   <br/>
+                   <b>Annex</b>
+                 </h1>
+                 <div id="Q">
+                   <h2>
+                     A.1
+                     <span style="mso-tab-count:1">  </span>
+                     Annex A.1
+                   </h2>
+                   <div id="Q1">
+                     <h3>
+                       A.1.1
+                       <span style="mso-tab-count:1">  </span>
+                       Annex A.1a
+                     </h3>
+                   </div>
+                 </div>
+                 <div id="Q2">
+                   <h2>
+                     Appendix 1
+                     <span style="mso-tab-count:1">  </span>
+                     An Appendix
+                   </h2>
+                 </div>
+               </div>
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div class="bibliography">
+                 <h1 class="Section3">Bibliography</h1>
+                 <div>
+                   <h2 class="BiblioTitle">Bibliography Subsection</h2>
+                 </div>
+               </div>
+             </div>
+             <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+             <div class="colophon"/>
+           </body>
     WORD
     expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)

@@ -5,7 +5,8 @@ module IsoDoc
         [
           {
             path: "//sections/introduction | //sections/clause | " \
-                  "//sections/terms | //sections/references", multi: true
+                  "//sections/terms | //sections/definitions | " \
+                  "//sections/references", multi: true
           },
         ]
       end
