@@ -99,7 +99,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword id="fwd" displayorder="1">
+      <foreword id="fwd" displayorder="2">
          <p>
            <xref target="N1">
              <span class="citefig">Figure 1</span>
@@ -217,7 +217,7 @@ RSpec.describe IsoDoc do
         </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword id="fwd" displayorder="1">
+      <foreword id="fwd" displayorder="2">
          <p>
            <xref target="N">
              <span class="citefig">Figure 3-1</span>
@@ -390,7 +390,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
+      <foreword displayorder="2">
          <p>
            <xref target="N1">
              <span class="citetbl">Table 1</span>
@@ -518,69 +518,69 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     output = <<~OUTPUT
-          <foreword obligation="informative" displayorder="1">
-           <title>Foreword</title>
-           <p id="A">
-             This is a preamble
-             <xref target="C">
-               <span class="citesec">0.1</span>
-             </xref>
-             <xref target="C1">
-               <span class="citesec">0.2</span>
-             </xref>
-             <xref target="D">
-               <span class="citesec">Clause 1</span>
-             </xref>
-             <xref target="H">
-               <span class="citesec">Clause 2</span>
-             </xref>
-             <xref target="I">
-               <span class="citesec">2.1</span>
-             </xref>
-             <xref target="J">
-               <span class="citesec">2.1.1</span>
-             </xref>
-             <xref target="K">
-               <span class="citesec">2.2</span>
-             </xref>
-             <xref target="L">
-               <span class="citesec">Clause 3</span>
-             </xref>
-             <xref target="M">
-               <span class="citesec">Clause 4</span>
-             </xref>
-             <xref target="N">
-               <span class="citesec">4.1</span>
-             </xref>
-             <xref target="O">
-               <span class="citesec">4.2</span>
-             </xref>
-             <xref target="P">
-               <span class="citeapp">Annex A</span>
-             </xref>
-             <xref target="Q">
-               <span class="citeapp">A.1</span>
-             </xref>
-             <xref target="Q1">
-               <span class="citeapp">A.1.1</span>
-             </xref>
-             <xref target="QQ">
-               <span class="citeapp">Annex B</span>
-             </xref>
-             <xref target="QQ1">
-               <span class="citeapp">B</span>
-             </xref>
-             <xref target="QQ2">
-               <span class="citeapp">B.1</span>
-             </xref>
-             <xref target="R">
-               <span class="citesec">Clause 5</span>
-             </xref>
-             <xref target="S">
-               <span class="citesec">Bibliography</span>
-             </xref>
-           </p>
-         </foreword>
+       <foreword obligation="informative" displayorder="2">
+        <title>Foreword</title>
+        <p id="A">
+          This is a preamble
+          <xref target="C">
+            <span class="citesec">0.1</span>
+          </xref>
+          <xref target="C1">
+            <span class="citesec">0.2</span>
+          </xref>
+          <xref target="D">
+            <span class="citesec">Clause 1</span>
+          </xref>
+          <xref target="H">
+            <span class="citesec">Clause 2</span>
+          </xref>
+          <xref target="I">
+            <span class="citesec">2.1</span>
+          </xref>
+          <xref target="J">
+            <span class="citesec">2.1.1</span>
+          </xref>
+          <xref target="K">
+            <span class="citesec">2.2</span>
+          </xref>
+          <xref target="L">
+            <span class="citesec">Clause 3</span>
+          </xref>
+          <xref target="M">
+            <span class="citesec">Clause 4</span>
+          </xref>
+          <xref target="N">
+            <span class="citesec">4.1</span>
+          </xref>
+          <xref target="O">
+            <span class="citesec">4.2</span>
+          </xref>
+          <xref target="P">
+            <span class="citeapp">Annex A</span>
+          </xref>
+          <xref target="Q">
+            <span class="citeapp">A.1</span>
+          </xref>
+          <xref target="Q1">
+            <span class="citeapp">A.1.1</span>
+          </xref>
+          <xref target="QQ">
+            <span class="citeapp">Annex B</span>
+          </xref>
+          <xref target="QQ1">
+            <span class="citeapp">B</span>
+          </xref>
+          <xref target="QQ2">
+            <span class="citeapp">B.1</span>
+          </xref>
+          <xref target="R">
+            <span class="citesec">Clause 5</span>
+          </xref>
+          <xref target="S">
+            <span class="citesec">Bibliography</span>
+          </xref>
+        </p>
+      </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
@@ -658,7 +658,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword obligation="informative" displayorder="1">
+      <foreword obligation="informative" displayorder="2">
          <title>Foreword</title>
          <p id="A">
            This is a preamble

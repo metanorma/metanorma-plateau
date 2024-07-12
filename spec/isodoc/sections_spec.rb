@@ -22,6 +22,14 @@ RSpec.describe IsoDoc::Plateau do
           </ext>
         </bibdata>
         <preface>
+          <abstract id="abstract1" obligation="informative">
+            <title>Abstract 1</title>
+            <p id="A0">This is an abstract</p>
+          </abstract>
+          <abstract id="abstract2" obligation="informative">
+            <title>Abstract 2</title>
+            <p id="A1">This is another abstract</p>
+          </abstract>
           <foreword id="foreword" obligation="informative">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
@@ -117,18 +125,25 @@ RSpec.describe IsoDoc::Plateau do
             <doctype language="ja">日本産業規格</doctype>
           </ext>
         </bibdata>
-
-        <preface>
-          <foreword id="foreword" obligation="informative" displayorder="1">
-            <title>Foreword</title>
-            <p id="A">This is a preamble</p>
-          </foreword>
-          <clause type="toc" id="_" displayorder="2">
-            <title depth="1">目　次</title>
-          </clause>
-        </preface>
-                   <sections>
-             <introduction id="B" obligation="informative" unnumbered="true" displayorder="3">
+                   <preface>
+             <abstract id="abstract2" obligation="informative" displayorder="1">
+               <title>Abstract 2</title>
+               <p id="A1">This is another abstract</p>
+             </abstract>
+             <abstract id="abstract1" obligation="informative" displayorder="2">
+               <title>Abstract 1</title>
+               <p id="A0">This is an abstract</p>
+             </abstract>
+             <clause type="toc" id="_" displayorder="3">
+               <title depth="1">目　次</title>
+             </clause>
+             <foreword id="foreword" obligation="informative" displayorder="4">
+               <title>Foreword</title>
+               <p id="A">This is a preamble</p>
+             </foreword>
+           </preface>
+           <sections>
+             <introduction id="B" obligation="informative" unnumbered="true" displayorder="5">
                <title>Introduction</title>
                <clause id="C" inline-header="false" obligation="informative">
                  <title depth="2">
@@ -139,7 +154,7 @@ RSpec.describe IsoDoc::Plateau do
                </clause>
                <p>This is patent boilerplate</p>
              </introduction>
-             <clause id="D" obligation="normative" type="scope" displayorder="4">
+             <clause id="D" obligation="normative" type="scope" displayorder="6">
                <title depth="1">
                  1
                  <tab/>
@@ -147,7 +162,7 @@ RSpec.describe IsoDoc::Plateau do
                </title>
                <p id="E">Text</p>
              </clause>
-             <clause id="H" obligation="normative" displayorder="5">
+             <clause id="H" obligation="normative" displayorder="7">
                <title depth="1">
                  2
                  <tab/>
@@ -174,14 +189,14 @@ RSpec.describe IsoDoc::Plateau do
                  </dl>
                </definitions>
              </clause>
-             <definitions id="L" displayorder="6">
+             <definitions id="L" displayorder="8">
                <title>3</title>
                <dl>
                  <dt>Symbol</dt>
                  <dd>Definition</dd>
                </dl>
              </definitions>
-             <clause id="M" inline-header="false" obligation="normative" displayorder="7">
+             <clause id="M" inline-header="false" obligation="normative" displayorder="9">
                <title depth="1">
                  4
                  <tab/>
@@ -202,7 +217,7 @@ RSpec.describe IsoDoc::Plateau do
                  </title>
                </clause>
              </clause>
-             <references id="R" normative="true" obligation="informative" displayorder="8">
+             <references id="R" normative="true" obligation="informative" displayorder="10">
                <title depth="1">
                  5
                  <tab/>
@@ -210,7 +225,7 @@ RSpec.describe IsoDoc::Plateau do
                </title>
              </references>
            </sections>
-           <annex id="P" inline-header="false" obligation="normative" displayorder="9">
+           <annex id="P" inline-header="false" obligation="normative" displayorder="11">
              <title>
                附属書 A
                <br/>
@@ -241,7 +256,7 @@ RSpec.describe IsoDoc::Plateau do
              </appendix>
            </annex>
            <bibliography>
-             <clause id="S" obligation="informative" displayorder="10">
+             <clause id="S" obligation="informative" displayorder="12">
                <title depth="1">Bibliography</title>
                <references id="T" normative="false" obligation="informative">
                  <title depth="2">Bibliography Subsection</title>
@@ -252,79 +267,89 @@ RSpec.describe IsoDoc::Plateau do
     OUTPUT
 
     html = <<~OUTPUT
-      <html lang="ja">
-         <head/>
-         <body lang="ja">
-           <div class="title-section">
-             <p> </p>
-           </div>
-           <br/>
-           <div class="prefatory-section">
-             <p> </p>
-           </div>
-           <br/>
-           <div class="main-section">
-             <br/>
-             <div id="foreword">
-               <h1 class="ForewordTitle">Foreword</h1>
-               <p id="A">This is a preamble</p>
+           <html lang="ja">
+           <head/>
+           <body lang="ja">
+             <div class="title-section">
+               <p> </p>
              </div>
              <br/>
-             <div id="_" class="TOC">
-               <h1 class="IntroTitle">目　次</h1>
+             <div class="prefatory-section">
+               <p> </p>
              </div>
              <br/>
-             <div class="Section3" id="B">
-               <h1 class="IntroTitle">Introduction</h1>
-               <div id="C">
-                 <h2>
-                 0.1
-                  
-                 Introduction Subsection
-               </h2>
+             <div class="main-section">
+               <br/>
+               <div id="abstract2">
+                 <h1 class="AbstractTitle">Abstract 2</h1>
+                 <p id="A1">This is another abstract</p>
                </div>
-               <p>This is patent boilerplate</p>
-             </div>
-             <div id="D">
-               <h1>
-               1
-                
-               Scope
-             </h1>
-               <p id="E">Text</p>
-             </div>
-             <div id="H">
-               <h1>
-               2
-                
-               Terms, definitions, symbols and abbreviated terms
-             </h1>
-               <div id="I">
-                 <h2>
-                 2.1
-                  
-                 Normal Terms
-               </h2>
-                 <p class="TermNum" id="J">2.1.1</p>
-                 <p class="Terms" style="text-align:left;">
-                   <b>Term2</b>
-                 </p>
+               <br/>
+               <div id="abstract1">
+                 <h1 class="AbstractTitle">Abstract 1</h1>
+                 <p id="A0">This is an abstract</p>
                </div>
-               <div id="K">
-                 <span class="zzMoveToFollowing inline-header">
-                   <b>2.2  </b>
-                 </span>
-                 <div class="figdl">
-                   <dl>
-                     <dt>
-                       <p>Symbol</p>
-                     </dt>
-                     <dd>Definition</dd>
-                   </dl>
+               <br/>
+               <div id="_" class="TOC">
+                 <h1 class="IntroTitle">目　次</h1>
+               </div>
+               <br/>
+               <div id="foreword">
+                 <h1 class="ForewordTitle">Foreword</h1>
+                 <p id="A">This is a preamble</p>
+               </div>
+               <br/>
+               <div class="Section3" id="B">
+                 <h1 class="IntroTitle">Introduction</h1>
+                 <div id="C">
+                   <h2>
+                    0.1
+                     
+                    Introduction Subsection
+                  </h2>
+                 </div>
+                 <p>This is patent boilerplate</p>
+               </div>
+               <div id="D">
+                 <h1>
+                  1
+                   
+                  Scope
+                </h1>
+                 <p id="E">Text</p>
+               </div>
+               <div id="H">
+                 <h1>
+                  2
+                   
+                  Terms, definitions, symbols and abbreviated terms
+                </h1>
+                 <div id="I">
+                   <h2>
+                    2.1
+                     
+                    Normal Terms
+                  </h2>
+                   <p class="TermNum" id="J">2.1.1</p>
+                   <p class="Terms" style="text-align:left;">
+                     <b>Term2</b>
+                   </p>
+                 </div>
+                 <div id="K">
+                   <span class="zzMoveToFollowing inline-header">
+                     <b>2.2  </b>
+                   </span>
+                   <div class="figdl">
+                     <dl>
+                       <dt>
+                         <p>Symbol</p>
+                       </dt>
+                       <dd>Definition</dd>
+                     </dl>
+                   </div>
                  </div>
                </div>
-             </div>
-                           <div id="L" class="Symbols">
+               <div id="L" class="Symbols">
                  <h1>3</h1>
                  <div class="figdl">
                    <dl>
@@ -337,31 +362,31 @@ RSpec.describe IsoDoc::Plateau do
                </div>
                <div id="M">
                  <h1>
-                4
-                 
-                Clause 4
-              </h1>
+                  4
+                   
+                  Clause 4
+                </h1>
                  <div id="N">
                    <h2>
-                  4.1
-                   
-                  Introduction
-                </h2>
+                    4.1
+                     
+                    Introduction
+                  </h2>
                  </div>
                  <div id="O">
                    <h2>
-                  4.2
-                   
-                  Clause 4.2
-                </h2>
+                    4.2
+                     
+                    Clause 4.2
+                  </h2>
                  </div>
                </div>
                <div>
                  <h1>
-                5
-                 
-                Normative References
-              </h1>
+                  5
+                   
+                  Normative References
+                </h1>
                </div>
                <br/>
                <div id="P" class="Section3">
@@ -374,24 +399,24 @@ RSpec.describe IsoDoc::Plateau do
                  </h1>
                  <div id="Q">
                    <h2>
-                A.1
-                 
-                Annex A.1
-              </h2>
+                  A.1
+                   
+                  Annex A.1
+                </h2>
                    <div id="Q1">
                      <h3>
-                  A.1.1
-                   
-                  Annex A.1a
-                </h3>
+                    A.1.1
+                     
+                    Annex A.1a
+                  </h3>
                    </div>
                  </div>
                  <div id="Q2">
                    <h2>
-                Appendix 1
-                 
-                An Appendix
-              </h2>
+                  Appendix 1
+                   
+                  An Appendix
+                </h2>
                  </div>
                </div>
                <br/>
@@ -411,87 +436,101 @@ RSpec.describe IsoDoc::Plateau do
            <style></style>
            <style></style>
          </head>
-                  <body lang="EN-US" link="blue" vlink="#954F72">
-          <div class="WordSection1">
-            <p> </p>
-          </div>
-          <p class="section-break">
-            <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection2">
-            <p class="page-break">
-              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-            </p>
-            <div id="foreword">
-              <h1 class="ForewordTitle">Foreword</h1>
-              <p class="ForewordText" id="A">This is a preamble</p>
-            </div>
-            <p class="page-break">
-              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-            </p>
-            <div id="_" type="toc" class="TOC">
-              <p class="zzContents">目　次</p>
-            </div>
-            <p> </p>
-          </div>
-          <p class="section-break">
-            <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection3">
-            <div class="Section3" id="B">
-              <h1 class="IntroTitle">Introduction</h1>
-              <div id="C">
-                <h2>
-                  0.1
-                  <span style="mso-tab-count:1">  </span>
-                  Introduction Subsection
-                </h2>
-              </div>
-              <p>This is patent boilerplate</p>
-            </div>
-            <div id="D">
-              <h1>
-                1
-                <span style="mso-tab-count:1">  </span>
-                Scope
-              </h1>
-              <p id="E">Text</p>
-            </div>
-            <div id="H">
-              <h1>
-                2
-                <span style="mso-tab-count:1">  </span>
-                Terms, definitions, symbols and abbreviated terms
-              </h1>
-              <div id="I">
-                <h2>
-                  2.1
-                  <span style="mso-tab-count:1">  </span>
-                  Normal Terms
-                </h2>
-                <p class="TermNum" id="J">2.1.1</p>
-                <p class="Terms" style="text-align:left;">
-                  <b>Term2</b>
-                </p>
-              </div>
-              <div id="K">
-                <span class="zzMoveToFollowing inline-header">
-                  <b>
-                    2.2
-                    <span style="mso-tab-count:1">  </span>
-                  </b>
-                </span>
-                <table class="dl">
-                  <tr>
-                    <td valign="top" align="left">
-                      <p align="left" style="margin-left:0pt;text-align:left;">Symbol</p>
-                    </td>
-                    <td valign="top">Definition</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-                          <div id="L" class="Symbols">
+           <body lang="EN-US" link="blue" vlink="#954F72">
+             <div class="WordSection1">
+               <p> </p>
+             </div>
+             <p class="section-break">
+               <br clear="all" class="section"/>
+             </p>
+             <div class="WordSection2">
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div id="abstract2">
+                 <h1 class="AbstractTitle">Abstract 2</h1>
+                 <p id="A1">This is another abstract</p>
+               </div>
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div id="abstract1">
+                 <h1 class="AbstractTitle">Abstract 1</h1>
+                 <p id="A0">This is an abstract</p>
+               </div>
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div id="_" type="toc" class="TOC">
+                 <p class="zzContents">目　次</p>
+               </div>
+               <p class="page-break">
+                 <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               </p>
+               <div id="foreword">
+                 <h1 class="ForewordTitle">Foreword</h1>
+                 <p class="ForewordText" id="A">This is a preamble</p>
+               </div>
+               <p> </p>
+             </div>
+             <p class="section-break">
+               <br clear="all" class="section"/>
+             </p>
+             <div class="WordSection3">
+               <div class="Section3" id="B">
+                 <h1 class="IntroTitle">Introduction</h1>
+                 <div id="C">
+                   <h2>
+                     0.1
+                     <span style="mso-tab-count:1">  </span>
+                     Introduction Subsection
+                   </h2>
+                 </div>
+                 <p>This is patent boilerplate</p>
+               </div>
+               <div id="D">
+                 <h1>
+                   1
+                   <span style="mso-tab-count:1">  </span>
+                   Scope
+                 </h1>
+                 <p id="E">Text</p>
+               </div>
+               <div id="H">
+                 <h1>
+                   2
+                   <span style="mso-tab-count:1">  </span>
+                   Terms, definitions, symbols and abbreviated terms
+                 </h1>
+                 <div id="I">
+                   <h2>
+                     2.1
+                     <span style="mso-tab-count:1">  </span>
+                     Normal Terms
+                   </h2>
+                   <p class="TermNum" id="J">2.1.1</p>
+                   <p class="Terms" style="text-align:left;">
+                     <b>Term2</b>
+                   </p>
+                 </div>
+                 <div id="K">
+                   <span class="zzMoveToFollowing inline-header">
+                     <b>
+                       2.2
+                       <span style="mso-tab-count:1">  </span>
+                     </b>
+                   </span>
+                   <table class="dl">
+                     <tr>
+                       <td valign="top" align="left">
+                         <p align="left" style="margin-left:0pt;text-align:left;">Symbol</p>
+                       </td>
+                       <td valign="top">Definition</td>
+                     </tr>
+                   </table>
+                 </div>
+               </div>
+               <div id="L" class="Symbols">
                  <h1>3</h1>
                  <table class="dl">
                    <tr>
@@ -576,6 +615,7 @@ RSpec.describe IsoDoc::Plateau do
              <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
              <div class="colophon"/>
            </body>
+         </html>
     WORD
     expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
