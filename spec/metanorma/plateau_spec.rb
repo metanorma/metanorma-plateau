@@ -383,4 +383,104 @@ RSpec.describe Metanorma::Plateau do
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
+
+  it "populates sources on paragraphs and lists" do
+    input = <<~INPUT
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+
+      [[x]]
+      == Clause
+
+      Paragraph
+
+      [.source]
+      <<x,1>>
+
+      [.source]
+      <<x,2>>
+
+      * List
+
+      [.source]
+      <<x,3>>
+
+      [.source]
+      <<x,4>>
+
+      . List
+
+      [.source]
+      <<x,5>>
+
+      [.source]
+      <<x,6>>
+
+      List:: Entry
+
+      [.source]
+      <<x,7>>
+
+      [.source]
+      <<x,8>>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+          <clause id="x" inline-header="false" obligation="normative">
+            <title>Clause</title>
+            <p id="_">
+              Paragraph
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">1</origin>
+              </source>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">2</origin>
+              </source>
+            </p>
+            <ul id="_">
+              <li>
+                <p id="_">List</p>
+              </li>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">3</origin>
+              </source>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">4</origin>
+              </source>
+            </ul>
+            <ol id="_">
+              <li>
+                <p id="_">List</p>
+              </li>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">5</origin>
+              </source>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">6</origin>
+              </source>
+            </ol>
+            <dl id="_">
+              <dt>List</dt>
+              <dd>
+                <p id="_">Entry</p>
+              </dd>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">7</origin>
+              </source>
+              <source status="identical">
+                <origin bibitemid="x" type="inline" citeas="">8</origin>
+              </source>
+            </dl>
+          </clause>
+        </sections>
+    OUTPUT
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+      .at("//xmlns:sections").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
 end
