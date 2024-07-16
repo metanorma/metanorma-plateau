@@ -13,6 +13,31 @@ module IsoDoc
         ins.children.first
       end
 
+      def source(docxml)
+        super
+        docxml.xpath(ns("//p/source")).each { |f| parasource(f) }
+        docxml.xpath(ns("//ul/source")).each { |f| listsource(f) }
+        docxml.xpath(ns("//ol/source")).each { |f| listsource(f) }
+        docxml.xpath(ns("//dl/source")).each { |f| listsource(f) }
+      end
+
+      def parasource(elem)
+        source1(elem)
+        # if we haven't already removed it...
+        elem.parent or return
+        elem.name = "p"
+        elem.delete("status")
+        elem.parent.next = elem
+      end
+
+      def listsource(elem)
+        source1(elem)
+        elem.parent or return
+        elem.name = "p"
+        elem.delete("status")
+        elem.parent.next = elem
+      end
+
       def middle_title(docxml); end
 
       include Init

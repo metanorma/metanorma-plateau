@@ -16,6 +16,17 @@ module Metanorma
           end
         end
       end
+
+      def blocksource_cleanup(xmldoc)
+        xmldoc.xpath("//termsource").each do |s|
+          p = s.previous_element or next
+          %w[p ol ul dl].include? p.name or next
+          s.name = "source"
+          s.delete("type")
+          s.parent = p
+        end
+        super
+      end
     end
   end
 end

@@ -457,4 +457,315 @@ RSpec.describe IsoDoc do
       .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "processes sources on paragraphs and lists" do
+    input = <<~INPUT
+         <iso-standard xmlns="http://riboseinc.com/isoxml">
+               <sections>
+        <clause id="x" inline-header="false" obligation="normative">
+          <title>Clause</title>
+          <p id="_">
+            Paragraph
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">1</origin>
+            </source>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">2</origin>
+            </source>
+          </p>
+          <ul id="_">
+            <li>
+              <p id="_">List</p>
+            </li>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">3</origin>
+            </source>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">4</origin>
+            </source>
+          </ul>
+          <ol id="_">
+            <li>
+              <p id="_">List</p>
+            </li>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">5</origin>
+            </source>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">6</origin>
+            </source>
+          </ol>
+          <dl id="_">
+            <dt>List</dt>
+            <dd>
+              <p id="_">Entry</p>
+            </dd>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">7</origin>
+            </source>
+            <source status="identical">
+              <origin bibitemid="x" type="inline" citeas="">8</origin>
+            </source>
+          </dl>
+        </clause>
+      </sections>
+         </iso-standard>
+    INPUT
+
+    presxml = <<~OUTPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <preface>
+          <clause type="toc" id="_" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+        </preface>
+        <sections>
+          <clause id="x" inline-header="false" obligation="normative" displayorder="2">
+            <title depth="1">
+              1
+              <tab/>
+              Clause
+            </title>
+            <p id="_">
+          Paragraph
+
+
+        </p>
+            <p>
+              [SOURCE:
+              <origin bibitemid="x" type="inline" citeas="Clause 1">1</origin>
+              ;
+              <origin bibitemid="x" type="inline" citeas="Clause 1">2</origin>
+              ]
+            </p>
+            <ul id="_">
+              <li>
+                <p id="_">List</p>
+              </li>
+            </ul>
+            <p>
+              [SOURCE:
+              <origin bibitemid="x" type="inline" citeas="Clause 1">3</origin>
+              ;
+              <origin bibitemid="x" type="inline" citeas="Clause 1">4</origin>
+              ]
+            </p>
+            <ol id="_" type="alphabetic">
+              <li id="_" label="a">
+                <p id="_">List</p>
+              </li>
+            </ol>
+            <p>
+              [SOURCE:
+              <origin bibitemid="x" type="inline" citeas="Clause 1">5</origin>
+              ;
+              <origin bibitemid="x" type="inline" citeas="Clause 1">6</origin>
+              ]
+            </p>
+            <dl id="_">
+              <dt>List</dt>
+              <dd>
+                <p id="_">Entry</p>
+              </dd>
+            </dl>
+            <p>
+              [SOURCE:
+              <origin bibitemid="x" type="inline" citeas="Clause 1">7</origin>
+              ;
+              <origin bibitemid="x" type="inline" citeas="Clause 1">8</origin>
+              ]
+            </p>
+          </clause>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    html = <<~HTML
+      <html lang="en">
+          <head/>
+          <body lang="en">
+            <div class="title-section">
+              <p> </p>
+            </div>
+            <br/>
+            <div class="prefatory-section">
+              <p> </p>
+            </div>
+            <br/>
+            <div class="main-section">
+              <br/>
+              <div id="_" class="TOC">
+                <h1 class="IntroTitle">Contents</h1>
+              </div>
+              <div id="x">
+                <h1>
+              1
+               
+              Clause
+            </h1>
+                <p id="_">
+          Paragraph
+
+
+        </p>
+                <p>
+              [SOURCE:
+              1
+              ;
+              2
+              ]
+            </p>
+                <div class="ul_wrap">
+                  <ul id="_">
+                    <li>
+                      <p id="_">List</p>
+                    </li>
+                  </ul>
+                </div>
+                <p>
+              [SOURCE:
+              3
+              ;
+              4
+              ]
+            </p>
+                <div class="ol_wrap">
+                  <ol id="_">
+                    <li id="_">
+                      <p id="_">List</p>
+                    </li>
+                  </ol>
+                </div>
+                <p>
+              [SOURCE:
+              5
+              ;
+              6
+              ]
+            </p>
+                <div class="figdl">
+                  <dl id="_">
+                    <dt>
+                      <p>List</p>
+                    </dt>
+                    <dd>
+                      <p id="_">Entry</p>
+                    </dd>
+                  </dl>
+                </div>
+                <p>
+              [SOURCE:
+              7
+              ;
+              8
+              ]
+            </p>
+              </div>
+            </div>
+          </body>
+        </html>
+    HTML
+    word = <<~DOC
+      <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+            <p> </p>
+          </div>
+          <p class="section-break">
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection2">
+            <p class="page-break">
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+            <div id="_" type="toc" class="TOC">
+              <p class="zzContents">Contents</p>
+            </div>
+            <p> </p>
+          </div>
+          <p class="section-break">
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection3">
+            <div id="x">
+              <h1>
+                1
+                <span style="mso-tab-count:1">  </span>
+                Clause
+              </h1>
+              <p id="_">
+          Paragraph
+
+
+        </p>
+              <p>
+              [SOURCE:
+              1
+              ;
+              2
+              ]
+            </p>
+              <div class="ul_wrap">
+                <ul id="_">
+                  <li>
+                    <p id="_">List</p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+              [SOURCE:
+              3
+              ;
+              4
+              ]
+            </p>
+              <div class="ol_wrap">
+                <ol id="_">
+                  <li id="_">
+                    <p id="_">List</p>
+                  </li>
+                </ol>
+              </div>
+              <p>
+              [SOURCE:
+              5
+              ;
+              6
+              ]
+            </p>
+              <table id="_" class="dl">
+                <tr>
+                  <td valign="top" align="left">
+                    <p align="left" style="margin-left:0pt;text-align:left;">List</p>
+                  </td>
+                  <td valign="top">
+                    <p id="_">Entry</p>
+                  </td>
+                </tr>
+              </table>
+              <p>
+              [SOURCE:
+              7
+              ;
+              8
+              ]
+            </p>
+            </div>
+          </div>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+        </body>
+    DOC
+    expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+  .convert("test", presxml, true)))).to be_equivalent_to xmlpp(html)
+    FileUtils.rm_rf "spec/assets/odf1.emf"
+    expect(xmlpp(strip_guid(IsoDoc::Plateau::WordConvert.new({})
+      .convert("test", presxml, true)
+      .gsub(/^.*<body/m, "<body").gsub(/<\/body>.$/m, "</body>")
+      .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
+      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
+      .to be_equivalent_to xmlpp(word)
+  end
 end
