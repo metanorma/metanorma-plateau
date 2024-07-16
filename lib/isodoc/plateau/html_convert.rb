@@ -8,6 +8,7 @@ module IsoDoc
         @libdir = File.dirname(__FILE__)
       end
 
+      include BaseConvert
       include Init
     end
   end
