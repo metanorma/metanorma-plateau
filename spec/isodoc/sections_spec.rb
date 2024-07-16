@@ -90,6 +90,9 @@ RSpec.describe IsoDoc::Plateau do
             <title>An Appendix</title>
           </appendix>
         </annex>
+        <annex id="U" type="revhistory">
+        <title>Rev History</title>
+        </annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative">
             <title>Normative References</title>
@@ -263,6 +266,9 @@ RSpec.describe IsoDoc::Plateau do
                </references>
              </clause>
            </bibliography>
+           <annex id="U" type="revhistory" unnumbered="true" displayorder="13">
+             <title><strong>Rev History</strong></title>
+            </annex>
          </iso-standard>
     OUTPUT
 
@@ -426,6 +432,12 @@ RSpec.describe IsoDoc::Plateau do
                    <h2 class="Section3">Bibliography Subsection</h2>
                  </div>
                </div>
+                      <br/>
+       <div id="U" class="Section3">
+         <h1 class="Annex">
+           <b>Rev History</b>
+         </h1>
+       </div>
              </div>
            </body>
          </html>
@@ -611,6 +623,14 @@ RSpec.describe IsoDoc::Plateau do
                    <h2 class="BiblioTitle">Bibliography Subsection</h2>
                  </div>
                </div>
+                      <p class="page-break">
+         <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+       </p>
+       <div id="U" class="Section3">
+         <h1 class="Annex">
+           <b>Rev History</b>
+         </h1>
+       </div>
              </div>
              <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
              <div class="colophon"/>

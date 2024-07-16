@@ -317,6 +317,8 @@ RSpec.describe IsoDoc do
                     <td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">6,06</td>
                   </tr>
                 </tfoot>
+                <p class="ListTitle">Key</p>
+                <p class="dl">Drago: A type of rice</p>
                 <div class="BlockSource">
                   <p>
                     SOURCE:
@@ -469,6 +471,8 @@ RSpec.describe IsoDoc do
                     <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-left:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">6,06</td>
                   </tr>
                 </tfoot>
+               <p class="ListTitle">Key</p>
+                <p class="dl">Drago: A type of rice</p>
                 <div class="BlockSource">
                   <p>
                     SOURCE:
