@@ -458,6 +458,35 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "indent Japanese paragraphs" do
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+           <sections><clause id="A" displayorder="1">
+           <p>ABC</p>
+           </clause></sections>
+           </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+         <div id="A">
+         <h1/>
+         <p>ABC</p>
+               </div>
+             </div>
+         </body>
+       </html>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true)))).to be_equivalent_to xmlpp(html)
+    presxml.sub!(/<sections>/,
+                 "<bibdata><language>ja</language></bibdata><sections>")
+    html.gsub!('lang="en"', 'lang="ja"')
+      .sub!("<p>ABC</p>", "<p>&#x3000;ABC</p>")
+    expect(xmlpp(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true))))
+      .to be_equivalent_to xmlpp(html)
+  end
+
   it "processes sources on paragraphs and lists" do
     input = <<~INPUT
          <iso-standard xmlns="http://riboseinc.com/isoxml">

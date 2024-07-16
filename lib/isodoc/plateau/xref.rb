@@ -11,6 +11,19 @@ module IsoDoc
         ]
       end
 
+      def clause_order_annex(_docxml)
+        [{ path: "//annex[not(@type = 'revhistory')]", multi: true }]
+      end
+
+      def clause_order_back(_docxml)
+        [
+          { path: @klass.bibliography_xpath },
+          { path: "//annex[@type = 'revhistory']" },
+          { path: "//indexsect", multi: true },
+          { path: "//colophon/*", multi: true },
+        ]
+      end
+
       def middle_section_asset_names(doc)
         middle_sections =
           "//clause[@type = 'scope'] | #{@klass.norm_ref_xpath} | " \

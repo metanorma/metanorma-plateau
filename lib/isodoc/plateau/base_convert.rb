@@ -5,9 +5,17 @@ require_relative "init"
 module IsoDoc
   module Plateau
     module BaseConvert
-def convert_init(file, input_filename, debug)
-  super
-end
+
+      def para_parse(node, out)
+        out.p **attr_code(para_attrs(node)) do |p|
+          unless @termdomain.empty?
+            p << "&lt;#{@termdomain}&gt; "
+            @termdomain = ""
+          end
+          @lang == "ja" and p << "&#x3000;"
+          node.children.each { |n| parse(n, p) }
+        end
+      end
 
       include Init
     end

@@ -1,6 +1,11 @@
 module Metanorma
   module Plateau
     class Converter < JIS::Converter
+      def cleanup(xmldoc)
+        #require "debug"; binding.b
+        super
+      end
+
       def bibdata_cleanup(xmldoc)
         super
         coverpage_images(xmldoc)

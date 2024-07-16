@@ -40,6 +40,20 @@ module IsoDoc
 
       def middle_title(docxml); end
 
+      def rearrange_clauses(docxml)
+        super
+        revhistory(docxml)
+      end
+
+      def revhistory(doc)
+        a = doc.at(ns("//annex[@type = 'revhistory']")) or return
+        ins = doc.at(ns("//bibliography")) ||
+          doc.at(ns("//annex[not(@type = 'revhistory')]")) ||
+          doc.at(ns("//sections"))
+        ins.next = a
+        a["unnumbered"] = "true"
+      end
+
       include Init
     end
   end

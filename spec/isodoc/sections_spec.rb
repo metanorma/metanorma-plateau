@@ -90,6 +90,9 @@ RSpec.describe IsoDoc::Plateau do
             <title>An Appendix</title>
           </appendix>
         </annex>
+        <annex id="U" type="revhistory">
+        <title>Rev History</title>
+        </annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative">
             <title>Normative References</title>
@@ -263,11 +266,14 @@ RSpec.describe IsoDoc::Plateau do
                </references>
              </clause>
            </bibliography>
+           <annex id="U" type="revhistory" unnumbered="true" displayorder="13">
+             <title><strong>Rev History</strong></title>
+            </annex>
          </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
-           <html lang="ja">
+      <html lang="ja">
            <head/>
            <body lang="ja">
              <div class="title-section">
@@ -282,12 +288,12 @@ RSpec.describe IsoDoc::Plateau do
                <br/>
                <div id="abstract2">
                  <h1 class="AbstractTitle">Abstract 2</h1>
-                 <p id="A1">This is another abstract</p>
+                 <p id="A1">　This is another abstract</p>
                </div>
                <br/>
                <div id="abstract1">
                  <h1 class="AbstractTitle">Abstract 1</h1>
-                 <p id="A0">This is an abstract</p>
+                 <p id="A0">　This is an abstract</p>
                </div>
                <br/>
                <div id="_" class="TOC">
@@ -296,7 +302,7 @@ RSpec.describe IsoDoc::Plateau do
                <br/>
                <div id="foreword">
                  <h1 class="ForewordTitle">Foreword</h1>
-                 <p id="A">This is a preamble</p>
+                 <p id="A">　This is a preamble</p>
                </div>
                <br/>
                <div class="Section3" id="B">
@@ -308,7 +314,7 @@ RSpec.describe IsoDoc::Plateau do
                     Introduction Subsection
                   </h2>
                  </div>
-                 <p>This is patent boilerplate</p>
+                 <p>　This is patent boilerplate</p>
                </div>
                <div id="D">
                  <h1>
@@ -316,7 +322,7 @@ RSpec.describe IsoDoc::Plateau do
                    
                   Scope
                 </h1>
-                 <p id="E">Text</p>
+                 <p id="E">　Text</p>
                </div>
                <div id="H">
                  <h1>
@@ -426,6 +432,12 @@ RSpec.describe IsoDoc::Plateau do
                    <h2 class="Section3">Bibliography Subsection</h2>
                  </div>
                </div>
+                      <br/>
+       <div id="U" class="Section3">
+         <h1 class="Annex">
+           <b>Rev History</b>
+         </h1>
+       </div>
              </div>
            </body>
          </html>
@@ -449,14 +461,14 @@ RSpec.describe IsoDoc::Plateau do
                </p>
                <div id="abstract2">
                  <h1 class="AbstractTitle">Abstract 2</h1>
-                 <p id="A1">This is another abstract</p>
+                 <p id="A1">　This is another abstract</p>
                </div>
                <p class="page-break">
                  <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
                </p>
                <div id="abstract1">
                  <h1 class="AbstractTitle">Abstract 1</h1>
-                 <p id="A0">This is an abstract</p>
+                 <p id="A0">　This is an abstract</p>
                </div>
                <p class="page-break">
                  <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
@@ -469,7 +481,7 @@ RSpec.describe IsoDoc::Plateau do
                </p>
                <div id="foreword">
                  <h1 class="ForewordTitle">Foreword</h1>
-                 <p class="ForewordText" id="A">This is a preamble</p>
+                 <p class="ForewordText" id="A">　This is a preamble</p>
                </div>
                <p> </p>
              </div>
@@ -486,7 +498,7 @@ RSpec.describe IsoDoc::Plateau do
                      Introduction Subsection
                    </h2>
                  </div>
-                 <p>This is patent boilerplate</p>
+                 <p>　This is patent boilerplate</p>
                </div>
                <div id="D">
                  <h1>
@@ -494,7 +506,7 @@ RSpec.describe IsoDoc::Plateau do
                    <span style="mso-tab-count:1">  </span>
                    Scope
                  </h1>
-                 <p id="E">Text</p>
+                 <p id="E">　Text</p>
                </div>
                <div id="H">
                  <h1>
@@ -611,6 +623,14 @@ RSpec.describe IsoDoc::Plateau do
                    <h2 class="BiblioTitle">Bibliography Subsection</h2>
                  </div>
                </div>
+                      <p class="page-break">
+         <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+       </p>
+       <div id="U" class="Section3">
+         <h1 class="Annex">
+           <b>Rev History</b>
+         </h1>
+       </div>
              </div>
              <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
              <div class="colophon"/>
