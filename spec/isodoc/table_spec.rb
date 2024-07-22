@@ -519,15 +519,15 @@ RSpec.describe IsoDoc do
       </body>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Plateau::WordConvert.new({})
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(IsoDoc::Plateau::WordConvert.new({})
       .convert("test", presxml, true)
       .gsub(/^.*<body/m, "<body").gsub(/<\/body>.$/m, "</body>")
       .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 end

@@ -205,8 +205,8 @@ RSpec.describe Metanorma::Plateau do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
     xml = Nokogiri::XML(Asciidoctor.convert(
                           input.sub(":docfile: test.adoc",
                                     ":docfile: test.adoc\n:language: en"),
@@ -337,8 +337,8 @@ RSpec.describe Metanorma::Plateau do
          <sections> </sections>
        </plateau-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "populates cover images" do
@@ -379,9 +379,9 @@ RSpec.describe Metanorma::Plateau do
          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "populates sources on paragraphs and lists" do
@@ -479,8 +479,8 @@ RSpec.describe Metanorma::Plateau do
           </clause>
         </sections>
     OUTPUT
-    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
       .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

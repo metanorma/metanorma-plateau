@@ -637,17 +637,17 @@ RSpec.describe IsoDoc::Plateau do
            </body>
          </html>
     WORD
-    expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Plateau::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Plateau::WordConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(IsoDoc::Plateau::WordConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "labels deep-nested sections" do
@@ -830,10 +830,10 @@ RSpec.describe IsoDoc::Plateau do
            </annex>
          </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
        .new(presxml_options)
        .convert("test", input, true)))
        .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end
