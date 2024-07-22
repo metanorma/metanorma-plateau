@@ -862,6 +862,8 @@
 				<xsl:when test="$doctype = 'technical-report' and $level = 3">12pt</xsl:when>
 				<xsl:when test="$doctype = 'technical-report' and $level &gt;= 4">10pt</xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'sections']">12pt</xsl:when>
+				<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">14pt</xsl:when>
+				<xsl:when test="ancestor::*[local-name() = 'annex']">12pt</xsl:when>
 				<xsl:otherwise>10pt</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -878,7 +880,7 @@
 		<xsl:variable name="text-align">
 			<xsl:choose>
 				<xsl:when test="ancestor::*[local-name() = 'foreword'] and $level = 1">center</xsl:when>
-				<!-- <xsl:when test="@ancestor = 'annex' and $level = 1">center</xsl:when> -->
+				<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">center</xsl:when>
 				<xsl:otherwise>left</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -886,11 +888,11 @@
 		<xsl:variable name="margin-top">
 			<xsl:choose>
 				<xsl:when test="ancestor::*[local-name() = 'foreword'] and $level = 1">9mm</xsl:when>
-				<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = '1' and ancestor::*[local-name() = 'annex'][1][@commentary = 'true']">1mm</xsl:when>
+				<!-- <xsl:when test="ancestor::*[local-name() = 'annex'] and $level = '1' and ancestor::*[local-name() = 'annex'][1][@commentary = 'true']">1mm</xsl:when> -->
 				<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">0mm</xsl:when>
 				<xsl:when test="$level = 1 and not(ancestor::*[local-name() = 'preface'])">6.5mm</xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'foreword'] and $level = 2">0mm</xsl:when>
-				<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 2">4.5mm</xsl:when>
+				<!-- <xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 2">4.5mm</xsl:when> -->
 				<xsl:when test="ancestor::*[local-name() = 'bibliography'] and $level = 2">0mm</xsl:when>
 				<xsl:when test="$doctype = 'technical-report' and $level = 2 and preceding-sibling::*[2][self::plateau:title]">0mm</xsl:when>
 				<xsl:when test="$doctype = 'technical-report' and $level = 3 and preceding-sibling::*[2][self::plateau:title]">0mm</xsl:when>
@@ -920,8 +922,8 @@
 					<xsl:choose>
 						<xsl:when test="ancestor::*[local-name() = 'preface']">6pt</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'foreword'] and $level = 1">9mm</xsl:when>
-						<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = '1' and ancestor::*[local-name() = 'annex'][1][@commentary = 'true']">7mm</xsl:when>
-						<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">1mm</xsl:when>
+						<!-- <xsl:when test="ancestor::*[local-name() = 'annex'] and $level = '1' and ancestor::*[local-name() = 'annex'][1][@commentary = 'true']">7mm</xsl:when> -->
+						<!-- <xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">1mm</xsl:when> -->
 						<xsl:when test="$level = 1 and following-sibling::*[1][self::plateau:clause]">8pt</xsl:when>
 						<xsl:when test="$level = 1">12pt</xsl:when>
 						<xsl:when test="$level = 2 and following-sibling::*[1][self::plateau:clause]">8pt</xsl:when>
@@ -961,9 +963,9 @@
 						<xsl:copy-of select="@id"/>
 					</xsl:if>
 
-					<xsl:if test="$level = '3'">
+					<!-- <xsl:if test="$level = '3'">
 						<xsl:attribute name="margin-left">7.5mm</xsl:attribute>
-					</xsl:if>
+					</xsl:if> -->
 
 					<xsl:if test="$doctype = 'technical-report'">
 						<xsl:choose>
@@ -998,9 +1000,15 @@
 					<xsl:call-template name="extractTitle"/>
 
 					<xsl:apply-templates select="following-sibling::*[1][local-name() = 'variant-title'][@type = 'sub']" mode="subtitle"/>
-					<xsl:if test="$doctype = 'technical-report' and $level = 1">
-						<fo:block margin-top="-3mm" margin-bottom="-1.5mm"><fo:leader leader-pattern="rule" rule-style="double" rule-thickness="1.5pt" leader-length="100%"/></fo:block>
-					</xsl:if>
+					<xsl:choose>
+						<xsl:when test="$doctype = 'technical-report' and $level = 1">
+							<fo:block margin-top="-3mm" margin-bottom="-1.5mm"><fo:leader leader-pattern="rule" rule-style="double" rule-thickness="1.5pt" leader-length="100%"/></fo:block>
+						</xsl:when>
+						<xsl:when test="ancestor::*[local-name() = 'annex'] and $level = 1">
+							<fo:block margin-top="-3mm"><fo:leader leader-pattern="rule" rule-thickness="2.5pt" leader-length="100%"/></fo:block>
+							<fo:block> </fo:block>
+						</xsl:when>
+					</xsl:choose>
 				</xsl:element>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -1011,6 +1019,21 @@
 			<fo:block id="{@id}"/>
 		</fo:block>
 		<xsl:apply-templates/>
+	</xsl:template>
+
+	<!-- indent for clause level 4 and more -->
+	<xsl:template match="*[local-name() = 'sections']/*[local-name() = 'page_sequence']//*[local-name() = 'clause'][*[local-name() = 'title'][@depth &gt;= 4]]" priority="20">
+		<fo:block keep-with-next="always">
+			<fo:block id="{@id}"/>
+		</fo:block>
+		<xsl:apply-templates select="*[local-name() = 'title']"/>
+		<fo:block-container margin-left="6mm">
+			<fo:block-container margin-left="0">
+				<fo:block>
+					<xsl:apply-templates select="*[not(local-name() = 'title')]"/>
+				</fo:block>
+			</fo:block-container>
+		</fo:block-container>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'sections']/*[local-name() = 'page_sequence']/*[local-name() = 'clause']" priority="21">
@@ -1097,6 +1120,10 @@
 
 					<xsl:if test="parent::plateau:clause[@type = 'inner-cover-note'] or ancestor::plateau:boilerplate">
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+					</xsl:if>
+
+					<xsl:if test="parent::plateau:clause">
+						<xsl:text>　</xsl:text>
 					</xsl:if>
 
 					<xsl:apply-templates>
@@ -1284,12 +1311,12 @@
 	</xsl:template>
 
 	<!-- remove Annex and (normative) -->
-	<xsl:template match="*[local-name() = 'annex']/*[local-name() = 'title']" mode="update_xml_step1" priority="3">
+	<!-- <xsl:template match="*[local-name() = 'annex']/*[local-name() = 'title']" mode="update_xml_step1" priority="3">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates select="*[local-name() = 'br'][2]/following-sibling::node()" mode="update_xml_step1"/>
 		</xsl:copy>
-	</xsl:template>
+	</xsl:template> -->
 
 	<xsl:template match="plateau:clause[@type = 'contributors']//plateau:table//plateau:span[@class = 'surname']/text()[string-length() &lt; 3]" priority="2">
 		<xsl:choose>
@@ -1528,6 +1555,12 @@
 					<xsl:attribute name="font-weight">normal</xsl:attribute>
 				</xsl:if>
 			</xsl:if>
+
+			<xsl:if test="ancestor::*[local-name() = 'annex'] and ancestor::*[local-name() = 'title'] and not(ancestor::*[local-name() = 'clause'])">
+				<xsl:attribute name="font-family">inherit</xsl:attribute>
+				<xsl:attribute name="font-weight">bold</xsl:attribute>
+			</xsl:if>
+
 			<xsl:apply-templates/>
 		</fo:inline>
 		<xsl:if test="ancestor::*[local-name() = 'td' or local-name() = 'th']"><xsl:value-of select="$zero_width_space"/></xsl:if>
