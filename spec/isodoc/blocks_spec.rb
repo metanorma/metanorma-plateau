@@ -87,7 +87,6 @@ RSpec.describe IsoDoc do
                   was estimated to be 18,2 min for this example.
                 </p>
               </fn>
-              <p class="ListTitle">Key</p>
               <p class="dl">A: B</p>
               <source status="generalisation">
                 [SOURCE:
@@ -156,7 +155,6 @@ RSpec.describe IsoDoc do
                      </p>
                    </div>
                  </aside>
-                 <p class="ListTitle">Key</p>
                  <p class="dl">A: B</p>
                  <div class="BlockSource">
                    <p>
@@ -238,7 +236,6 @@ RSpec.describe IsoDoc do
                  </tr>
                  <tr>
                    <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <p class="ListTitle">Key</p>
                      <p class="dl">A: B</p>
                    </td>
                  </tr>
