@@ -29,16 +29,10 @@ module Metanorma
       end
 
       def pub_class1(bib)
-        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization " \
-                           "for Standardization']")
-        return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
-        return 2 if bib.at("#{PUBLISHER}[name = 'International " \
-                           "Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type]" \
-                           "[not(#{skip_docid} or @type = 'metanorma')]") ||
-          bib.at("./docidentifier[not(@type)]")
+        return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']")
+        return 2 if bib["type"] == "standard"
 
-        4
+        3
       end
     end
   end
