@@ -1,11 +1,6 @@
 module Metanorma
   module Plateau
     class Converter < JIS::Converter
-      def cleanup(xmldoc)
-        #require "debug"; binding.b
-        super
-      end
-
       def bibdata_cleanup(xmldoc)
         super
         coverpage_images(xmldoc)
@@ -31,6 +26,19 @@ module Metanorma
           s.parent = p
         end
         super
+      end
+
+      def pub_class1(bib)
+        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization " \
+                           "for Standardization']")
+        return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
+        return 2 if bib.at("#{PUBLISHER}[name = 'International " \
+                           "Electrotechnical Commission']")
+        return 3 if bib.at("./docidentifier[@type]" \
+                           "[not(#{skip_docid} or @type = 'metanorma')]") ||
+          bib.at("./docidentifier[not(@type)]")
+
+        4
       end
     end
   end

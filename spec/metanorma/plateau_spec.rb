@@ -94,45 +94,39 @@ RSpec.describe Metanorma::Plateau do
            <date type="announced">
               <on>2000-02-01</on>
            </date>
-           <contributor>
-             <role type="author"/>
-             <organization>
-               <name>
-                  <variant language="ja">日本工業規格</variant>
-                  <variant language="en">Japanese Industrial Standards</variant>
-               </name>
-               <abbreviation>JIS</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="publisher"/>
-             <organization>
-                            <name>
-                  <variant language="ja">日本工業規格</variant>
-                  <variant language="en">Japanese Industrial Standards</variant>
-               </name>
-               <abbreviation>JIS</abbreviation>
-             </organization>
-           </contributor>
-                      <contributor>
-             <role type="authorizer">
-               <description>Investigative organization</description>
-             </role>
-             <organization>
-               <name>
-                 <variant language="ja">日本産業標準調査会</variant>
-                 <variant language="en">Japanese Industrial Standards Committee</variant>
-               </name>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer">
-               <description>Investigative committee</description>
-             </role>
-             <organization>
-               <name>日本産業標準調査会 標準第一部会</name>
-             </organization>
-           </contributor>
+             <contributor>
+                <role type="author"/>
+                <organization>
+                   <name language="ja">国土交通省都市局</name>
+                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <abbreviation>MLIT</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="publisher"/>
+                <organization>
+                   <name language="ja">国土交通省都市局</name>
+                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <abbreviation>MLIT</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Investigative organization</description>
+                </role>
+                <organization>
+                   <name language="ja">日本産業標準調査会</name>
+                   <name language="en">Japanese Industrial Standards Committee</name>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Investigative committee</description>
+                </role>
+                <organization>
+                   <name>日本産業標準調査会 標準第一部会</name>
+                </organization>
+             </contributor>
            <edition>2</edition>
            <version>
              <revision-date>2000-01-01</revision-date>
@@ -149,11 +143,9 @@ RSpec.describe Metanorma::Plateau do
              <from>2000</from>
              <owner>
                <organization>
-                         <name>
-            <variant language="ja">日本工業規格</variant>
-            <variant language="en">Japanese Industrial Standards</variant>
-          </name>
-                 <abbreviation>JIS</abbreviation>
+               <name language="ja">国土交通省都市局</name>
+               <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+               <abbreviation>MLIT</abbreviation>
                </organization>
              </owner>
            </copyright>
@@ -161,7 +153,7 @@ RSpec.describe Metanorma::Plateau do
              <doctype>technical-report</doctype>
              <horizontal>true</horizontal>
              <editorialgroup>
-               <agency>JIS</agency>
+               <agency>MLIT</agency>
                <technical-committee number="1" type="A">TC</technical-committee>
                <technical-committee number="11" type="A1">TC1</technical-committee>
                <subcommittee number="2" type="B">SC</subcommittee>
@@ -229,45 +221,39 @@ RSpec.describe Metanorma::Plateau do
            <date type="announced">
               <on>2000-02-01</on>
            </date>
-           <contributor>
-             <role type="author"/>
-             <organization>
-               <name>
-                  <variant language="ja">日本工業規格</variant>
-                  <variant language="en">Japanese Industrial Standards</variant>
-               </name>
-               <abbreviation>JIS</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="publisher"/>
-             <organization>
-                            <name>
-                  <variant language="ja">日本工業規格</variant>
-                  <variant language="en">Japanese Industrial Standards</variant>
-               </name>
-               <abbreviation>JIS</abbreviation>
-             </organization>
-           </contributor>
-                      <contributor>
-             <role type="authorizer">
-               <description>Investigative organization</description>
-             </role>
-             <organization>
-               <name>
-                 <variant language="ja">日本産業標準調査会</variant>
-                 <variant language="en">Japanese Industrial Standards Committee</variant>
-               </name>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer">
-               <description>Investigative committee</description>
-             </role>
-             <organization>
-               <name>日本産業標準調査会 標準第一部会</name>
-             </organization>
-           </contributor>
+             <contributor>
+                <role type="author"/>
+                <organization>
+                   <name language="ja">国土交通省都市局</name>
+                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <abbreviation>MLIT</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="publisher"/>
+                <organization>
+                   <name language="ja">国土交通省都市局</name>
+                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <abbreviation>MLIT</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Investigative organization</description>
+                </role>
+                <organization>
+                   <name language="ja">日本産業標準調査会</name>
+                   <name language="en">Japanese Industrial Standards Committee</name>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Investigative committee</description>
+                </role>
+                <organization>
+                   <name>日本産業標準調査会 標準第一部会</name>
+                </organization>
+             </contributor>
            <edition>2</edition>
            <version>
              <revision-date>2000-01-01</revision-date>
@@ -284,11 +270,9 @@ RSpec.describe Metanorma::Plateau do
              <from>2000</from>
              <owner>
                <organization>
-                         <name>
-            <variant language="ja">日本工業規格</variant>
-            <variant language="en">Japanese Industrial Standards</variant>
-          </name>
-                 <abbreviation>JIS</abbreviation>
+               <name language="ja">国土交通省都市局</name>
+               <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+               <abbreviation>MLIT</abbreviation>
                </organization>
              </owner>
            </copyright>
@@ -296,7 +280,7 @@ RSpec.describe Metanorma::Plateau do
              <doctype>technical-report</doctype>
              <horizontal>true</horizontal>
              <editorialgroup>
-               <agency>JIS</agency>
+               <agency>MLIT</agency>
                <technical-committee number="1" type="A">TC</technical-committee>
                <technical-committee number="11" type="A1">TC1</technical-committee>
                <subcommittee number="2" type="B">SC</subcommittee>

@@ -16,7 +16,7 @@ module Metanorma
       end
 
       def org_abbrev
-        super.merge("Japanese Ministry of Land, Infrastructure, Transport and Tourism" => "MLIT")
+        super.merge(pub_hash["en"] => "MLIT")
       end
 
       def default_publisher
@@ -29,9 +29,10 @@ module Metanorma
       end
 
       # Plateau reuse of the JIS publisher default setting
-      JIS_HASH =
+      def pub_hash
         { "ja" => "国土交通省都市局",
-          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
+          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }
+      end
 
       def doctype_validate(_xmldoc)
         %w(handbook technical-report annex).include? @doctype or
