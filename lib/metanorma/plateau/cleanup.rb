@@ -28,8 +28,9 @@ module Metanorma
         super
       end
 
-      def pub_class1(bib)
-        return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']")
+      def pub_class(bib)
+        return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']") ||
+          bib.at("#{PUBLISHER}[abbreviation = 'MLIT']")
         return 2 if bib["type"] == "standard"
 
         3

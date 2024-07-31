@@ -1,4 +1,5 @@
 require "spec_helper"
+require "relaton_iso"
 
 RSpec.describe Metanorma::Plateau do
   before do
@@ -6,7 +7,7 @@ RSpec.describe Metanorma::Plateau do
       .to receive(:check_file).and_return(nil)
   end
 
-  it "sorts normative references" do
+  it "sorts bibliography" do
     VCR.use_cassette "sortrefs" do
       input = <<~INPUT
         = Document title
@@ -16,16 +17,14 @@ RSpec.describe Metanorma::Plateau do
         :no-isobib-cache:
 
         [bibliography]
-        == Normative References
+        == Bibliography
 
-        * [[[ref1,PLATEAU Handbook #00]]]
+        * [[[ref1,PLATEAU Technical Report #00]]]
         * [[[ref2,RFC 7749]]]
-        * [[[ref3,REF4]]]
-        * [[[ref4,PLATEAU Handbook #01]]]
+        * [[[ref4,PLATEAU Handbook #11 第1.0版（民間活用編）]]]
         * [[[ref5,ISO 639]]]
-        * [[[ref6,REF5]]]
 
-        [[ref4]]
+        [[ref3]]
         [%bibitem]
         === Indiana Jones and the Last Crusade
         type:: book
@@ -46,7 +45,7 @@ RSpec.describe Metanorma::Plateau do
             surname:::: Jones
             forename:::: Indiana
 
-        [[ref5]]
+        [[ref6]]
         [%bibitem]
         === “Indiana Jones and your Last Crusade”
         type:: book
@@ -71,8 +70,8 @@ RSpec.describe Metanorma::Plateau do
       INPUT
       out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
       expect(out.xpath("//xmlns:references/xmlns:bibitem/@id")
-        .map(&:value)).to be_equivalent_to ["ref2", "ref1", "ref4", "ref5",
-                                            "ref3"]
+        .map(&:value))
+        .to be_equivalent_to ["ref4", "ref1", "ref2", "ref5", "ref3", "ref6"]
     end
   end
 end
