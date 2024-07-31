@@ -39,8 +39,8 @@ module IsoDoc
 
       # container makes numbering be prefixed with the parent clause reference
       def middle_asset_names(clause, container: false)
-        sequential_formula_names(clause, container: container)
-        sequential_permission_names(clause, container: container)
+        sequential_formula_names(clause, container:)
+        sequential_permission_names(clause, container:)
         clause.each do |c|
           num = @anchors.dig(c["id"], :label) || @anchors.dig(c["id"], :xref) ||
             c.at(ns("./title"))&.text

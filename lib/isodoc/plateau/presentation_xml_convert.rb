@@ -4,13 +4,19 @@ module IsoDoc
   module Plateau
     class PresentationXMLConvert < IsoDoc::JIS::PresentationXMLConvert
       def toc_title_insert_pt(docxml)
-        ins = docxml.at(ns("//preface")) ||
+        i = preface_init_insert_pt(docxml) or return nil
+        a = i.at(ns("./abstract[last()] | ./clause[@type = 'revhistory']")) and
+          return a.after(" ").next
+        i.children.first
+      end
+
+      def preface_init_insert_pt(docxml)
+        ret = docxml.at(ns("//preface")) ||
           docxml.at(ns("//sections | //annex | //bibliography"))
-            &.before("<preface> </preface>")
-            &.previous_element or return nil
-        ins.children.empty? and ins << " "
-        a = ins.at(ns("./abstract[last()]")) and return a.after(" ").next
-        ins.children.first
+            &.add_previous_sibling("<preface> </preface>")&.first
+        ret.nil? and return nil
+        ret.children.empty? and ret << " "
+        ret
       end
 
       def source(docxml)
@@ -45,13 +51,14 @@ module IsoDoc
         revhistory(docxml)
       end
 
-      def revhistory(doc)
-        a = doc.at(ns("//annex[@type = 'revhistory']")) or return
-        ins = doc.at(ns("//bibliography")) ||
-          doc.at(ns("//annex[not(@type = 'revhistory')]")) ||
-          doc.at(ns("//sections"))
-        ins.next = a
-        a["unnumbered"] = "true"
+      def revhistory(docxml)
+        a = docxml.at(ns("//clause[@type = 'revhistory']")) or return
+        pref = preface_init_insert_pt(docxml) or return nil
+        ins = if b = pref.at(ns("./abstract[last()]"))
+                b.after(" ").next
+              else ins.children.first
+              end
+        ins.previous = a
       end
 
       include Init
