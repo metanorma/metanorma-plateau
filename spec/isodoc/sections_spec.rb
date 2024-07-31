@@ -5,7 +5,7 @@ RSpec.describe IsoDoc::Plateau do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
-                  <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+          <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
           <title language="en" format="text/plain" type="title-intro">Introduction</title>
           <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
           <title language="en" format="text/plain" type="title-part">Title Part</title>
@@ -13,6 +13,7 @@ RSpec.describe IsoDoc::Plateau do
           <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
           <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
           <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+          <docidentifier primary="true" type="PLATEAU">TRZ 1000-1:2000</docidentifier>
           <status>
             <stage abbreviation='IS' language=''>60</stage>
           </status>
@@ -93,6 +94,9 @@ RSpec.describe IsoDoc::Plateau do
             <title>An Appendix</title>
           </appendix>
         </annex>
+        <annex id="V" commentary="true" inline-header="false" obligation="informative">
+          <title>Commentary</title>
+        </annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative">
             <title>Normative References</title>
@@ -118,6 +122,7 @@ RSpec.describe IsoDoc::Plateau do
           <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
           <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
           <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+          <docidentifier primary="true" type="PLATEAU">TRZ 1000-1:2000</docidentifier>
           <status>
             <stage abbreviation="IS" language="">60</stage>
             <stage abbreviation="IS" language="ja">International Standard</stage>
@@ -269,6 +274,17 @@ RSpec.describe IsoDoc::Plateau do
                 </references>
              </clause>
           </bibliography>
+           <annex id="V" commentary="true" inline-header="false" obligation="informative" displayorder="14">
+             <p class="CommentaryStandardNumber">TRZ 1000-1
+       </p>
+             <p class="CommentaryStandardName">Introduction Française — Titre Principal — </p>
+             <p class="zzSTDTitle1">
+                その :
+                <br/>
+                <strong>Part du Titre</strong>
+             </p>
+             <title>Commentary</title>
+          </annex>
        </iso-standard>
     OUTPUT
 
@@ -436,6 +452,18 @@ RSpec.describe IsoDoc::Plateau do
                    <h2 class="Section3">Bibliography Subsection</h2>
                  </div>
                </div>
+               <br/>
+               <div id="V" class="Section3">
+                   <p class="CommentaryStandardNumber">　TRZ 1000-1
+        </p>
+                   <p class="CommentaryStandardName">　Introduction Française — Titre Principal — </p>
+                   <p class="zzSTDTitle1">
+                      　 その :
+                      <br/>
+                      <b>Part du Titre</b>
+                   </p>
+                   <h1 class="Annex">Commentary</h1>
+                </div>
              </div>
            </body>
          </html>
@@ -448,6 +476,81 @@ RSpec.describe IsoDoc::Plateau do
     expect(Xml::C14n.format(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true)))
       .to be_equivalent_to Xml::C14n.format(html)
+  end
+
+  it "places revhistory, TOC without abstracts" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+          <title language="en" format="text/plain" type="title-intro">Introduction</title>
+          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+          <title language="en" format="text/plain" type="title-part">Title Part</title>
+          <docidentifier primary="true" type="PLATEAU">TRZ 1000-1:2000</docidentifier>
+          <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
+          <language>ja</language>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
+        </bibdata>
+        <preface><clause id="U" type="revhistory">
+            <title>Rev History</title>
+          </clause>
+        </preface>
+        <sections>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+         </sections>
+       </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+            <title language="en" format="text/plain" type="title-intro">Introduction</title>
+            <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+            <title language="en" format="text/plain" type="title-part">Title Part</title>
+            <docidentifier primary="true" type="PLATEAU">TRZ 1000-1:2000</docidentifier>
+            <status>
+               <stage abbreviation="IS" language="">60</stage>
+               <stage abbreviation="IS" language="ja">International Standard</stage>
+            </status>
+            <language current="true">ja</language>
+            <ext>
+               <doctype language="">international-standard</doctype>
+               <doctype language="ja">日本産業規格</doctype>
+            </ext>
+         </bibdata>
+
+         <preface>
+            <clause id="U" type="revhistory" displayorder="1">
+               <title depth="1">Rev History</title>
+            </clause>
+            <clause type="toc" id="_" displayorder="2">
+               <title depth="1">目　次</title>
+            </clause>
+         </preface>
+         <sections>
+            <clause id="D" obligation="normative" type="scope" displayorder="3">
+               <title depth="1">
+                  1
+                  <tab/>
+                  Scope
+               </title>
+               <p id="E">Text</p>
+            </clause>
+         </sections>
+      </iso-standard>
+    OUTPUT
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "labels deep-nested sections" do

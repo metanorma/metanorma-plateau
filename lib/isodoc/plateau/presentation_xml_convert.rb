@@ -52,13 +52,22 @@ module IsoDoc
       end
 
       def revhistory(docxml)
-        a = docxml.at(ns("//clause[@type = 'revhistory']")) or return
+        a = docxml.at(ns("//clause[@type = 'revhistory']"))&.remove or return
         pref = preface_init_insert_pt(docxml) or return nil
         ins = if b = pref.at(ns("./abstract[last()]"))
                 b.after(" ").next
-              else ins.children.first
+              else pref.children.first
               end
         ins.previous = a
+      end
+
+      def commentary_title_hdr(elem)
+        ret = <<~COMMENTARY
+          <p class="CommentaryStandardNumber">#{@meta.get[:docnumber_undated]}
+        COMMENTARY
+        yr = @meta.get[:docyear] and
+          ret += ": <span class='CommentaryEffectiveYear'>#{yr}</span>"
+        elem.previous = ret
       end
 
       include Init
