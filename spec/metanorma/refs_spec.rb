@@ -51,7 +51,7 @@ RSpec.describe Metanorma::Plateau do
         type:: book
         title::
           type::: main
-          content::: Indiana Jones and the Last Crusade
+          content::: Indiana Jones and your Last Crusade
 
         ==== Contributor
         organization::
