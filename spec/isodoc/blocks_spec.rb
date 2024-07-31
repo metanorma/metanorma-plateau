@@ -529,4 +529,91 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, true))))
       .to be_equivalent_to Xml::C14n.format(html)
   end
+
+  it "do not label figures embedded within other assets" do
+    input = <<~INPUT
+      <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="semantic">
+        <preface>
+          <foreword id="A">
+            <p id="B">
+            <table id="C">
+            <colgroup><col width="100%"/></colgroup>
+            <tbody><tr><td>
+            <figure id="D">X</figure>
+            </td></tr>
+            </tbody>
+            </table>
+            </p>
+       </foreword></preface>
+       <sections>
+          <clause id="A1">
+            <p id="B1">
+            <table id="C1">
+            <colgroup><col width="100%"/></colgroup>
+            <tbody><tr><td>
+            <figure id="D1">X</figure>
+            </td></tr>
+            </tbody>
+            </table>
+            </p>
+       </clause></sections>
+          <annex id="A2">
+            <p id="B2">
+            <table id="C2">
+            <colgroup><col width="100%"/></colgroup>
+            <tbody><tr><td>
+            <figure id="D2">X</figure>
+            </td></tr>
+            </tbody>
+            </table>
+            </p>
+       </annex>
+       </standard-document>
+    INPUT
+    presxml = <<~OUTPUT
+      <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
+         <preface><clause type="toc" id="_" displayorder="1"><title depth="1">Contents</title></clause>
+
+           <foreword id="A" displayorder="2">
+             <p id="B">
+             <table id="C"><name>Table 1</name><thead> </thead>
+             <colgroup><col width="100%"/></colgroup>
+             <tbody><tr><td>
+             <figure id="D"><name>Figure 1</name>X</figure>
+             </td></tr>
+             </tbody>
+             </table>
+             </p>
+        </foreword></preface>
+        <sections>
+           <clause id="A1" displayorder="3"><title>1</title>
+             <p id="B1">
+             <table id="C1"><name>Table 1-1</name><thead> </thead>
+             <colgroup><col width="100%"/></colgroup>
+             <tbody><tr><td>
+             <figure id="D1">X</figure>
+             </td></tr>
+             </tbody>
+             </table>
+             </p>
+        </clause></sections>
+           <annex id="A2" displayorder="4"><title>Annex A<br/>(informative)</title>
+             <p id="B2">
+             <table id="C2"><name>Table A-1</name><thead> </thead>
+             <colgroup><col width="100%"/></colgroup>
+             <tbody><tr><td>
+             <figure id="D2">X</figure>
+             </td></tr>
+             </tbody>
+             </table>
+             </p>
+        </annex>
+        </standard-document>
+    OUTPUT
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to (presxml)
+  end
 end

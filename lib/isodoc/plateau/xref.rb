@@ -1,5 +1,8 @@
 module IsoDoc
   module Plateau
+    class Counter < IsoDoc::XrefGen::Counter
+    end
+
     class Xref < IsoDoc::JIS::Xref
       def clause_order_main(_docxml)
         [
@@ -71,6 +74,34 @@ module IsoDoc
           @anchors[clause["id"]][:xref] = l10n(xref)
         end
       end
+
+      def hierarchical_figure_names(clause, num)
+        c = IsoDoc::XrefGen::Counter.new
+        j = 0
+        clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
+          labelled_ancestor(t, %w(figure)) and next # do not label nested figure
+          j = subfigure_increment(j, c, t)
+          label = "#{num}#{hiersep}#{c.print}"
+          sublabel = subfigure_label(j)
+          figure_anchor(t, sublabel, label, "figure")
+        end
+        hierarchical_figure_class_names(clause, num)
+      end
+
+      def hierarchical_figure_class_names(clause, num)
+        c = {}
+        j = 0
+        clause.xpath(ns(".//figure[@class][not(@class = 'pseudocode')]"))
+          .noblank.each do |t|
+          c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
+          labelled_ancestor(t, %w(figure)) and next
+          j = subfigure_increment(j, c[t["class"]], t)
+          label = "#{num}#{hiersep}#{c.print}"
+          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
+          figure_anchor(t, sublabel, label, t["class"])
+        end
+      end
+
     end
   end
 end
