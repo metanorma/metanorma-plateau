@@ -1,0 +1,5 @@
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "main"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "main"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
+gem "relaton-index", git: "https://github.com/relaton/relaton-index", branch: "main"
