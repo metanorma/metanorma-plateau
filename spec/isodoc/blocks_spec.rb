@@ -203,114 +203,12 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
 
-    word = <<~OUTPUT
-      <body lang="EN-US" link="blue" vlink="#954F72">
-           <div class="WordSection1">
-             <p> </p>
-           </div>
-           <p class="section-break">
-             <br clear="all" class="section"/>
-           </p>
-           <div class="WordSection2">
-             <p class="page-break">
-               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-             </p>
-             <div id="_" type="toc" class="TOC">
-               <p class="zzContents">Contents</p>
-             </div>
-             <p> </p>
-           </div>
-           <p class="section-break">
-             <br clear="all" class="section"/>
-           </p>
-           <div class="WordSection3">
-             <div id="A">
-               <h1>1</h1>
-               <table id="figureA-1" class="MsoTableGrid" style="border-collapse:collapse;border:none;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none;page-break-after: avoid;page-break-inside: avoid;" border="0" cellspacing="0" cellpadding="0">
-                 <tr>
-                   <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <p class="Figure">
-                       <img src="rice_images/rice_image1.png" height="20" alt="alttext" title="titletxt" width="30"/>
-                     </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <p class="dl">A: B</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <div class="BlockSource">
-                       <p>
-                         [SOURCE:
-                         <a href="#ISO712">ISO 712, Section 1</a>
-                         — with adjustments]
-                       </p>
-                     </div>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <p class="Tabletitle" style="text-align:center;">
-                       Figure 1-1 — Split-it-right
-                       <i>sample</i>
-                       divider
-                       <a href="#_" class="TableFootnoteRef">1</a>
-                       <aside>
-                         <div id="ftn_">
-                           <span>
-                             Footnote
-                             <span id="_" class="TableFootnoteRef">1)</span>
-                             <span style="mso-tab-count:1">  </span>
-                           </span>
-                           <p>X</p>
-                         </div>
-                       </aside>
-                     </p>
-                   </td>
-                 </tr>
-               </table>
-               <table id="figure-B" class="MsoTableGrid" style="border-collapse:collapse;border:none;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none;" border="0" cellspacing="0" cellpadding="0">
-                 <tr>
-                   <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                     <p class="Tabletitle" style="text-align:center;">Figure 1-2</p>
-                   </td>
-                 </tr>
-               </table>
-               <table id="figure-C" class="MsoTableGrid" style="border-collapse:collapse;border:none;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none;" border="0" cellspacing="0" cellpadding="0"/>
-             </div>
-             <div class="normref_div">
-               <h1>
-                 2
-                 <span style="mso-tab-count:1">  </span>
-                 Normative References
-               </h1>
-               <p id="ISO712" class="NormRef">
-                 ISO 712,
-                 <i>
-                   <span class="stddocTitle">Cereals and cereal products</span>
-                 </i>
-               </p>
-             </div>
-           </div>
-           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-           <div class="colophon"/>
-         </body>
-    OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true)))).to be_equivalent_to Xml::C14n.format(html)
-    FileUtils.rm_rf "spec/assets/odf1.emf"
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::WordConvert.new({})
-      .convert("test", presxml, true)
-      .gsub(/^.*<body/m, "<body").gsub(/<\/body>.$/m, "</body>")
-      .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
-      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes subfigures" do
@@ -380,79 +278,12 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    word = <<~OUTPUT
-             <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p> </p>
-        </div>
-        <p class="section-break">
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection2">
-          <p class="page-break">
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-          <div id="_" type="toc" class="TOC">
-            <p class="zzContents">Contents</p>
-          </div>
-          <p> </p>
-        </div>
-        <p class="section-break">
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection3">
-          <div id="A">
-            <h1>1</h1>
-            <table id="figureA-1" class="MsoTableGrid" style="border-collapse:collapse;border:none;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none;page-break-after: avoid;page-break-inside: avoid;" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                  <p class="Figure">
-                    <img src="rice_images/rice_image1.png" height="20" alt="alttext" title="titletxt" width="30"/>
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                  <p class="SubfigureCaption">a)  Subfigure 1</p>
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                  <p class="Figure">
-                    <img src="rice_images/rice_image1.png" height="20" width="auto"/>
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                  <p class="SubfigureCaption">b)  Subfigure 2</p>
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding:0cm 5.4pt 0cm 5.4pt">
-                  <p class="Tabletitle" style="text-align:center;">Figure 1-1 — Overall title</p>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
-    OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true)))).to be_equivalent_to Xml::C14n.format(html)
-    FileUtils.rm_rf "spec/assets/odf1.emf"
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::WordConvert.new({})
-      .convert("test", presxml, true)
-      .gsub(/^.*<body/m, "<body").gsub(/<\/body>.$/m, "</body>")
-      .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
-      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "indent Japanese paragraphs" do
@@ -690,108 +521,12 @@ RSpec.describe IsoDoc do
           </body>
         </html>
     HTML
-    word = <<~DOC
-      <body lang="EN-US" link="blue" vlink="#954F72">
-          <div class="WordSection1">
-            <p> </p>
-          </div>
-          <p class="section-break">
-            <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection2">
-            <p class="page-break">
-              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-            </p>
-            <div id="_" type="toc" class="TOC">
-              <p class="zzContents">Contents</p>
-            </div>
-            <p> </p>
-          </div>
-          <p class="section-break">
-            <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection3">
-            <div id="x">
-              <h1>
-                1
-                <span style="mso-tab-count:1">  </span>
-                Clause
-              </h1>
-              <p id="_">
-          Paragraph
-
-
-        </p>
-              <p>
-              [SOURCE:
-              1
-              ;
-              2
-              ]
-            </p>
-              <div class="ul_wrap">
-                <ul id="_">
-                  <li>
-                    <p id="_">List</p>
-                  </li>
-                </ul>
-              </div>
-              <p>
-              [SOURCE:
-              3
-              ;
-              4
-              ]
-            </p>
-              <div class="ol_wrap">
-                <ol id="_">
-                  <li id="_">
-                    <p id="_">List</p>
-                  </li>
-                </ol>
-              </div>
-              <p>
-              [SOURCE:
-              5
-              ;
-              6
-              ]
-            </p>
-              <table id="_" class="dl">
-                <tr>
-                  <td valign="top" align="left">
-                    <p align="left" style="margin-left:0pt;text-align:left;">List</p>
-                  </td>
-                  <td valign="top">
-                    <p id="_">Entry</p>
-                  </td>
-                </tr>
-              </table>
-              <p>
-              [SOURCE:
-              7
-              ;
-              8
-              ]
-            </p>
-            </div>
-          </div>
-          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-          <div class="colophon"/>
-        </body>
-    DOC
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-  .convert("test", presxml, true)))).to be_equivalent_to Xml::C14n.format(html)
-    FileUtils.rm_rf "spec/assets/odf1.emf"
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::WordConvert.new({})
-      .convert("test", presxml, true)
-      .gsub(/^.*<body/m, "<body").gsub(/<\/body>.$/m, "</body>")
-      .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
-      .to be_equivalent_to Xml::C14n.format(word)
+      .convert("test", presxml, true))))
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 end

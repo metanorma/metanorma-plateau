@@ -91,14 +91,6 @@ module Metanorma
         end
       end
 
-      def doc_converter(node)
-        if node.nil?
-          IsoDoc::Plateau::WordConvert.new({})
-        else
-          IsoDoc::Plateau::WordConvert.new(doc_extract_attributes(node))
-        end
-      end
-
       def pdf_converter(node)
         return if node.attr("no-pdf")
 

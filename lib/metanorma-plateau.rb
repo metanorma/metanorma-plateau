@@ -2,7 +2,6 @@ irequire "asciidoctor" unless defined? Asciidoctor::Converter
 require_relative "metanorma/plateau/converter"
 require_relative "metanorma/plateau/version"
 require "isodoc/plateau/html_convert"
-require "isodoc/plateau/word_convert"
 require "isodoc/plateau/pdf_convert"
 require "isodoc/plateau/presentation_xml_convert"
 require "isodoc/plateau/metadata"
