@@ -13,7 +13,6 @@ module Metanorma
         super.merge(
           html: "html",
           pdf: "pdf",
-          doc: "doc",
         )
       end
 
@@ -39,9 +38,6 @@ module Metanorma
         case format
         when :html
           IsoDoc::Plateau::HtmlConvert.new(options)
-            .convert(inname, xml, nil, outname)
-        when :doc
-          IsoDoc::Plateau::WordConvert.new(options)
             .convert(inname, xml, nil, outname)
         when :pdf
           IsoDoc::Plateau::PdfConvert.new(options)

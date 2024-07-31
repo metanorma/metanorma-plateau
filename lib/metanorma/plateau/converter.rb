@@ -16,7 +16,7 @@ module Metanorma
       end
 
       def org_abbrev
-        super.merge("Japanese Ministry of Land, Infrastructure, Transport and Tourism" => "MLIT")
+        super.merge(pub_hash["en"] => "MLIT")
       end
 
       def default_publisher
@@ -29,9 +29,10 @@ module Metanorma
       end
 
       # Plateau reuse of the JIS publisher default setting
-      JIS_HASH =
+      def pub_hash
         { "ja" => "国土交通省都市局",
-          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }.freeze
+          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }
+      end
 
       def doctype_validate(_xmldoc)
         %w(handbook technical-report annex).include? @doctype or
@@ -56,19 +57,37 @@ module Metanorma
         end
       end
 
+      def metadata_id(node, xml)
+        if id = node.attr("docidentifier")
+          xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
+                            **attr_code(type: "PLATEAU", primary: "true")
+        else iso_id(node, xml)
+        end
+      end
+
+      # do not use pubid
+      def iso_id(node, xml)
+        id = node.attr("docnumber") or return
+        xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
+                          **attr_code(type: "PLATEAU", primary: "true")
+      end
+
+      # do not use pubid
+      def metadata_status(node, xml)
+        stage = get_stage(node)
+        xml.status do |s|
+          s.stage stage
+          i = node.attr("iteration") and s.iteration i
+        end
+      end
+
+      def metadata_stage(node, xml); end
+
       def html_converter(node)
         if node.nil?
           IsoDoc::Plateau::HtmlConvert.new({})
         else
           IsoDoc::Plateau::HtmlConvert.new(html_extract_attributes(node))
-        end
-      end
-
-      def doc_converter(node)
-        if node.nil?
-          IsoDoc::Plateau::WordConvert.new({})
-        else
-          IsoDoc::Plateau::WordConvert.new(doc_extract_attributes(node))
         end
       end
 

@@ -1,11 +1,6 @@
 module Metanorma
   module Plateau
     class Converter < JIS::Converter
-      def cleanup(xmldoc)
-        #require "debug"; binding.b
-        super
-      end
-
       def bibdata_cleanup(xmldoc)
         super
         coverpage_images(xmldoc)
@@ -31,6 +26,14 @@ module Metanorma
           s.parent = p
         end
         super
+      end
+
+      def pub_class(bib)
+        return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']") ||
+          bib.at("#{PUBLISHER}[abbreviation = 'MLIT']")
+        return 2 if bib["type"] == "standard"
+
+        3
       end
     end
   end
