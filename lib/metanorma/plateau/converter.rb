@@ -57,6 +57,32 @@ module Metanorma
         end
       end
 
+      def metadata_id(node, xml)
+        if id = node.attr("docidentifier")
+          xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
+                            **attr_code(type: "PLATEAU", primary: "true")
+        else iso_id(node, xml)
+        end
+      end
+
+      # do not use pubid
+      def iso_id(node, xml)
+        id = node.attr("docnumber") or return
+        xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
+                          **attr_code(type: "PLATEAU", primary: "true")
+      end
+
+      # do not use pubid
+      def metadata_status(node, xml)
+        stage = get_stage(node)
+        xml.status do |s|
+          s.stage stage
+          i = node.attr("iteration") and s.iteration i
+        end
+      end
+
+      def metadata_stage(node, xml); end
+
       def html_converter(node)
         if node.nil?
           IsoDoc::Plateau::HtmlConvert.new({})

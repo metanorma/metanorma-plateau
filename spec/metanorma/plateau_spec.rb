@@ -18,7 +18,7 @@ RSpec.describe Metanorma::Plateau do
       :nodoc:
       :novalid:
       :no-isobib:
-      :docnumber: 1000
+      :docnumber: PLATEAU 1000
       :docseries: Z
       :partnumber: 1
       :edition: 2
@@ -89,8 +89,8 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
-           <docidentifier primary="true" type="JIS">TRZ 1000-1:2000</docidentifier>
-           <docnumber>1000</docnumber>
+           <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
+           <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">
               <on>2000-02-01</on>
            </date>
@@ -136,7 +136,6 @@ RSpec.describe Metanorma::Plateau do
            <script>Jpan</script>
            <status>
              <stage>20</stage>
-             <substage>20</substage>
              <iteration>3</iteration>
            </status>
            <copyright>
@@ -173,7 +172,7 @@ RSpec.describe Metanorma::Plateau do
                <workgroup number="31a" type="C1a">WG1a</workgroup>
              </approvalgroup>
              <structuredidentifier>
-               <project-number part="1">1000</project-number>
+               <project-number part="1">PLATEAU 1000</project-number>
              </structuredidentifier>
            </ext>
          </bibdata>
@@ -216,8 +215,8 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
-           <docidentifier primary="true" type="JIS">TRZ 1000-1:2000(E)</docidentifier>
-           <docnumber>1000</docnumber>
+           <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
+           <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">
               <on>2000-02-01</on>
            </date>
@@ -263,7 +262,6 @@ RSpec.describe Metanorma::Plateau do
            <script>Latn</script>
            <status>
              <stage>20</stage>
-             <substage>20</substage>
              <iteration>3</iteration>
            </status>
            <copyright>
@@ -300,7 +298,7 @@ RSpec.describe Metanorma::Plateau do
                <workgroup number="31a" type="C1a">WG1a</workgroup>
              </approvalgroup>
              <structuredidentifier>
-               <project-number part="1">1000</project-number>
+               <project-number part="1">PLATEAU 1000</project-number>
              </structuredidentifier>
            </ext>
          </bibdata>
