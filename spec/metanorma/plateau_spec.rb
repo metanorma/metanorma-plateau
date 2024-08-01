@@ -97,16 +97,16 @@ RSpec.describe Metanorma::Plateau do
              <contributor>
                 <role type="author"/>
                 <organization>
-                   <name language="ja">国土交通省都市局</name>
-                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
              <contributor>
                 <role type="publisher"/>
                 <organization>
-                   <name language="ja">国土交通省都市局</name>
-                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
@@ -142,8 +142,8 @@ RSpec.describe Metanorma::Plateau do
              <from>2000</from>
              <owner>
                <organization>
-               <name language="ja">国土交通省都市局</name>
-               <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                <abbreviation>MLIT</abbreviation>
                </organization>
              </owner>

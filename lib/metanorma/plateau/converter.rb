@@ -30,8 +30,8 @@ module Metanorma
 
       # Plateau reuse of the JIS publisher default setting
       def pub_hash
-        { "ja" => "国土交通省都市局",
-          "en" => "Japanese Ministry of Land, Infrastructure, Transport and Tourism" }
+        { "ja" => "国土交通省",
+          "en" => "Ministry of Land, Infrastructure, Transport and Tourism" }
       end
 
       def doctype_validate(_xmldoc)
