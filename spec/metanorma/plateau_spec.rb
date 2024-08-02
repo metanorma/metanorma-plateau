@@ -223,16 +223,16 @@ RSpec.describe Metanorma::Plateau do
              <contributor>
                 <role type="author"/>
                 <organization>
-                   <name language="ja">国土交通省都市局</name>
-                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
              <contributor>
                 <role type="publisher"/>
                 <organization>
-                   <name language="ja">国土交通省都市局</name>
-                   <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
@@ -268,8 +268,8 @@ RSpec.describe Metanorma::Plateau do
              <from>2000</from>
              <owner>
                <organization>
-               <name language="ja">国土交通省都市局</name>
-               <name language="en">Japanese Ministry of Land, Infrastructure, Transport and Tourism</name>
+                   <name language="ja">国土交通省</name>
+                   <name language="en">Ministry of Land, Infrastructure, Transport and Tourism</name>
                <abbreviation>MLIT</abbreviation>
                </organization>
              </owner>
@@ -461,8 +461,36 @@ RSpec.describe Metanorma::Plateau do
           </clause>
         </sections>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
       .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
+  end
+
+  it "applies default requirement model" do
+    input = <<~"INPUT"
+      #{ASCIIDOC_BLANK_HDR}
+
+      [[A]]
+      [.permission]
+      ====
+      I permit this
+
+
+      [[B]]
+      [.permission]
+      =====
+      I also permit this
+
+      . List
+      . List
+      =====
+      ====
+    INPUT
+
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(xml.at("//xmlns:permission[@id = 'A']/@model").text).to eq("ogc")
+    expect(xml.at("//xmlns:permission/xmlns:permission/@model").text)
+      .to eq("ogc")
   end
 end
