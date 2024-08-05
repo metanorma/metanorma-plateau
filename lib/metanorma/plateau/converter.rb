@@ -9,6 +9,10 @@ module Metanorma
       XML_ROOT_TAG = "plateau-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/plateau".freeze
 
+      def default_requirement_model
+        "ogc"
+      end
+
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
