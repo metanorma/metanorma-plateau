@@ -407,8 +407,8 @@ RSpec.describe IsoDoc do
               <origin bibitemid="x" type="inline" citeas="Clause 1">4</origin>
               ]
             </p>
-            <ol id="_" type="alphabetic">
-              <li id="_" label="a">
+            <ol id="_" type="alphabet">
+              <li id="_" label="">
                 <p id="_">List</p>
               </li>
             </ol>

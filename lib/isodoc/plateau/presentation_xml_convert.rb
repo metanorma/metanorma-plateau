@@ -3,6 +3,11 @@ require_relative "init"
 module IsoDoc
   module Plateau
     class PresentationXMLConvert < IsoDoc::JIS::PresentationXMLConvert
+      def initialize(options)
+        @iso = ::IsoDoc::Iso::PresentationXMLConvert.new(options)
+        super
+      end
+
       def toc_title_insert_pt(docxml)
         i = preface_init_insert_pt(docxml) or return nil
         a = i.at(ns("./abstract[last()] | ./clause[@type = 'revhistory']")) and
@@ -68,6 +73,10 @@ module IsoDoc
         yr = @meta.get[:docyear] and
           ret += ": <span class='CommentaryEffectiveYear'>#{yr}</span>"
         elem.previous = ret
+      end
+
+      def ol_depth(node)
+        @iso.ol_depth(node)
       end
 
       include Init

@@ -609,129 +609,129 @@ RSpec.describe IsoDoc::Plateau do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
              <clause type="toc" id="_" displayorder="1">
-               <title depth="1">Contents</title>
+                <title depth="1">Contents</title>
              </clause>
-           </preface>
-           <sections>
+          </preface>
+          <sections>
              <clause id="S1" obligation="normative" displayorder="2">
-               <title depth="1">
-                 1
-                 <tab/>
-                 Scope
-               </title>
-               <clause id="S2" obligation="normative">
-                 <title depth="2">
-                   1.1
+                <title depth="1">
+                   1
                    <tab/>
                    Scope
-                 </title>
-                 <clause id="S3" obligation="normative">
-                   <title depth="3">
-                     1.1.1
-                     <tab/>
-                     Scope
+                </title>
+                <clause id="S2" obligation="normative">
+                   <title depth="2">
+                      1.1
+                      <tab/>
+                      Scope
                    </title>
-                   <clause id="S4" obligation="normative">
-                     <title depth="4">
-                       (1)
-                       <tab/>
-                       Scope
-                     </title>
-                     <clause id="S5" obligation="normative">
-                       <title depth="5">
-                         1)
+                   <clause id="S3" obligation="normative">
+                      <title depth="3">
+                         1.1.1
                          <tab/>
                          Scope
-                       </title>
-                       <clause id="S6a" obligation="normative">
-                         <title depth="6">
-                           ①
-                           <tab/>
-                           Scope
+                      </title>
+                      <clause id="S4" obligation="normative">
+                         <title depth="4">
+                            1.1.1.1
+                            <tab/>
+                            Scope
                          </title>
-                       </clause>
-                       <clause id="S6b" obligation="normative">
-                         <title depth="6">
-                           ②
-                           <tab/>
-                           Scope
-                         </title>
-                       </clause>
-                       <clause id="S6c" obligation="normative">
-                         <title depth="6">
-                           ③
-                           <tab/>
-                           Scope
-                         </title>
-                       </clause>
-                     </clause>
+                         <clause id="S5" obligation="normative">
+                            <title depth="5">
+                               1.1.1.1.1
+                               <tab/>
+                               Scope
+                            </title>
+                            <clause id="S6a" obligation="normative">
+                               <title depth="6">
+                                  1.1.1.1.1.1
+                                  <tab/>
+                                  Scope
+                               </title>
+                            </clause>
+                            <clause id="S6b" obligation="normative">
+                               <title depth="6">
+                                  1.1.1.1.1.2
+                                  <tab/>
+                                  Scope
+                               </title>
+                            </clause>
+                            <clause id="S6c" obligation="normative">
+                               <title depth="6">
+                                  1.1.1.1.1.3
+                                  <tab/>
+                                  Scope
+                               </title>
+                            </clause>
+                         </clause>
+                      </clause>
                    </clause>
-                 </clause>
-               </clause>
+                </clause>
              </clause>
-           </sections>
-           <annex id="P" inline-header="false" obligation="normative" displayorder="3">
+          </sections>
+          <annex id="P" inline-header="false" obligation="normative" displayorder="3">
              <title>
-               Annex A
-               <br/>
-               (normative)
-               <br/>
-               <strong>Annex</strong>
+                Annex A
+                <br/>
+                (normative)
+                <br/>
+                <strong>Annex</strong>
              </title>
              <clause id="A1" obligation="normative">
-               <title depth="2">
-                 A.1
-                 <tab/>
-                 Scope
-               </title>
-               <clause id="A2" obligation="normative">
-                 <title depth="3">
-                   A.1.1
+                <title depth="2">
+                   A.1
                    <tab/>
                    Scope
-                 </title>
-                 <clause id="A3" obligation="normative">
-                   <title depth="4">
-                     (1)
-                     <tab/>
-                     Scope
+                </title>
+                <clause id="A2" obligation="normative">
+                   <title depth="3">
+                      A.1.1
+                      <tab/>
+                      Scope
                    </title>
-                   <clause id="A4" obligation="normative">
-                     <title depth="5">
-                       1)
-                       <tab/>
-                       Scope
-                     </title>
-                     <clause id="A6a" obligation="normative">
-                       <title depth="6">
-                         ①
+                   <clause id="A3" obligation="normative">
+                      <title depth="4">
+                         A.1.1.1
                          <tab/>
                          Scope
-                       </title>
-                     </clause>
-                     <clause id="A6b" obligation="normative">
-                       <title depth="6">
-                         ②
-                         <tab/>
-                         Scope
-                       </title>
-                     </clause>
-                     <clause id="A6c" obligation="normative">
-                       <title depth="6">
-                         ③
-                         <tab/>
-                         Scope
-                       </title>
-                     </clause>
+                      </title>
+                      <clause id="A4" obligation="normative">
+                         <title depth="5">
+                            A.1.1.1.1
+                            <tab/>
+                            Scope
+                         </title>
+                         <clause id="A6a" obligation="normative">
+                            <title depth="6">
+                               A.1.1.1.1.1
+                               <tab/>
+                               Scope
+                            </title>
+                         </clause>
+                         <clause id="A6b" obligation="normative">
+                            <title depth="6">
+                               A.1.1.1.1.2
+                               <tab/>
+                               Scope
+                            </title>
+                         </clause>
+                         <clause id="A6c" obligation="normative">
+                            <title depth="6">
+                               A.1.1.1.1.3
+                               <tab/>
+                               Scope
+                            </title>
+                         </clause>
+                      </clause>
                    </clause>
-                 </clause>
-               </clause>
+                </clause>
              </clause>
-           </annex>
-         </iso-standard>
+          </annex>
+       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
        .new(presxml_options)
