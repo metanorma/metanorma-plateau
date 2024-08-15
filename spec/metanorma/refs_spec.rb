@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Plateau do
       out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
       expect(out.xpath("//xmlns:references/xmlns:bibitem/@id")
         .map(&:value))
-        .to be_equivalent_to ["ref3", "ref6", "ref5", "ref2", "ref4", "ref1"]
+        .to be_equivalent_to ["ref4", "ref1", "ref3", "ref6", "ref5", "ref2"]
     end
 
     VCR.use_cassette "sortrefs" do
@@ -79,7 +79,7 @@ RSpec.describe Metanorma::Plateau do
         .sub("== Bibliography", "== Normative References"), *OPTIONS))
       expect(out.xpath("//xmlns:references/xmlns:bibitem/@id")
         .map(&:value))
-        .to be_equivalent_to ["ref3", "ref6", "ref5", "ref2", "ref4", "ref1"]
+        .to be_equivalent_to ["ref4", "ref1", "ref3", "ref6", "ref5", "ref2"]
     end
   end
 end
