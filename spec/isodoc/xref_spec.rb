@@ -658,50 +658,50 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword obligation="informative" displayorder="2">
-         <title>Foreword</title>
-         <p id="A">
-           This is a preamble
-           <xref target="S1">
-             <span class="citesec">Clause 1</span>
-           </xref>
-           <xref target="S2">
-             <span class="citesec">1.1</span>
-           </xref>
-           <xref target="S3">
-             <span class="citesec">1.1.1</span>
-           </xref>
-           <xref target="S4">
-             <span class="citesec">1.1.1 (1)</span>
-           </xref>
-           <xref target="S5">
-             <span class="citesec">1.1.1 (1) 1)</span>
-           </xref>
-           <xref target="S6">
-             <span class="citesec">1.1.1 (1) 1) ①</span>
-           </xref>
-           <xref target="S7">
-              <span class="citesec">1.1.1.1.1.1.1</span>
-           </xref>
-           <xref target="A1">
-             <span class="citeapp">A.1</span>
-           </xref>
-           <xref target="A2">
-             <span class="citeapp">A.1.1</span>
-           </xref>
-           <xref target="A3">
-             <span class="citeapp">A.1.1 (1)</span>
-           </xref>
-           <xref target="A4">
-             <span class="citeapp">A.1.1 (1) 1)</span>
-           </xref>
-           <xref target="A5">
-             <span class="citeapp">A.1.1 (1) 1) ①</span>
-           </xref>
-           <xref target="A6">
-             <span class="citeapp">A.1.1.1.1.1.1</span>
-           </xref>
-         </p>
+          <foreword obligation="informative" displayorder="2">
+          <title>Foreword</title>
+          <p id="A">
+             This is a preamble
+             <xref target="S1">
+                <span class="citesec">Clause 1</span>
+             </xref>
+             <xref target="S2">
+                <span class="citesec">1.1</span>
+             </xref>
+             <xref target="S3">
+                <span class="citesec">1.1.1</span>
+             </xref>
+             <xref target="S4">
+                <span class="citesec">1.1.1.1</span>
+             </xref>
+             <xref target="S5">
+                <span class="citesec">1.1.1.1.1</span>
+             </xref>
+             <xref target="S6">
+                <span class="citesec">1.1.1.1.1.1</span>
+             </xref>
+             <xref target="S7">
+                <span class="citesec">1.1.1.1.1.1.1</span>
+             </xref>
+             <xref target="A1">
+                <span class="citeapp">A.1</span>
+             </xref>
+             <xref target="A2">
+                <span class="citeapp">A.1.1</span>
+             </xref>
+             <xref target="A3">
+                <span class="citeapp">A.1.1.1</span>
+             </xref>
+             <xref target="A4">
+                <span class="citeapp">A.1.1.1.1</span>
+             </xref>
+             <xref target="A5">
+                <span class="citeapp">A.1.1.1.1.1</span>
+             </xref>
+             <xref target="A6">
+                <span class="citeapp">A.1.1.1.1.1.1</span>
+             </xref>
+          </p>
        </foreword>
     OUTPUT
     expect(Xml::C14n.format(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert

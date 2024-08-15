@@ -1,0 +1,1 @@
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "main"
