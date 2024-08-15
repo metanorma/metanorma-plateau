@@ -36,6 +36,12 @@ module Metanorma
 
         3
       end
+
+      def biblio_reorder(xmldoc)
+        xmldoc.xpath("//references").each do |r|
+          biblio_reorder1(r)
+        end
+      end
     end
   end
 end
