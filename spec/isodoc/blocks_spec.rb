@@ -486,7 +486,7 @@ RSpec.describe IsoDoc do
               ]
             </p>
                 <div class="ol_wrap">
-                  <ol id="_">
+                <ol type="a" id="_" class="alphabet">
                     <li id="_">
                       <p id="_">List</p>
                     </li>
