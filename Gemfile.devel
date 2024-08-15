@@ -1,1 +1,1 @@
-gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "fix/refs-ordering"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "main"
