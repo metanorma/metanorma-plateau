@@ -28,14 +28,15 @@ module Metanorma
         super
       end
 
-      def pub_class(bib)
-        return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']") ||
-          bib.at("#{PUBLISHER}[name = '#{pub_hash['ja']}']") ||
-          bib.at("#{PUBLISHER}[abbreviation = 'MLIT']")
-        return 2 if bib["type"] == "standard"
-
-        3
-      end
+      # Abandoned in favour of JIS ordering
+      #       def pub_class(bib)
+      #         return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']") ||
+      #           bib.at("#{PUBLISHER}[name = '#{pub_hash['ja']}']") ||
+      #           bib.at("#{PUBLISHER}[abbreviation = 'MLIT']")
+      #         return 2 if bib["type"] == "standard"
+      #
+      #         3
+      #       end
 
       def biblio_reorder(xmldoc)
         xmldoc.xpath("//references").each do |r|
