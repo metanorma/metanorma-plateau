@@ -158,8 +158,6 @@ RSpec.describe IsoDoc::Plateau do
                 <title>Introduction</title>
                 <clause id="C" inline-header="false" obligation="informative">
                    <title depth="2">
-                      0.1
-                      <tab/>
                       Introduction Subsection
                    </title>
                 </clause>
@@ -329,8 +327,6 @@ RSpec.describe IsoDoc::Plateau do
                  <h1 class="IntroTitle">Introduction</h1>
                  <div id="C">
                    <h2>
-                    0.1
-                     
                     Introduction Subsection
                   </h2>
                  </div>
