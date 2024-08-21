@@ -658,7 +658,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     output = <<~OUTPUT
-          <foreword obligation="informative" displayorder="2">
+      <foreword obligation="informative" displayorder="2">
           <title>Foreword</title>
           <p id="A">
              This is a preamble
@@ -707,6 +707,219 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to Xml::C14n.format(output)
+  end
+
+  it "cross-references lists" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+          <foreword>
+          <p>
+          <xref target="N1"/>
+          <xref target="N2"/>
+          <xref target="N"/>
+          <xref target="note1"/>
+          <xref target="note2"/>
+          <xref target="AN"/>
+          <xref target="Anote1"/>
+          <xref target="Anote2"/>
+          <xref target="Anote3"/>
+          </p>
+          </foreword>
+          <acknowledgements id="intro">
+           <ol id="N1">
+        <li><p>A</p></li>
+      </ol>
+        <clause id="xyz"><title>Preparatory</title>
+           <ol id="N2">
+        <li><p>A</p></li>
+      </ol>
+      </clause>
+          </acknowledgements>
+          </preface>
+          <sections>
+          <clause id="scope" type="scope"><title>Scope</title>
+          <ol id="N">
+        <li><p>A</p></li>
+      </ol>
+          </clause>
+          <terms id="terms"/>
+          <clause id="widgets"><title>Widgets</title>
+          <clause id="widgets1">
+          <ol id="note1">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          <ol id="note2">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          </clause>
+          </clause>
+          </sections>
+          <annex id="annex1">
+          <clause id="annex1a">
+          <ol id="AN">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          </clause>
+          <clause id="annex1b">
+          <ol id="Anote1">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          <ol id="Anote2">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          </clause>
+          </annex>
+          <bibliography><references normative="false" id="biblio"><title>Bibliographical Section</title>
+          <ol id="Anote3">
+        <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+      </ol>
+          </references></bibliography>
+          </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword displayorder="2">
+          <p>
+             <xref target="N1">Acknowledgements, List</xref>
+             <xref target="N2">Preparatory, List</xref>
+             <xref target="N">Clause 1, List</xref>
+             <xref target="note1">3.1, List  1</xref>
+             <xref target="note2">3.1, List  2</xref>
+             <xref target="AN">A.1, List</xref>
+             <xref target="Anote1">A.2, List  1</xref>
+             <xref target="Anote2">A.2, List  2</xref>
+             <xref target="Anote3">Bibliographical Section, List</xref>
+          </p>
+       </foreword>
+    OUTPUT
+    expect(Xml::C14n.format(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to Xml::C14n.format(output)
+  end
+
+  it "cross-references list items in English and Japanese" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata><language>en</language></bibdata>
+          <preface>
+          <foreword>
+          <p>
+          <xref target="N1"/>
+          <xref target="N11"/>
+          <xref target="N12"/>
+          <xref target="N2"/>
+          <xref target="N"/>
+          <xref target="note1"/>
+          <xref target="note2"/>
+          <xref target="AN"/>
+          <xref target="Anote1"/>
+          <xref target="Anote2"/>
+          <xref target="Anote3"/>
+          </p>
+          </foreword>
+          <acknowledgements id="intro">
+          <ol id="N01">
+        <li id="N1"><p>A</p>
+          <ol id="N011">
+        <li id="N11"><p>A</p>
+          <ol id="N012">
+        <li id="N12"><p>A</p>
+         </li>
+      </ol></li></ol></li></ol>
+        <clause id="xyz"><title>Preparatory</title>
+           <ol id="N02" type="arabic">
+        <li id="N2"><p>A</p></li>
+      </ol>
+      </clause>
+          </acknowledgements>
+          </preface>
+          <sections>
+          <clause id="scope" type="scope"><title>Scope</title>
+          <ol id="N0" type="roman">
+        <li id="N"><p>A</p></li>
+      </ol>
+          </clause>
+          <terms id="terms"/>
+          <clause id="widgets"><title>Widgets</title>
+          <clause id="widgets1">
+          <ol id="note1l" type="alphabet">
+        <li id="note1"><p>A</p></li>
+      </ol>
+          <ol id="note2l" type="roman_upper">
+        <li id="note2"><p>A</p></li>
+      </ol>
+          </clause>
+          </clause>
+          </sections>
+          <annex id="annex1">
+          <clause id="annex1a">
+          <ol id="ANl" type="alphabet_upper">
+        <li id="AN"><p>A</p></li>
+      </ol>
+          </clause>
+          <clause id="annex1b">
+          <ol id="Anote1l" type="roman" start="4">
+        <li id="Anote1"><p>A</p></li>
+      </ol>
+          <ol id="Anote2l">
+        <li id="Anote2"><p>A</p></li>
+      </ol>
+          </clause>
+          </annex>
+          <bibliography><references normative="false" id="biblio"><title>Bibliographical Section</title>
+          <ol id="Anote31">
+        <li id="Anote3"><p>A</p></li>
+      </ol>
+          </references></bibliography>
+          </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword displayorder="2">
+          <p>
+             <xref target="N1">Acknowledgements a)</xref>
+             <xref target="N11">Acknowledgements a) 1)</xref>
+             <xref target="N12">Acknowledgements a) 1) i)</xref>
+             <xref target="N2">Preparatory 1)</xref>
+             <xref target="N">Clause 1 i)</xref>
+             <xref target="note1">3.1, List  1 a)</xref>
+             <xref target="note2">3.1, List  2 I)</xref>
+             <xref target="AN">A.1 A)</xref>
+             <xref target="Anote1">A.2, List  1 iv)</xref>
+             <xref target="Anote2">A.2, List  2 a)</xref>
+             <xref target="Anote3">Bibliographical Section a)</xref>
+          </p>
+       </foreword>
+    OUTPUT
+    expect(Xml::C14n.format(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to Xml::C14n.format(output)
+    input1 = input.sub(%r{<language>en</language>}, "<language>ja</language>")
+    output = <<~OUTPUT
+      <foreword displayorder="2">
+          <p>
+             <xref target="N1">Acknowledgements a)</xref>
+             <xref target="N11">Acknowledgements a)の1)</xref>
+             <xref target="N12">Acknowledgements a)の1)のi)</xref>
+             <xref target="N2">Preparatory 1)</xref>
+             <xref target="N">箇条 1 i)</xref>
+             <xref target="note1">3.1のリスト  1のa)</xref>
+             <xref target="note2">3.1のリスト  2のI)</xref>
+             <xref target="AN">A.1 A)</xref>
+             <xref target="Anote1">A.2のリスト  1のiv)</xref>
+             <xref target="Anote2">A.2のリスト  2のa)</xref>
+             <xref target="Anote3">Bibliographical Section a)</xref>
+          </p>
+       </foreword>
+    OUTPUT
+    expect(Xml::C14n.format(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input1, true))
       .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to Xml::C14n.format(output)
   end
