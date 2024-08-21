@@ -73,11 +73,16 @@ module IsoDoc
 
       def list_item_anchor_names(list, list_anchor, depth, prev_label,
 refer_list)
-        @iso.list_item_anchor_names(list, list_anchor, depth, prev_label, refer_list)
+        @iso.anchors.merge!(@anchors)
+        @iso.list_item_anchor_names(list, list_anchor, depth, prev_label,
+                                    refer_list)
+        @anchors.merge!(@iso.anchors)
       end
 
       def list_item_value(entry, counter, depth, opts)
+        @iso.anchors.merge!(@anchors)
         @iso.list_item_value(entry, counter, depth, opts)
+        @anchors.merge!(@iso.anchors)
       end
     end
   end

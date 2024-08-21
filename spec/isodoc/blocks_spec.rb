@@ -408,7 +408,7 @@ RSpec.describe IsoDoc do
               ]
             </p>
             <ol id="_" type="alphabet">
-              <li id="_" label="">
+              <li id="_" label="a">
                 <p id="_">List</p>
               </li>
             </ol>
