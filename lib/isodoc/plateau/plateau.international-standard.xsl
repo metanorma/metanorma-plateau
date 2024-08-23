@@ -1177,6 +1177,8 @@
 		</fo:block-container>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'note']" priority="3"/>
+
 	<xsl:template match="*[local-name() = 'note'][not(ancestor::plateau:table)]/*[local-name() = 'p']" priority="2">
 		<xsl:call-template name="paragraph"/>
 	</xsl:template>
@@ -8437,7 +8439,16 @@
 		</xsl:variable>
 		<xsl:variable name="img_src">
 			<xsl:choose>
-				<xsl:when test="not(starts-with(@src, 'data:'))"><xsl:value-of select="concat($basepath, @src)"/></xsl:when>
+				<xsl:when test="not(starts-with(@src, 'data:'))">
+					<xsl:choose>
+						<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+							<xsl:value-of select="@src"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="concat($basepath, @src)"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
 				<xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -8450,7 +8461,7 @@
 		<!-- <xsl:message>width_effective=<xsl:value-of select="$width_effective"/></xsl:message>
 		<xsl:message>indent_left=<xsl:value-of select="$indent_left"/></xsl:message>
 		<xsl:message>image_width_effective=<xsl:value-of select="$image_width_effective"/> for <xsl:value-of select="ancestor::ogc:p[1]/@id"/></xsl:message> -->
-		<xsl:variable name="scale" select="java:org.metanorma.fop.Util.getImageScale($img_src, $image_width_effective, $height_effective)"/>
+		<xsl:variable name="scale" select="java:org.metanorma.fop.utils.ImageUtils.getImageScale($img_src, $image_width_effective, $height_effective)"/>
 		<xsl:value-of select="$scale"/>
 	</xsl:template>
 
@@ -8469,7 +8480,14 @@
 				<xsl:value-of select="concat('url(file:///',$basepath, $src_png, ')')"/>
 			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
-				<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
+				<xsl:choose>
+					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+						<xsl:value-of select="concat('url(file:///', @src, ')')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="@src"/>
@@ -8491,7 +8509,14 @@
 			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
 				<xsl:variable name="src">
-					<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
+					<xsl:choose>
+						<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+							<xsl:value-of select="concat('url(file:///', @src, ')')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:variable>
 				<xsl:variable name="file" select="java:java.io.File.new(@src)"/>
 				<xsl:variable name="bufferedImage" select="java:javax.imageio.ImageIO.read($file)"/>
@@ -13775,7 +13800,14 @@
 				<xsl:value-of select="$src"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="concat('url(file:///',$basepath, $src, ')')"/>
+				<xsl:choose>
+					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+						<xsl:value-of select="concat('url(file:///', @src, ')')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="concat('url(file:///',$basepath, $src, ')')"/>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
