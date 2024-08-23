@@ -22,6 +22,6 @@ RSpec.describe Metanorma::Plateau do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "standard is not a recognised document type"
+      .to include("standard is not a recognised document type")
   end 
 end
