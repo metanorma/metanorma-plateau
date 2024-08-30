@@ -204,9 +204,7 @@ RSpec.describe IsoDoc do
             </title>
             <bibitem id="ISO712" type="standard">
               <formattedref>
-                <em>
                   <span class="stddocTitle">Cereals and cereal products</span>
-                </em>
               </formattedref>
               <docidentifier type="ISO">ISO 712</docidentifier>
               <docidentifier scope="biblio-tag">ISO 712</docidentifier>
@@ -350,9 +348,7 @@ RSpec.describe IsoDoc do
             </h1>
               <p id="ISO712" class="NormRef">
                 ISO 712,
-                <i>
                   <span class="stddocTitle">Cereals and cereal products</span>
-                </i>
               </p>
             </div>
           </div>

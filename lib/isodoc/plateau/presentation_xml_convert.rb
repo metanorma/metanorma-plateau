@@ -79,10 +79,6 @@ module IsoDoc
         @iso.ol_depth(node)
       end
 
-      def bibliography_bibitem_number(docxml)
-        super
-      end
-
       include Init
     end
   end
