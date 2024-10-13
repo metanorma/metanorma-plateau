@@ -1,6 +1,6 @@
 module IsoDoc
   module Plateau
-    class Metadata < IsoDoc::JIS::Metadata
+    class Metadata < IsoDoc::Jis::Metadata
       def docid(xml, _out)
         id = xml.at(ns("//bibdata/docidentifier[@type = 'PLATEAU']"))&.text or
           return

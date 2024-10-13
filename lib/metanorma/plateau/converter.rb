@@ -3,7 +3,7 @@ require_relative "cleanup"
 
 module Metanorma
   module Plateau
-    class Converter < JIS::Converter
+    class Converter < Jis::Converter
       register_for "plateau"
 
       XML_ROOT_TAG = "plateau-standard".freeze

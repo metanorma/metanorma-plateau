@@ -3,7 +3,7 @@ require "twitter_cldr"
 
 module IsoDoc
   module Plateau
-    class I18n < IsoDoc::JIS::I18n
+    class I18n < IsoDoc::Jis::I18n
       def load_file(fname)
         f = File.join(File.dirname(__FILE__), fname)
         File.exist?(f) ? YAML.load_file(f) : {}

@@ -22,7 +22,7 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        ::Relaton::Render::JIS::General.new(options.merge(language: @lang,
+        ::Relaton::Render::Jis::General.new(options.merge(language: @lang,
                                                           i18nhash: @i18n.get))
       end
     end

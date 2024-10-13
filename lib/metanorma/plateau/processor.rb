@@ -2,7 +2,7 @@ require "metanorma/processor"
 
 module Metanorma
   module Plateau
-    class Processor < Metanorma::JIS::Processor
+    class Processor < Metanorma::Jis::Processor
       def initialize # rubocop:disable Lint/MissingSuper
         @short = :plateau
         @input_format = :asciidoc

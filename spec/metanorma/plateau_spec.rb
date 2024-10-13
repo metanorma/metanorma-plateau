@@ -150,6 +150,7 @@ RSpec.describe Metanorma::Plateau do
            </copyright>
            <ext>
              <doctype>technical-report</doctype>
+             <flavor>plateau</flavor>
              <horizontal>true</horizontal>
              <editorialgroup>
                <agency>MLIT</agency>
@@ -276,6 +277,7 @@ RSpec.describe Metanorma::Plateau do
            </copyright>
            <ext>
              <doctype>technical-report</doctype>
+             <flavor>plateau</flavor>
              <horizontal>true</horizontal>
              <editorialgroup>
                <agency>MLIT</agency>

@@ -2,7 +2,7 @@ require_relative "init"
 
 module IsoDoc
   module Plateau
-    class PresentationXMLConvert < IsoDoc::JIS::PresentationXMLConvert
+    class PresentationXMLConvert < IsoDoc::Jis::PresentationXMLConvert
       def initialize(options)
         @iso = ::IsoDoc::Iso::PresentationXMLConvert.new(options)
         super

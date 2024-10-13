@@ -3,7 +3,7 @@ module IsoDoc
     class Counter < IsoDoc::XrefGen::Counter
     end
 
-    class Xref < IsoDoc::JIS::Xref
+    class Xref < IsoDoc::Jis::Xref
       def initialize(lang, script, klass, i18n, options)
         @iso = ::IsoDoc::Iso::Xref.new(lang, script, klass, i18n, options)
         super

@@ -7,6 +7,7 @@
       </optional>
       <ref name="doctype"/>
       <ref name="editorialgroup"/>
+      <ref name="flavor"/>
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
