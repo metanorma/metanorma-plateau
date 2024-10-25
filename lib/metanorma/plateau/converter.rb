@@ -44,23 +44,6 @@ module Metanorma
                    "#{@doctype} is not a recognised document type")
       end
 
-      def metadata_ext(node, xml)
-        super
-        metadata_coverpage_images(node, xml)
-      end
-
-      def metadata_coverpage_images(node, xml)
-        %w(coverpage-image).each do |n|
-          if a = node.attr(n)
-            xml.send n do |c|
-              a.split(",").each do |x|
-                c.image src: x
-              end
-            end
-          end
-        end
-      end
-
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")
           xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
