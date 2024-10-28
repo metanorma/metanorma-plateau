@@ -907,7 +907,7 @@ RSpec.describe IsoDoc do
              <xref target="N11">Acknowledgements a)の1)</xref>
              <xref target="N12">Acknowledgements a)の1)のi)</xref>
              <xref target="N2">Preparatory 1)</xref>
-             <xref target="N">箇条 1 i)</xref>
+             <xref target="N">箇条1 i)</xref>
              <xref target="note1">3.1のリスト  1のa)</xref>
              <xref target="note2">3.1のリスト  2のI)</xref>
              <xref target="AN">A.1 A)</xref>

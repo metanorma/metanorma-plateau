@@ -236,9 +236,9 @@ RSpec.describe IsoDoc::Plateau do
           </sections>
           <annex id="P" inline-header="false" obligation="normative" displayorder="12">
              <title>
-                附属書 A
+                附属書A
                 <br/>
-                (規定)
+                （規定）
                 <br/>
                 <strong>Annex</strong>
              </title>
@@ -413,10 +413,10 @@ RSpec.describe IsoDoc::Plateau do
                <br/>
                <div id="P" class="Section3">
                  <h1 class="Annex">
-                   附属書 A
-                   <br/>
-                   (規定)
-                   <br/>
+                   附属書A
+                <br/>
+                （規定）
+                <br/>
                    <b>Annex</b>
                  </h1>
                  <div id="Q">
