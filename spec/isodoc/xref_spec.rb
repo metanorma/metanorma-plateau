@@ -99,7 +99,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword id="fwd" displayorder="2">
+      <foreword id="fwd" displayorder="2"><title>Foreword</title>
          <p>
            <xref target="N1">
              <span class="citefig">Figure 1</span>
@@ -217,7 +217,7 @@ RSpec.describe IsoDoc do
         </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword id="fwd" displayorder="2">
+      <foreword id="fwd" displayorder="2"><title>Foreword</title>
          <p>
            <xref target="N">
              <span class="citefig">Figure 3-1</span>
@@ -390,7 +390,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="2">
+      <foreword displayorder="2"><title>Foreword</title>
          <p>
            <xref target="N1">
              <span class="citetbl">Table 1</span>
@@ -780,7 +780,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="2">
+      <foreword displayorder="2"><title>Foreword</title>
           <p>
              <xref target="N1">Acknowledgements, List</xref>
              <xref target="N2">Preparatory, List</xref>
@@ -878,7 +878,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="2">
+      <foreword displayorder="2"><title>Foreword</title>
           <p>
              <xref target="N1">Acknowledgements a)</xref>
              <xref target="N11">Acknowledgements a) 1)</xref>
@@ -901,11 +901,11 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Xml::C14n.format(output)
     input1 = input.sub(%r{<language>en</language>}, "<language>ja</language>")
     output = <<~OUTPUT
-      <foreword displayorder="2">
+      <foreword displayorder="2"><title>まえがき</title>
           <p>
-             <xref target="N1">Acknowledgements a)</xref>
-             <xref target="N11">Acknowledgements a)の1)</xref>
-             <xref target="N12">Acknowledgements a)の1)のi)</xref>
+             <xref target="N1">謝辞 a)</xref>
+             <xref target="N11">謝辞 a)の1)</xref>
+             <xref target="N12">謝辞 a)の1)のi)</xref>
              <xref target="N2">Preparatory 1)</xref>
              <xref target="N">箇条1 i)</xref>
              <xref target="note1">3.1のリスト  1のa)</xref>

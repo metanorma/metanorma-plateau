@@ -1,0 +1,4 @@
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/presxml-oct24"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "fix/presxml-oct24"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "fix/presxml-oct24"

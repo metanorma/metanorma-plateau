@@ -87,6 +87,12 @@ RSpec.describe IsoDoc do
                   was estimated to be 18,2 min for this example.
                 </p>
               </fn>
+              <p keep-with-next="true">
+               <strong>
+                  Key
+                  <strong/>
+               </strong>
+            </p>
               <p class="dl">A: B</p>
               <source status="generalisation">
                 [SOURCE:
@@ -153,6 +159,12 @@ RSpec.describe IsoDoc do
                      </p>
                    </div>
                  </aside>
+               <p style="page-break-after: avoid;">
+                  <b>
+                     Key
+                     <b/>
+                  </b>
+               </p>
                  <p class="dl">A: B</p>
                  <div class="BlockSource">
                    <p>
@@ -204,7 +216,8 @@ RSpec.describe IsoDoc do
       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true)))).to be_equivalent_to Xml::C14n.format(html)
+      .convert("test", presxml, true))))
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes subfigures" do
@@ -569,8 +582,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
          <preface><clause type="toc" id="_" displayorder="1"><title depth="1">Contents</title></clause>
-
-           <foreword id="A" displayorder="2">
+           <foreword id="A" displayorder="2">><title>Foreword</title>
              <p id="B">
              <table id="C"><name>Table 1</name><thead> </thead>
              <colgroup><col width="100%"/></colgroup>
@@ -606,10 +618,10 @@ RSpec.describe IsoDoc do
         </annex>
         </standard-document>
     OUTPUT
-    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(Xml::C14n.format(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to (presxml)
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end
