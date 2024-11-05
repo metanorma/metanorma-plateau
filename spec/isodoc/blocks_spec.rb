@@ -90,7 +90,6 @@ RSpec.describe IsoDoc do
               <p keep-with-next="true">
                <strong>
                   Key
-                  <strong/>
                </strong>
             </p>
               <p class="dl">A: B</p>
@@ -162,7 +161,6 @@ RSpec.describe IsoDoc do
                <p style="page-break-after: avoid;">
                   <b>
                      Key
-                     <b/>
                   </b>
                </p>
                  <p class="dl">A: B</p>
