@@ -11,7 +11,7 @@ module IsoDoc
       end
 
       def xref_init(lang, script, _klass, labels, options)
-        p = PresentationXMLConvert.new(language: lang, script:)
+        p = HtmlConvert.new(language: lang, script:)
         @xrefs = Xref.new(lang, script, p, labels, options)
       end
 
