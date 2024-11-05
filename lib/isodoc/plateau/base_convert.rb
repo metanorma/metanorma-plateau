@@ -8,10 +8,6 @@ module IsoDoc
 
       def para_parse(node, out)
         out.p **attr_code(para_attrs(node)) do |p|
-          unless @termdomain.empty?
-            p << "&lt;#{@termdomain}&gt; "
-            @termdomain = ""
-          end
           @lang == "ja" and p << "&#x3000;"
           node.children.each { |n| parse(n, p) }
         end
