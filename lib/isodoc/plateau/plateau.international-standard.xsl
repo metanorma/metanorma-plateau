@@ -5332,6 +5332,11 @@
 
 								<xsl:value-of select="@reference"/>
 
+								<!-- commented https://github.com/metanorma/isodoc/issues/614 -->
+								<!-- <xsl:if test="$namespace = 'itu'">
+									<xsl:text>)</xsl:text>
+								</xsl:if> -->
+
 									<xsl:text>：</xsl:text>
 
 							</fo:inline>
@@ -5343,7 +5348,7 @@
 
 			</xsl:if>
 		</xsl:for-each>
-	</xsl:template>
+	</xsl:template> <!-- table_fn_display -->
 
 	<xsl:template name="create_fn">
 		<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
@@ -5374,7 +5379,7 @@
 	<!-- ============================ -->
 	<!-- figure's footnotes rendering -->
 	<!-- ============================ -->
-	<xsl:template name="fn_display_figure">
+	<xsl:template name="fn_display_figure"> <!-- figure_fn_display -->
 
 		<!-- current figure id -->
 		<xsl:variable name="figure_id_">
@@ -5526,6 +5531,10 @@
 
 				<xsl:value-of select="@reference"/>
 
+				<!-- commented, https://github.com/metanorma/isodoc/issues/614 -->
+				<!-- <xsl:if test="$namespace = 'jis'">
+					<fo:inline font-weight="normal">)</fo:inline>
+				</xsl:if> -->
 			</fo:basic-link>
 		</fo:inline>
 	</xsl:template>
@@ -10506,7 +10515,7 @@
 		<xsl:if test="normalize-space() != ''">
 			<fo:inline xsl:use-attribute-sets="termexample-name-style">
 				<xsl:call-template name="refine_termexample-name-style"/>
-				<xsl:apply-templates/>
+				<xsl:apply-templates/> <!-- commented $namespace = 'ieee', https://github.com/metanorma/isodoc/issues/614-->
 			</fo:inline>
 		</xsl:if>
 	</xsl:template>
@@ -10668,7 +10677,7 @@
 			<xsl:otherwise>
 				<fo:inline xsl:use-attribute-sets="example-name-style">
 					<xsl:call-template name="refine_example-name-style"/>
-					<xsl:apply-templates/>
+					<xsl:apply-templates/> <!-- $namespace = 'ieee', see https://github.com/metanorma/isodoc/issues/614  -->
 				</fo:inline>
 			</xsl:otherwise>
 		</xsl:choose>
