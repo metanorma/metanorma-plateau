@@ -131,13 +131,13 @@ RSpec.describe IsoDoc do
                   <td valign="top" align="left">Arborio</td>
                   <td valign="middle" align="center">
                     Drago
-                    <fn reference="a">
+                    <fn reference="a)">
                       <p id="_">Parboiled rice.</p>
                     </fn>
                   </td>
                   <td valign="bottom" align="center">
                     Balilla
-                    <fn reference="a">
+                    <fn reference="a)">
                       <p id="_">Parboiled rice.</p>
                     </fn>
                   </td>
@@ -248,7 +248,7 @@ RSpec.describe IsoDoc do
                           <div id="fn:tableD-11">
                             <span>
                               Footnote
-                              <span id="tableD-11" class="TableFootnoteRef">1)</span>
+                              <span id="tableD-11" class="TableFootnoteRef">1</span>
                                
                             </span>
                             <p>X</p>
@@ -265,12 +265,12 @@ RSpec.describe IsoDoc do
                     <td style="text-align:left;vertical-align:top;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Arborio</td>
                     <td style="text-align:center;vertical-align:middle;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                       Drago
-                      <a href="#tableD-1a" class="TableFootnoteRef">a</a>
+                      <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
                       <aside class="footnote">
-                        <div id="fn:tableD-1a">
+                        <div id="fn:tableD-1a)">
                           <span>
                             Footnote
-                            <span id="tableD-1a" class="TableFootnoteRef">a)</span>
+                            <span id="tableD-1a)" class="TableFootnoteRef">a)</span>
                              
                           </span>
                           <p id="_">Parboiled rice.</p>
@@ -279,7 +279,7 @@ RSpec.describe IsoDoc do
                     </td>
                     <td style="text-align:center;vertical-align:bottom;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                       Balilla
-                      <a href="#tableD-1a" class="TableFootnoteRef">a</a>
+                      <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
                     </td>
                     <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Thaibonnet</td>
                   </tr>

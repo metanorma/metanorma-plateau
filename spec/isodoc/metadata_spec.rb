@@ -128,7 +128,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         <sections> </sections>
       </jis-standard>
     INPUT
-    output = <<~OUTPUT
+    output =
       {:agency=>"MLIT",
       :docnumber=>"1000-1.3:2000",
       :docnumber_undated=>"1000-1.3",
@@ -169,7 +169,6 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       :tc=>"A 1",
       :unpublished=>true,
       :wg=>"C 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
