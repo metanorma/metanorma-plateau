@@ -355,13 +355,14 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))))
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
+      .gsub(/&lt;/, "&#x3c;"))))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(html)
   end
 end
