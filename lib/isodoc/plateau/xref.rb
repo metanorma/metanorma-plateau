@@ -44,17 +44,19 @@ module IsoDoc
         end
       end
 
-      def hierarchical_figure_names(clause, num)
+      def hierarchical_figure_names(clauses, num)
         c = IsoDoc::XrefGen::Counter.new
         j = 0
+        nodeSet(clauses).each do |clause|
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           labelled_ancestor(t, %w(figure)) and next # do not label nested figure
           j = subfigure_increment(j, c, t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = subfigure_label(j)
-          figure_anchor(t, sublabel, label, "figure")
+          figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
         end
         hierarchical_figure_class_names(clause, num)
+      end
       end
 
       def hierarchical_figure_class_names(clause, num)
@@ -65,9 +67,9 @@ module IsoDoc
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           labelled_ancestor(t, %w(figure)) and next
           j = subfigure_increment(j, c[t["class"]], t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, label, t["class"])
+          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t), t["class"])
         end
       end
 
