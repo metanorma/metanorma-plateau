@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.test_files = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 3.1.0")
 
-  spec.add_dependency "metanorma-jis", "~> 0.4.0"
+  spec.add_dependency "metanorma-jis", "~> 0.4.1"
   spec.add_dependency "pubid"
 
   spec.add_development_dependency "debug"
