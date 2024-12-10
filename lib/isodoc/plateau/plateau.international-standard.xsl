@@ -460,9 +460,8 @@
 					</xsl:for-each>
 				</xsl:element>
 
-				<xsl:call-template name="insertBibliographyInSeparatePageSequences"/>
-
 				<xsl:call-template name="insertAnnexInSeparatePageSequences"/>
+				<xsl:call-template name="insertBibliographyInSeparatePageSequences"/>
 				<xsl:call-template name="insertIndexInSeparatePageSequences"/>
 
 			</xsl:element>
@@ -538,7 +537,7 @@
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:choose>
-										<xsl:when test="@type = 'annex' or @type = 'bibliography'">
+										<xsl:when test="@type = 'annex' or @type = 'bibliography' or @type = 'index'">
 											<fo:block space-after="5pt">
 												<xsl:call-template name="insertTocItem"/>
 											</fo:block>
@@ -1727,6 +1726,36 @@
 			</fo:block-container>
 		</fo:block-container>
 	</xsl:template>
+
+	<!-- =================== -->
+	<!-- Index processing -->
+	<!-- =================== -->
+	<xsl:template match="plateau:indexsect">
+		<fo:block id="{@id}" span="all">
+			<xsl:apply-templates select="plateau:title"/>
+		</fo:block>
+		<fo:block role="Index">
+			<xsl:apply-templates select="*[not(self::plateau:title)]"/>
+		</fo:block>
+	</xsl:template>
+
+	<xsl:template match="plateau:xref[@pagenumber = 'true']" priority="2">
+		<xsl:call-template name="insert_basic_link">
+			<xsl:with-param name="element">
+				<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
+					<fo:inline>
+						<xsl:if test="@id">
+							<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+						</xsl:if>
+						<fo:page-number-citation ref-id="{@target}"/>
+					</fo:inline>
+				</fo:basic-link>
+			</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
+	<!-- =================== -->
+	<!-- End of Index processing -->
+	<!-- =================== -->
 
 	<xsl:template name="insertHeaderFooter">
 		<xsl:call-template name="insertHeader"/>
@@ -3429,6 +3458,10 @@
 	<!-- Index section styles -->
 	<xsl:attribute-set name="indexsect-title-style">
 		<xsl:attribute name="role">H1</xsl:attribute>
+
+			<xsl:attribute name="font-weight">bold</xsl:attribute>
+			<xsl:attribute name="span">all</xsl:attribute>
+			<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -12100,6 +12133,8 @@
 	<xsl:template match="*[local-name() = 'indexsect']//*[local-name() = 'li']" priority="4">
 		<xsl:variable name="level" select="count(ancestor::*[local-name() = 'ul'])"/>
 		<fo:block start-indent="{5 * $level}mm" text-indent="-5mm">
+
+				<xsl:attribute name="space-after">12pt</xsl:attribute>
 
 			<xsl:apply-templates/>
 		</fo:block>
