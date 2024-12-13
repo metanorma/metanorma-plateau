@@ -172,4 +172,69 @@ RSpec.describe IsoDoc::Plateau::Metadata do
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
+
+  it "internationalises dates in bibdata" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+        <language>en</language>
+          <date type="created">2020-10-11</date>
+          <date type="issued">2020-10</date>
+          <date type="published">2020</date>
+        </bibdata>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <bibdata>
+          <language current="true">en</language>
+          <date type="created">2020-10-11</date>
+          <date type="issued">2020-10</date>
+          <date type="published">2020</date>
+        </bibdata>
+      </iso-standard>
+    OUTPUT
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Xml::C14n.format(output)
+    output = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <bibdata>
+          <language current="true">ja</language>
+      <date type="created">令和2年10月11日</date>
+      <date type="issued">令和2年10月</date>
+      <date type="published">令和2年</date>
+        </bibdata>
+      </iso-standard>
+    OUTPUT
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input.sub!("<language>en</language>",
+                                  "<language>ja</language"), true)))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Xml::C14n.format(output)
+
+    input.sub!("</bibdata>", <<~SUB
+      </bibdata><metanorma-extension>
+      <presentation-metadata><autonumbering-style>japanese</autonumbering-style></presentation-metadata>
+      </metanorma-extension>
+    SUB
+    )
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .to be_equivalent_to Xml::C14n
+        .format(output
+        .sub('<date type="created">令和2年10月11日</date>',
+             '<date type="created">令和二年十月十一日</date>')
+        .sub('<date type="issued">令和2年10月</date>',
+             '<date type="issued">令和二年十月</date>')
+        .sub('<date type="published">令和2年</date>',
+             '<date type="published">令和二年</date>')
+               )
+  end
 end
