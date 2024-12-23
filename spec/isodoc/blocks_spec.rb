@@ -463,9 +463,9 @@ RSpec.describe IsoDoc do
            </p>
                 <p>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">1</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</origin>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">2</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">2</origin>
                    ]
                 </p>
                 <ul id="_">
@@ -475,9 +475,9 @@ RSpec.describe IsoDoc do
                 </ul>
                 <p>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">3</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</origin>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">4</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">4</origin>
                    ]
                 </p>
                 <ol id="_" type="alphabet">
@@ -487,9 +487,9 @@ RSpec.describe IsoDoc do
                 </ol>
                 <p>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">5</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</origin>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">6</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">6</origin>
                    ]
                 </p>
                 <dl id="_">
@@ -500,9 +500,9 @@ RSpec.describe IsoDoc do
                 </dl>
                 <p>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">7</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</origin>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="Clause 1">8</origin>
+                   <origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">8</origin>
                    ]
                 </p>
              </clause>
