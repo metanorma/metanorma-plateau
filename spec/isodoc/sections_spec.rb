@@ -246,9 +246,18 @@ RSpec.describe IsoDoc::Plateau do
                          <span class="fmt-autonum-delim">.</span>
                          <semx element="autonum" source="J">1</semx>
                       </fmt-xref-label>
-                      <preferred>
-                         <strong>Term2</strong>
-                      </preferred>
+               <preferred id="_">
+                  <expression>
+                     <name>Term2</name>
+                  </expression>
+               </preferred>
+               <fmt-preferred>
+                  <p>
+                     <semx element="preferred" source="_">
+                        <strong>Term2</strong>
+                     </semx>
+                  </p>
+               </fmt-preferred>
                    </term>
                 </terms>
                 <definitions id="K">
