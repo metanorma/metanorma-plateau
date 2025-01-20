@@ -1,0 +1,4 @@
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "feature/presentation-terms"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "feature/presentation-terms"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "feature/presentation-terms"
+gem "mn-requirements", git: "https://github.com/metanorma/mn-requirements", branch: "main"

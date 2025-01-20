@@ -210,10 +210,12 @@ RSpec.describe IsoDoc do
                       <semx element="name" source="_">Key</semx>
                    </p>
                    <p class="dl">Drago: A type of rice</p>
-                   <source status="generalisation">
+                   <source status="generalisation" id="_">
                       SOURCE:
+                      <semx element="source" source="_">
                       <xref type="inline" target="ISO712">ISO 712, Section 1</xref>
-                      — with adjustments
+                      — <semx element="modification" source="_">with adjustments</semx>
+                      </semx>
                    </source>
                    <note>
                       <fmt-name>
