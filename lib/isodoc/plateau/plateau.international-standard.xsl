@@ -1213,6 +1213,13 @@
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 					</xsl:if>
 
+					<xsl:if test="(ancestor::*[local-name() = 'td' or local-name() = 'th']) and            (.//*[local-name() = 'font_en' or local-name() = 'font_en_bold'])">
+						<xsl:if test="$isGenerateTableIF = 'false'">
+							<xsl:attribute name="language">en</xsl:attribute>
+							<xsl:attribute name="hyphenate">true</xsl:attribute>
+						</xsl:if>
+					</xsl:if>
+
 					<xsl:if test="parent::plateau:clause or (ancestor::plateau:note and not(ancestor::plateau:table))">
 						<xsl:text>　</xsl:text>
 					</xsl:if>
