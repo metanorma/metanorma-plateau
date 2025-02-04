@@ -79,7 +79,7 @@ RSpec.describe Metanorma::Plateau do
       :investigative-committee: 日本産業標準調査会 標準第一部会
     INPUT
     output = <<~OUTPUT
-      <plateau-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
+      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -193,7 +193,7 @@ RSpec.describe Metanorma::Plateau do
          </boilerplate>
          -->
          <sections> </sections>
-       </plateau-standard>
+       </metanorma>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:metanorma-extension")&.remove
@@ -206,7 +206,7 @@ RSpec.describe Metanorma::Plateau do
                         ))
     xml.at("//xmlns:metanorma-extension")&.remove
     output = <<~OUTPUT
-      <plateau-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
+      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -319,7 +319,7 @@ RSpec.describe Metanorma::Plateau do
          </boilerplate>
          -->
          <sections> </sections>
-       </plateau-standard>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
