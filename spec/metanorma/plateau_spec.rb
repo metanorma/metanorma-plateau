@@ -79,7 +79,7 @@ RSpec.describe Metanorma::Plateau do
       :investigative-committee: 日本産業標準調査会 標準第一部会
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="plateau">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -206,7 +206,7 @@ RSpec.describe Metanorma::Plateau do
                         ))
     xml.at("//xmlns:metanorma-extension")&.remove
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="plateau">
                <bibdata type="standard">
            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
            <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -420,10 +420,10 @@ RSpec.describe Metanorma::Plateau do
             <p id="_">
               Paragraph
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">1</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>1</display-text></origin>
               </source>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">2</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>2</display-text></origin>
               </source>
             </p>
             <ul id="_">
@@ -431,10 +431,10 @@ RSpec.describe Metanorma::Plateau do
                 <p id="_">List</p>
               </li>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">3</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>3</display-text></origin>
               </source>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">4</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>4</display-text></origin>
               </source>
             </ul>
             <ol id="_">
@@ -442,10 +442,10 @@ RSpec.describe Metanorma::Plateau do
                 <p id="_">List</p>
               </li>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">5</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>5</display-text></origin>
               </source>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">6</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>6</display-text></origin>
               </source>
             </ol>
             <dl id="_">
@@ -454,10 +454,10 @@ RSpec.describe Metanorma::Plateau do
                 <p id="_">Entry</p>
               </dd>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">7</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>7</display-text></origin>
               </source>
               <source status="identical">
-                <origin bibitemid="x" type="inline" citeas="">8</origin>
+                <origin bibitemid="x" type="inline" citeas=""><display-text>8</display-text></origin>
               </source>
             </dl>
           </clause>
