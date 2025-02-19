@@ -20,6 +20,7 @@ module Metanorma
         {
           "Yu Gothic" => nil,
           "Noto Sans Condensed" => nil,
+          "Noto Sans Condensed Light" => nil,
           "Noto Sans CJK JP" => nil,
           "STIX Two Math" => nil,
           "Courier New" => nil,
