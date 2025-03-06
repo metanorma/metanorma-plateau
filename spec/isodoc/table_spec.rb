@@ -119,8 +119,14 @@ RSpec.describe IsoDoc do
                       Repeatability and reproducibility of
                       <em>husked</em>
                       rice yield
-                      <fn reference="1">
+                      <fn reference="1" target="_" original-id="_">
                          <p>X</p>
+                         <fmt-fn-label>
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </sup>
+                         </fmt-fn-label>
                       </fn>
                    </name>
                    <fmt-name>
@@ -135,8 +141,14 @@ RSpec.describe IsoDoc do
                          Repeatability and reproducibility of
                          <em>husked</em>
                          rice yield
-                         <fn reference="1">
+                         <fn reference="1" id="_" target="_">
                             <p>X</p>
+                            <fmt-fn-label>
+                               <sup>
+                                  <semx element="autonum" source="_">1</semx>
+                                  <span class="fmt-label-delim">)</span>
+                               </sup>
+                            </fmt-fn-label>
                          </fn>
                       </semx>
                    </fmt-name>
@@ -162,14 +174,26 @@ RSpec.describe IsoDoc do
                          <td valign="top" align="left">Arborio</td>
                          <td valign="middle" align="center">
                             Drago
-                            <fn reference="a)">
-                               <p id="_">Parboiled rice.</p>
+                            <fn reference="a" id="_" target="_">
+                               <p original-id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td valign="bottom" align="center">
                             Balilla
-                            <fn reference="a)">
+                            <fn reference="a" id="_" target="_">
                                <p id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td align="center">Thaibonnet</td>
@@ -244,6 +268,42 @@ RSpec.describe IsoDoc do
                       </fmt-name>
                       <p>This is a table about rice</p>
                    </note>
+                   <fmt-footnote-container>
+                      <fmt-fn-body id="_" target="_" reference="1">
+                         <semx element="fn" source="_">
+                            <p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     Footnote
+                                     <semx element="autonum" source="_">1</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                                  <span class="fmt-caption-delim">
+                                     <tab/>
+                                  </span>
+                               </fmt-fn-label>
+                               X
+                            </p>
+                         </semx>
+                      </fmt-fn-body>
+                      <fmt-fn-body id="_" target="_" reference="a">
+                         <semx element="fn" source="_">
+                            <p id="_">
+                               <fmt-fn-label>
+                                  <sup>
+                                     Footnote
+                                     <semx element="autonum" source="_">a</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                                  <span class="fmt-caption-delim">
+                                     <tab/>
+                                  </span>
+                               </fmt-fn-label>
+                               Parboiled rice.
+                            </p>
+                         </semx>
+                      </fmt-fn-body>
+                   </fmt-footnote-container>
                 </table>
                 <table id="tableD-2" unnumbered="true">
                    <thead> </thead>
@@ -273,8 +333,16 @@ RSpec.describe IsoDoc do
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
+                   <title format="text/plain">Cereals or cereal products</title>
+                   <title type="main" format="text/plain">Cereals and cereal products</title>
                    <docidentifier type="ISO">ISO 712</docidentifier>
                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>International Organization for Standardization</name>
+                      </organization>
+                   </contributor>
                    <biblio-tag>ISO 712, </biblio-tag>
                 </bibitem>
              </references>
@@ -286,10 +354,10 @@ RSpec.describe IsoDoc do
 
     html = <<~OUTPUT
            #{HTML_HDR}
-           <br/>
-                        <div id="_" class="TOC">
-              <h1 class="IntroTitle">Contents</h1>
-            </div>
+                <br/>
+                <div id="_" class="TOC">
+                   <h1 class="IntroTitle">Contents</h1>
+                </div>
                 <div id="A">
                    <h1>1</h1>
                    <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;width:70%;page-break-after: avoid;page-break-inside: avoid;table-layout:fixed;" title="tool tip">
@@ -310,17 +378,7 @@ RSpec.describe IsoDoc do
                                   Table 1-1 — Repeatability and reproducibility of
                                   <i>husked</i>
                                   rice yield
-                                  <a href="#tableD-11" class="TableFootnoteRef">1</a>
-                                  <aside class="footnote">
-                                     <div id="fn:tableD-11">
-                                        <span>
-                                           Footnote
-                                           <span id="tableD-11" class="TableFootnoteRef">1</span>
-                                            
-                                        </span>
-                                        <p>X</p>
-                                     </div>
-                                  </aside>
+                                  <a href="#tableD-11" class="TableFootnoteRef">1)</a>
                                </p>
                             </td>
                          </tr>
@@ -332,21 +390,11 @@ RSpec.describe IsoDoc do
                             <td style="text-align:left;vertical-align:top;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Arborio</td>
                             <td style="text-align:center;vertical-align:middle;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                                Drago
-                               <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
-                               <aside class="footnote">
-                                  <div id="fn:tableD-1a)">
-                                     <span>
-                                        Footnote
-                                        <span id="tableD-1a)" class="TableFootnoteRef">a)</span>
-                                         
-                                     </span>
-                                     <p id="_">Parboiled rice.</p>
-                                  </div>
-                               </aside>
+                               <a href="#tableD-1a" class="TableFootnoteRef">a)</a>
                             </td>
                             <td style="text-align:center;vertical-align:bottom;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                                Balilla
-                               <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
+                               <a href="#tableD-1a" class="TableFootnoteRef">a)</a>
                             </td>
                             <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Thaibonnet</td>
                          </tr>
@@ -397,6 +445,18 @@ RSpec.describe IsoDoc do
                             This is a table about rice
                          </p>
                       </div>
+                      <aside id="fn:tableD-11" class="footnote">
+                         <p>
+                            <span class="TableFootnoteRef">Footnote 1)</span>
+                              X
+                         </p>
+                      </aside>
+                      <aside id="fn:tableD-1a" class="footnote">
+                         <p id="_">
+                            <span class="TableFootnoteRef">Footnote a)</span>
+                              Parboiled rice.
+                         </p>
+                      </aside>
                    </table>
                    <table id="tableD-2" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
                       <thead/>
