@@ -58,7 +58,6 @@ RSpec.describe IsoDoc do
             </tr>
           </tfoot>
           <dl key="true">
-          <name>Key</name>
           <dt>Drago</dt>
         <dd>A type of rice</dd>
           <dt>**</dt>
@@ -574,9 +573,9 @@ presxml = <<~PRESXML
                       <tr>
                          <td colspan="5">
                             <dl key="true">
-                               <name id="_">Key</name>
+                               <name id="_">記号説明</name>
                                <fmt-name>
-                                  <semx element="name" source="_">Key</semx>
+                                  <semx element="name" source="_">記号説明</semx>
                                </fmt-name>
                                <dt>Drago</dt>
                                <dd>: A type of rice</dd>
@@ -766,7 +765,7 @@ html = <<~OUTPUT
                          <tr>
                             <td colspan="5" style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;">
                                <div class="figdl">
-                                  <p class="ListTitle">Key</p>
+                                  <p class="ListTitle">記号説明</p>
                                   <dl>
                                      <dt>
                                         <p>Drago</p>
