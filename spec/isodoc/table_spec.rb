@@ -244,6 +244,7 @@ RSpec.describe IsoDoc do
                                </fmt-name>
                                <p>This is a table about rice</p>
                             </note>
+                            <div class="footnotes-go-here"/>
                             <source status="generalisation" id="_">
                                SOURCE:
                                <semx element="source" source="_">
@@ -428,6 +429,7 @@ RSpec.describe IsoDoc do
                                      This is a table about rice
                                   </p>
                                </div>
+                                <div/>
                                <div class="BlockSource">
                                   <p>
                                      SOURCE:
@@ -618,6 +620,7 @@ presxml = <<~PRESXML
                                </fmt-name>
                                <p>This is a table about rice</p>
                             </note>
+                            <div class="footnotes-go-here"/>
                             <source status="generalisation" id="_">
                                出典:
                                <semx element="source" source="_">
@@ -802,6 +805,7 @@ html = <<~OUTPUT
                                      This is a table about rice
                                   </p>
                                </div>
+                                <div/>
                                <div class="BlockSource">
                                   <p>
                                      出典:

@@ -129,10 +129,12 @@ module IsoDoc
             tf.children.first.previous = x.remove
           end
         end
-        # TODO fmt-footnote-container moves inside tfoot
-        if node.at(ns("./note | ./source"))
+        if node.at(ns("./note | ./source | ./example | .//fn"))
           tf = final_tfoot_cell(node)
+          node.xpath(ns("./example")).each { |x| tf.children.last.next = x.remove }
           node.xpath(ns("./note")).each { |x| tf.children.last.next = x.remove }
+        # TODO fmt-footnote-container moves inside tfoot
+          node.at(ns(".//fn")) and tf << '<div class="footnotes-go-here"/>'
           node.xpath(ns("./source")).each do |x|
             tf.children.last.next = x.remove
           end
