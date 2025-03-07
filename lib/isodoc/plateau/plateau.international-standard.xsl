@@ -1218,6 +1218,10 @@
 						<xsl:attribute name="margin-bottom">5pt</xsl:attribute>
 					</xsl:if>
 
+					<xsl:if test="parent::plateau:dd and ancestor::plateau:tfoot">
+						<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+					</xsl:if>
+
 					<xsl:if test="parent::plateau:clause[@type = 'inner-cover-note'] or ancestor::plateau:boilerplate">
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 					</xsl:if>
@@ -1812,27 +1816,6 @@
 						<xsl:attribute name="font-size">10pt</xsl:attribute>
 					</xsl:if>
 					<xsl:copy-of select="@id"/>
-					<!-- 
-					<fo:table table-layout="fixed" width="100%">
-						<fo:table-column column-width="7%"/>
-						<fo:table-column column-width="93%"/>
-						<fo:table-body>
-							<fo:table-row>
-								<fo:table-cell>
-									<fo:block>
-										<xsl:apply-templates select="node()[contains(., ':')][1]/preceding-sibling::node()"/>
-									</fo:block>
-								</fo:table-cell>
-								<fo:table-cell>
-									<fo:block>
-										<xsl:apply-templates select="node()[contains(., ':')][1]"/>
-										<xsl:apply-templates select="node()[contains(., ':')][1]/following-sibling::node()"/>
-									</fo:block>
-								</fo:table-cell>
-							</fo:table-row>
-						</fo:table-body>
-					</fo:table>
-					-->
 					<xsl:apply-templates/>
 				</fo:block>
 			</fo:block-container>
@@ -2832,7 +2815,7 @@
 	<xsl:attribute-set name="table-fn-style">
 		<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
 
-			<xsl:attribute name="font-size">10.5pt</xsl:attribute>
+			<xsl:attribute name="font-size">10pt</xsl:attribute>
 			<xsl:attribute name="margin-bottom">1pt</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-fn-style -->
@@ -5046,8 +5029,9 @@
 										<xsl:apply-templates select="../*[local-name()='p']"/>
 										<xsl:apply-templates select="../*[local-name()='example']"/>
 										<xsl:apply-templates select="../*[local-name()='note'][not(@type = 'units')]"/>
-										<xsl:copy-of select="$table_fn_block"/>
+										<!-- <xsl:copy-of select="$table_fn_block"/> -->
 										<xsl:apply-templates select="../*[local-name()='source']"/>
+										<!-- renders in tfoot -->
 
 								<xsl:variable name="isDisplayRowSeparator">
 
@@ -5350,7 +5334,7 @@
 		</fo:table-cell>
 	</xsl:template> <!-- td -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example'] |       *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
 					<xsl:copy-of select="@id"/>
@@ -5371,7 +5355,7 @@
 
 	</xsl:template> <!-- table/note -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p'] |  *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
 		<xsl:apply-templates/>
 	</xsl:template>
 
@@ -5825,6 +5809,13 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'div'][@class = 'footnotes-go-here']" priority="3">
+		<xsl:for-each select="ancestor::*[local-name()='table'][1]">
+			<xsl:call-template name="table_fn_display"/>
+		</xsl:for-each>
+	</xsl:template>
+
 	<!-- ===================== -->
 	<!-- END Footnotes processing  -->
 	<!-- ===================== -->
@@ -5861,6 +5852,11 @@
 					<xsl:if test="not(ancestor::*[local-name() = 'quote'])">
 						<xsl:attribute name="margin-left">0mm</xsl:attribute>
 					</xsl:if>
+
+				<xsl:if test="ancestor::*[local-name() = 'tfoot']">
+					<xsl:attribute name="margin-left"><xsl:value-of select="$tableAnnotationIndent"/></xsl:attribute>
+					<xsl:attribute name="margin-bottom">0</xsl:attribute>
+				</xsl:if>
 
 			<xsl:if test="ancestor::*[local-name() = 'sourcecode']">
 				<!-- set font-size as sourcecode font-size -->
@@ -6107,6 +6103,26 @@
 											<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
 										</xsl:call-template>
 
+										<!-- https://github.com/metanorma/metanorma-plateau/issues/171 -->
+
+											<xsl:if test="@key = 'true' and ancestor::*[local-name() = 'tfoot'] and not(xalan:nodeset($colwidths)//column)">
+												<xsl:variable name="dt_length_max">
+													<xsl:for-each select="*[local-name() = 'dt']">
+														<xsl:sort select="string-length()" data-type="number" order="descending"/>
+														<xsl:if test="position() = 1"><xsl:value-of select="string-length()"/></xsl:if>
+													</xsl:for-each>
+												</xsl:variable>
+												<xsl:variable name="col1_percent_" select="number($dt_length_max) + 1"/>
+												<xsl:variable name="col1_percent">
+													<xsl:choose>
+														<xsl:when test="$col1_percent_ &gt; 50">50</xsl:when>
+														<xsl:otherwise><xsl:value-of select="$col1_percent_"/></xsl:otherwise>
+													</xsl:choose>
+												</xsl:variable>
+												<fo:table-column column-width="{$col1_percent}%"/>
+												<fo:table-column column-width="{100 - $col1_percent}%"/>
+											</xsl:if>
+
 										<fo:table-body>
 
 											<!-- DEBUG -->
@@ -6172,6 +6188,12 @@
 		<xsl:param name="process">false</xsl:param>
 		<xsl:if test="$process = 'true'">
 			<fo:block xsl:use-attribute-sets="dl-name-style">
+
+					<xsl:if test="ancestor::*[local-name() = 'tfoot']">
+						<xsl:attribute name="margin-left">-<xsl:value-of select="$tableAnnotationIndent"/></xsl:attribute>
+						<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+					</xsl:if>
+
 				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:if>
@@ -11186,7 +11208,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name']">
+	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name'] |  *[local-name() = 'table']/*[local-name() = 'tfoot']//*[local-name() = 'example']/*[local-name() = 'name']">
 		<fo:inline xsl:use-attribute-sets="example-name-style">
 
 			<xsl:apply-templates/>
