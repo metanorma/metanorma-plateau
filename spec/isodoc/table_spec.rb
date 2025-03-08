@@ -204,11 +204,17 @@ RSpec.describe IsoDoc do
                                   <semx element="name" source="_">Key</semx>
                                </fmt-name>
                                <dt>Drago</dt>
-                               <dd>: A type of rice</dd>
+                                                       <dd>
+                           <span class="fmt-dt-delim">: </span>
+                           A type of rice
+                        </dd>
                                <dt>**</dt>
                                <dd>
-                                  <p>: 米の一種</p>
-                               </dd>
+                                                         <p>
+                             <span class="fmt-dt-delim">: </span>
+                             米の一種
+                          </p>
+                          </dd>
                             </dl>
                          </td>
                       </tr>
@@ -397,13 +403,19 @@ RSpec.describe IsoDoc do
                                      <dt>
                                         <p>Drago</p>
                                      </dt>
-                                     <dd>: A type of rice</dd>
+                              <dd>
+                                 <span class="fmt-dt-delim">: </span>
+                                 A type of rice
+                              </dd>
                                      <dt>
                                         <p>**</p>
                                      </dt>
                                      <dd>
-                                        <p>: 米の一種</p>
-                                     </dd>
+                                <p>
+                                   <span class="fmt-dt-delim">: </span>
+                                   米の一種
+                                </p>
+                                </dd>
                                   </dl>
                                </div>
                             </td>
@@ -580,11 +592,17 @@ presxml = <<~PRESXML
                                   <semx element="name" source="_">記号説明</semx>
                                </fmt-name>
                                <dt>Drago</dt>
-                               <dd>: A type of rice</dd>
+                                                      <dd>
+                          <span class="fmt-dt-delim">：</span>
+                          A type of rice
+                       </dd>
                                <dt>**</dt>
                                <dd>
-                                  <p>：米の一種</p>
-                               </dd>
+                           <p>
+                              <span class="fmt-dt-delim">：</span>
+                              米の一種
+                           </p>
+                           </dd>
                             </dl>
                          </td>
                       </tr>
@@ -773,12 +791,19 @@ html = <<~OUTPUT
                                      <dt>
                                         <p>Drago</p>
                                      </dt>
-                                     <dd>: A type of rice</dd>
+                                                                  <dd>
+                                <span class="fmt-dt-delim">：</span>
+                                A type of rice
+                             </dd>
                                      <dt>
                                         <p>**</p>
                                      </dt>
                                      <dd>
-                                        <p>　：米の一種</p>
+                                     <p>
+                                   　
+                                   <span class="fmt-dt-delim">：</span>
+                                   米の一種
+                                </p>
                                      </dd>
                                   </dl>
                                </div>

@@ -157,8 +157,9 @@ module IsoDoc
       def table_key(node)
         node.xpath(ns(".//dd")).each do |dd|
           text_node = dd.xpath(".//text()[normalize-space()]").first or next
-          text_content = text_node.content
-          text_node.content = @i18n.l10n(": " + text_content)
+          #text_node.content = @i18n.l10n(": " + text_content)
+          colon = %w(zh ja ko).include?(@lang) ? "：": ": "
+          text_node.previous = "<span class='fmt-dt-delim'>#{colon}</span>"
         end
       end
 

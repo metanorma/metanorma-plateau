@@ -117,7 +117,15 @@ RSpec.describe IsoDoc do
              <p keep-with-next="true">
                 <strong>Key</strong>
              </p>
-             <p class="dl">A: B</p>
+                   <dl class="formula_dl">
+         <dt>A</dt>
+         <dd>
+            <p>
+               <span class="fmt-dt-delim">: </span>
+               B
+            </p>
+         </dd>
+      </dl>
              <source status="generalisation">
                 [SOURCE:
                 <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
@@ -186,7 +194,19 @@ RSpec.describe IsoDoc do
              <p style="page-break-after: avoid;">
                 <b>Key</b>
              </p>
-             <p class="dl">A: B</p>
+                   <div class="figdl">
+         <dl class="formula_dl">
+            <dt>
+               <p>A</p>
+            </dt>
+            <dd>
+               <p>
+                  <span class="fmt-dt-delim">: </span>
+                  B
+               </p>
+            </dd>
+         </dl>
+      </div>
              <div class="BlockSource">
                 <p>
                    [SOURCE:
