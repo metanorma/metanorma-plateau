@@ -129,12 +129,11 @@ module IsoDoc
             tf.children.first.previous = x.remove
           end
         end
-        if node.at(ns("./note | ./source | ./example | .//fn"))
+        if node.at(ns("./note | ./source | ./example | ./fmt-footnote-container"))
           tf = final_tfoot_cell(node)
           node.xpath(ns("./example")).each { |x| tf.children.last.next = x.remove }
           node.xpath(ns("./note")).each { |x| tf.children.last.next = x.remove }
-        # TODO fmt-footnote-container moves inside tfoot
-          node.at(ns(".//fn")) and tf << '<div class="footnotes-go-here"/>'
+          node.xpath(ns("./fmt-footnote-container")).each { |x| tf.children.last.next = x.remove }
           node.xpath(ns("./source")).each do |x|
             tf.children.last.next = x.remove
           end
@@ -157,7 +156,6 @@ module IsoDoc
       def table_key(node)
         node.xpath(ns(".//dd")).each do |dd|
           text_node = dd.xpath(".//text()[normalize-space()]").first or next
-          #text_node.content = @i18n.l10n(": " + text_content)
           colon = %w(zh ja ko).include?(@lang) ? "：": ": "
           text_node.previous = "<span class='fmt-dt-delim'>#{colon}</span>"
         end

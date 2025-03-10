@@ -274,7 +274,42 @@ RSpec.describe IsoDoc do
                                </fmt-name>
                                <p>This is a table about rice</p>
                             </note>
-                            <div class="footnotes-go-here"/>
+                                                 <fmt-footnote-container>
+                        <fmt-fn-body id="_" target="_" reference="1">
+                           <semx element="fn" source="_">
+                              <p>
+                                 <fmt-fn-label>
+                                    <sup>
+                                       Footnote
+                                       <semx element="autonum" source="_">1</semx>
+                                       <span class="fmt-label-delim">)</span>
+                                    </sup>
+                                    <span class="fmt-caption-delim">
+                                       <tab/>
+                                    </span>
+                                 </fmt-fn-label>
+                                 X
+                              </p>
+                           </semx>
+                        </fmt-fn-body>
+                        <fmt-fn-body id="_" target="_" reference="a">
+                           <semx element="fn" source="_">
+                              <p id="_">
+                                 <fmt-fn-label>
+                                    <sup>
+                                       Footnote
+                                       <semx element="autonum" source="_">a</semx>
+                                       <span class="fmt-label-delim">)</span>
+                                    </sup>
+                                    <span class="fmt-caption-delim">
+                                       <tab/>
+                                    </span>
+                                 </fmt-fn-label>
+                                 Parboiled rice.
+                              </p>
+                           </semx>
+                        </fmt-fn-body>
+                     </fmt-footnote-container>
                             <source status="generalisation" id="_">
                                SOURCE:
                                <semx element="source" source="_">
@@ -453,7 +488,18 @@ RSpec.describe IsoDoc do
                                      This is a table about rice
                                   </p>
                                </div>
-                                <div/>
+                               <aside id="fn:tableD-11" class="footnote">
+                           <p>
+                              <span class="TableFootnoteRef">Footnote 1)</span>
+                                X
+                           </p>
+                        </aside>
+                        <aside id="fn:tableD-1a" class="footnote">
+                           <p id="_">
+                              <span class="TableFootnoteRef">Footnote a)</span>
+                                Parboiled rice.
+                           </p>
+                        </aside>
                                <div class="BlockSource">
                                   <p>
                                      SOURCE:
@@ -498,7 +544,7 @@ RSpec.describe IsoDoc do
     input.sub!("<language>en</language>", "<language>ja</language>")
 
 presxml = <<~PRESXML
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <language current="true">ja</language>
           </bibdata>
@@ -523,8 +569,14 @@ presxml = <<~PRESXML
                       Repeatability and reproducibility of
                       <em>husked</em>
                       rice yield
-                      <fn reference="1">
+                      <fn reference="1" target="_" original-id="_">
                          <p>X</p>
+                         <fmt-fn-label>
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </sup>
+                         </fmt-fn-label>
                       </fn>
                    </name>
                    <fmt-name>
@@ -539,8 +591,14 @@ presxml = <<~PRESXML
                          Repeatability and reproducibility of
                          <em>husked</em>
                          rice yield
-                         <fn reference="1">
+                         <fn reference="1" id="_" target="_">
                             <p>X</p>
+                            <fmt-fn-label>
+                               <sup>
+                                  <semx element="autonum" source="_">1</semx>
+                                  <span class="fmt-label-delim">)</span>
+                               </sup>
+                            </fmt-fn-label>
                          </fn>
                       </semx>
                    </fmt-name>
@@ -566,14 +624,26 @@ presxml = <<~PRESXML
                          <td valign="top" align="left">Arborio</td>
                          <td valign="middle" align="center">
                             Drago
-                            <fn reference="a)">
-                               <p id="_">Parboiled rice.</p>
+                            <fn reference="a" id="_" target="_">
+                               <p original-id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td valign="bottom" align="center">
                             Balilla
-                            <fn reference="a)">
+                            <fn reference="a" id="_" target="_">
                                <p id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td align="center">Thaibonnet</td>
@@ -604,17 +674,17 @@ presxml = <<~PRESXML
                                   <semx element="name" source="_">記号説明</semx>
                                </fmt-name>
                                <dt>Drago</dt>
-                                                      <dd>
-                          <span class="fmt-dt-delim">：</span>
-                          A type of rice
-                       </dd>
+                               <dd>
+                                  <span class="fmt-dt-delim">：</span>
+                                  A type of rice
+                               </dd>
                                <dt>**</dt>
                                <dd>
-                           <p>
-                              <span class="fmt-dt-delim">：</span>
-                              米の一種
-                           </p>
-                           </dd>
+                                  <p>
+                                     <span class="fmt-dt-delim">：</span>
+                                     米の一種
+                                  </p>
+                               </dd>
                             </dl>
                          </td>
                       </tr>
@@ -650,7 +720,42 @@ presxml = <<~PRESXML
                                </fmt-name>
                                <p>This is a table about rice</p>
                             </note>
-                            <div class="footnotes-go-here"/>
+                            <fmt-footnote-container>
+                               <fmt-fn-body id="_" target="_" reference="1">
+                                  <semx element="fn" source="_">
+                                     <p>
+                                        <fmt-fn-label>
+                                           <sup>
+                                              注
+                                              <semx element="autonum" source="_">1</semx>
+                                              <span class="fmt-label-delim">)</span>
+                                           </sup>
+                                           <span class="fmt-caption-delim">
+                                              <tab/>
+                                           </span>
+                                        </fmt-fn-label>
+                                        X
+                                     </p>
+                                  </semx>
+                               </fmt-fn-body>
+                               <fmt-fn-body id="_" target="_" reference="a">
+                                  <semx element="fn" source="_">
+                                     <p id="_">
+                                        <fmt-fn-label>
+                                           <sup>
+                                              注
+                                              <semx element="autonum" source="_">a</semx>
+                                              <span class="fmt-label-delim">)</span>
+                                           </sup>
+                                           <span class="fmt-caption-delim">
+                                              <tab/>
+                                           </span>
+                                        </fmt-fn-label>
+                                        Parboiled rice.
+                                     </p>
+                                  </semx>
+                               </fmt-fn-body>
+                            </fmt-footnote-container>
                             <source status="generalisation" id="_">
                                出典:
                                <semx element="source" source="_">
@@ -700,8 +805,16 @@ presxml = <<~PRESXML
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
+                   <title format="text/plain">Cereals or cereal products</title>
+                   <title type="main" format="text/plain">Cereals and cereal products</title>
                    <docidentifier type="ISO">ISO 712</docidentifier>
                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>International Organization for Standardization</name>
+                      </organization>
+                   </contributor>
                    <biblio-tag>ISO 712, </biblio-tag>
                 </bibitem>
              </references>
@@ -737,17 +850,7 @@ html = <<~OUTPUT
                                   　 表 1 - 1  — Repeatability and reproducibility of
                                   <i>husked</i>
                                   rice yield
-                                  <a href="#tableD-11" class="TableFootnoteRef">1</a>
-                                  <aside class="footnote">
-                                     <div id="fn:tableD-11">
-                                        <span>
-                                           注
-                                           <span id="tableD-11" class="TableFootnoteRef">1</span>
-                                           　
-                                        </span>
-                                        <p>　X</p>
-                                     </div>
-                                  </aside>
+                                  <a href="#tableD-11" class="TableFootnoteRef">1)</a>
                                </p>
                             </td>
                          </tr>
@@ -759,21 +862,11 @@ html = <<~OUTPUT
                             <td style="text-align:left;vertical-align:top;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Arborio</td>
                             <td style="text-align:center;vertical-align:middle;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                                Drago
-                               <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
-                               <aside class="footnote">
-                                  <div id="fn:tableD-1a)">
-                                     <span>
-                                        注
-                                        <span id="tableD-1a)" class="TableFootnoteRef">a)</span>
-                                        　
-                                     </span>
-                                     <p id="_">　Parboiled rice.</p>
-                                  </div>
-                               </aside>
+                               <a href="#tableD-1a" class="TableFootnoteRef">a)</a>
                             </td>
                             <td style="text-align:center;vertical-align:bottom;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">
                                Balilla
-                               <a href="#tableD-1a)" class="TableFootnoteRef">a)</a>
+                               <a href="#tableD-1a" class="TableFootnoteRef">a)</a>
                             </td>
                             <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="col">Thaibonnet</td>
                          </tr>
@@ -803,19 +896,19 @@ html = <<~OUTPUT
                                      <dt>
                                         <p>Drago</p>
                                      </dt>
-                                                                  <dd>
-                                <span class="fmt-dt-delim">：</span>
-                                A type of rice
-                             </dd>
+                                     <dd>
+                                        <span class="fmt-dt-delim">：</span>
+                                        A type of rice
+                                     </dd>
                                      <dt>
                                         <p>**</p>
                                      </dt>
                                      <dd>
-                                     <p>
-                                   　
-                                   <span class="fmt-dt-delim">：</span>
-                                   米の一種
-                                </p>
+                                        <p>
+                                           　
+                                           <span class="fmt-dt-delim">：</span>
+                                           米の一種
+                                        </p>
                                      </dd>
                                   </dl>
                                </div>
@@ -842,7 +935,20 @@ html = <<~OUTPUT
                                      This is a table about rice
                                   </p>
                                </div>
-                                <div/>
+                               <aside id="fn:tableD-11" class="footnote">
+                                  <p>
+                                     　
+                                     <span class="TableFootnoteRef">注1)</span>
+                                     　X
+                                  </p>
+                               </aside>
+                               <aside id="fn:tableD-1a" class="footnote">
+                                  <p id="_">
+                                     　
+                                     <span class="TableFootnoteRef">注a)</span>
+                                     　Parboiled rice.
+                                  </p>
+                               </aside>
                                <div class="BlockSource">
                                   <p>
                                      出典:
