@@ -2853,6 +2853,11 @@
 
 	<xsl:template name="refine_table-fmt-fn-label-style">
 
+			<xsl:attribute name="font-size">60%</xsl:attribute>
+			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<xsl:attribute name="padding-right">2mm</xsl:attribute>
+			<xsl:attribute name="font-weight">bold</xsl:attribute>
+
 	</xsl:template>
 
 	<xsl:attribute-set name="fn-container-body-style">
@@ -5049,11 +5054,14 @@
 
 								<!-- except gb and bsi  -->
 
-										<xsl:apply-templates select="../*[local-name()='p']"/>
+										<!-- https://github.com/metanorma/metanorma-plateau/issues/171 : the order is: definition list, text paragraphs, EXAMPLEs, NOTEs, footnotes, then source at the end -->
 										<xsl:apply-templates select="../*[local-name()='dl']"/>
-										<xsl:apply-templates select="../*[local-name()='note'][not(@type = 'units')]"/>
+										<xsl:apply-templates select="../*[local-name()='p']"/>
 										<xsl:apply-templates select="../*[local-name()='example']"/>
+										<xsl:apply-templates select="../*[local-name()='note'][not(@type = 'units')]"/>
+										<!-- <xsl:copy-of select="$table_fn_block"/> -->
 										<xsl:apply-templates select="../*[local-name()='source']"/>
+										<!-- renders in tfoot -->
 
 								<xsl:variable name="isDisplayRowSeparator">
 
