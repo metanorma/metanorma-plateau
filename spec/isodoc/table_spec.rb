@@ -279,8 +279,8 @@ RSpec.describe IsoDoc do
                            <semx element="fn" source="_">
                               <p>
                                  <fmt-fn-label>
-                                    <sup>
                                        Footnote
+                                    <sup>
                                        <semx element="autonum" source="_">1</semx>
                                        <span class="fmt-label-delim">)</span>
                                     </sup>
@@ -296,8 +296,8 @@ RSpec.describe IsoDoc do
                            <semx element="fn" source="_">
                               <p id="_">
                                  <fmt-fn-label>
-                                    <sup>
                                        Footnote
+                                    <sup>
                                        <semx element="autonum" source="_">a</semx>
                                        <span class="fmt-label-delim">)</span>
                                     </sup>
@@ -725,8 +725,8 @@ presxml = <<~PRESXML
                                   <semx element="fn" source="_">
                                      <p>
                                         <fmt-fn-label>
-                                           <sup>
                                               注
+                                           <sup>
                                               <semx element="autonum" source="_">1</semx>
                                               <span class="fmt-label-delim">)</span>
                                            </sup>
@@ -742,8 +742,8 @@ presxml = <<~PRESXML
                                   <semx element="fn" source="_">
                                      <p id="_">
                                         <fmt-fn-label>
-                                           <sup>
                                               注
+                                           <sup>
                                               <semx element="autonum" source="_">a</semx>
                                               <span class="fmt-label-delim">)</span>
                                            </sup>

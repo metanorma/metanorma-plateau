@@ -163,8 +163,8 @@ RSpec.describe IsoDoc do
                    <semx element="fn" source="_">
                       <p id="_">
                          <fmt-fn-label>
-                            <sup>
                                Footnote
+                            <sup>
                                <semx element="autonum" source="_">a</semx>
                                <span class="fmt-label-delim">)</span>
                             </sup>
