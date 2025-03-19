@@ -2853,11 +2853,6 @@
 
 	<xsl:template name="refine_table-fmt-fn-label-style">
 
-			<xsl:attribute name="font-size">60%</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
-			<xsl:attribute name="padding-right">2mm</xsl:attribute>
-			<xsl:attribute name="font-weight">bold</xsl:attribute>
-
 	</xsl:template>
 
 	<xsl:attribute-set name="fn-container-body-style">
@@ -5054,14 +5049,11 @@
 
 								<!-- except gb and bsi  -->
 
-										<!-- https://github.com/metanorma/metanorma-plateau/issues/171 : the order is: definition list, text paragraphs, EXAMPLEs, NOTEs, footnotes, then source at the end -->
-										<xsl:apply-templates select="../*[local-name()='dl']"/>
 										<xsl:apply-templates select="../*[local-name()='p']"/>
-										<xsl:apply-templates select="../*[local-name()='example']"/>
+										<xsl:apply-templates select="../*[local-name()='dl']"/>
 										<xsl:apply-templates select="../*[local-name()='note'][not(@type = 'units')]"/>
-										<!-- <xsl:copy-of select="$table_fn_block"/> -->
+										<xsl:apply-templates select="../*[local-name()='example']"/>
 										<xsl:apply-templates select="../*[local-name()='source']"/>
-										<!-- renders in tfoot -->
 
 								<xsl:variable name="isDisplayRowSeparator">
 
@@ -12079,39 +12071,34 @@
 	<!-- ===================================== -->
 	<xsl:variable name="ul_labels_">
 
-				<xsl:choose>
-					<xsl:when test="$doctype = 'technical-report'">
-						<label level="1" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
-						<label level="2">→</label> <!-- will be replaced in the template 'li' -->
-						<label level="3">☆</label> <!-- will be replaced in the template 'li' -->
-					</xsl:when>
-					<xsl:otherwise>
-						<label level="1" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
-						<label level="2">－</label> <!-- full-width hyphen minus -->
-						<label level="3" font-size="130%" line-height="1.2">・</label>
-					</xsl:otherwise>
-				</xsl:choose>
+				<label level="1">－</label> <!-- full-width hyphen minus -->
+				<label level="2" font-size="130%" line-height="1.2">・</label> <!-- Katakana Middle Dot -->
 
 	</xsl:variable>
 	<xsl:variable name="ul_labels" select="xalan:nodeset($ul_labels_)"/>
 
 	<xsl:template name="setULLabel">
 		<xsl:variable name="list_level__">
-			<xsl:value-of select="count(ancestor::*[local-name() = 'ul']) + count(ancestor::*[local-name() = 'ol'])"/>
+			<xsl:value-of select="count(ancestor::*[local-name() = 'ul'])"/>
 		</xsl:variable>
 		<xsl:variable name="list_level_" select="number($list_level__)"/>
 		<xsl:variable name="list_level">
 			<xsl:choose>
 				<xsl:when test="$list_level_ &lt;= 3"><xsl:value-of select="$list_level_"/></xsl:when>
-				<xsl:otherwise><xsl:value-of select="$list_level_ mod 3"/></xsl:otherwise>
+				<xsl:when test="$ul_labels/label[@level = 3]"><xsl:value-of select="$list_level_ mod 3"/></xsl:when>
+				<xsl:when test="$list_level_ mod 2 = 0">2</xsl:when>
+				<xsl:otherwise><xsl:value-of select="$list_level_ mod 2"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="$ul_labels/label[not(@level)]"> <!-- one label for all levels -->
 				<xsl:apply-templates select="$ul_labels/label[not(@level)]" mode="ul_labels"/>
 			</xsl:when>
-			<xsl:when test="$list_level mod 3 = 0">
+			<xsl:when test="$list_level mod 3 = 0 and $ul_labels/label[@level = 3]">
 				<xsl:apply-templates select="$ul_labels/label[@level = 3]" mode="ul_labels"/>
+			</xsl:when>
+			<xsl:when test="$list_level mod 3 = 0">
+				<xsl:apply-templates select="$ul_labels/label[@level = 1]" mode="ul_labels"/>
 			</xsl:when>
 			<xsl:when test="$list_level mod 2 = 0">
 				<xsl:apply-templates select="$ul_labels/label[@level = 2]" mode="ul_labels"/>
