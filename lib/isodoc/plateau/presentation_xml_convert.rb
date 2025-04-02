@@ -75,8 +75,10 @@ module IsoDoc
         elem.previous = ret
       end
 
+      # revert to iso
       def ol_depth(node)
-        @iso.ol_depth(node)
+        depth = node.ancestors("ul, ol").size + 1
+        @counter.ol_type(node, depth) # defined in Xref::Counter
       end
 
       # how many columns in the table?
@@ -131,9 +133,13 @@ module IsoDoc
         end
         if node.at(ns("./note | ./source | ./example | ./fmt-footnote-container"))
           tf = final_tfoot_cell(node)
-          node.xpath(ns("./example")).each { |x| tf.children.last.next = x.remove }
+          node.xpath(ns("./example")).each do |x|
+            tf.children.last.next = x.remove
+          end
           node.xpath(ns("./note")).each { |x| tf.children.last.next = x.remove }
-          node.xpath(ns("./fmt-footnote-container")).each { |x| tf.children.last.next = x.remove }
+          node.xpath(ns("./fmt-footnote-container")).each do |x|
+            tf.children.last.next = x.remove
+          end
           node.xpath(ns("./source")).each do |x|
             tf.children.last.next = x.remove
           end
@@ -156,7 +162,7 @@ module IsoDoc
       def table_key(node)
         node.xpath(ns(".//dd")).each do |dd|
           text_node = dd.xpath(".//text()[normalize-space()]").first or next
-          colon = %w(zh ja ko).include?(@lang) ? "：": ": "
+          colon = %w(zh ja ko).include?(@lang) ? "：" : ": "
           text_node.previous = "<span class='fmt-dt-delim'>#{colon}</span>"
         end
       end

@@ -544,6 +544,9 @@ RSpec.describe IsoDoc do
                 </p>
                 <ul id="_">
                    <li>
+                      <fmt-name>
+                         <semx element="autonum" source="">－</semx>
+                      </fmt-name>
                       <p id="_">List</p>
                    </li>
                 </ul>
@@ -561,7 +564,11 @@ RSpec.describe IsoDoc do
                    ]
                 </p>
                 <ol id="_" type="alphabet">
-                   <li id="_" label="a">
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">a</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
                       <p id="_">List</p>
                    </li>
                 </ol>

@@ -1,4 +1,20 @@
 module IsoDoc
+  module XrefGen
+    module OlTypeProvider
+      # revert to ISO default
+      def ol_type(list, depth)
+        return list["type"].to_sym if list["type"]
+        return :arabic if [2, 7].include? depth
+        return :alphabet if [1, 6].include? depth
+        return :alphabet_upper if [4, 9].include? depth
+        return :roman if [3, 8].include? depth
+        return :roman_upper if [5, 10].include? depth
+
+        :arabic
+      end
+    end
+  end
+
   module Plateau
     class Counter < IsoDoc::XrefGen::Counter
     end
@@ -48,15 +64,14 @@ module IsoDoc
         c = IsoDoc::XrefGen::Counter.new
         j = 0
         nodeSet(clauses).each do |clause|
-        clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
-          labelled_ancestor(t, %w(figure)) and next # do not label nested figure
-          j = subfigure_increment(j, c, t)
-          #label = "#{num}#{hier_separator}#{c.print}"
-          sublabel = subfigure_label(j)
-          figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
+          clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
+            labelled_ancestor(t, %w(figure)) and next # do not label nested figure
+            j = subfigure_increment(j, c, t)
+            sublabel = subfigure_label(j)
+            figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
+          end
+          hierarchical_figure_class_names(clause, num)
         end
-        hierarchical_figure_class_names(clause, num)
-      end
       end
 
       def hierarchical_figure_class_names(clause, num)
@@ -67,9 +82,9 @@ module IsoDoc
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           labelled_ancestor(t, %w(figure)) and next
           j = subfigure_increment(j, c[t["class"]], t)
-          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t), t["class"])
+          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t),
+                        t["class"])
         end
       end
 
