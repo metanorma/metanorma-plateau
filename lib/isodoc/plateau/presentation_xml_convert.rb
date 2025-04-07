@@ -8,11 +8,6 @@ module IsoDoc
         super
       end
 
-      def convert1(docxml, filename, dir)
-        require "debug"; binding.b
-        super
-      end
-
       def toc_title_insert_pt(docxml)
         i = preface_init_insert_pt(docxml) or return nil
         a = i.at(ns("./abstract[last()] | ./clause[@type = 'revhistory']")) and
