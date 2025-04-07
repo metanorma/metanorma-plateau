@@ -13,10 +13,8 @@ module Metanorma
         "ogc"
       end
 
-      def validate(doc)
-        content_validate(doc)
-        schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), "plateau.rng"))
+      def schema_file
+        "plateau.rng"
       end
 
       def org_abbrev
