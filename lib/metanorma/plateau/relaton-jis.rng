@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="biblio-standoc.rng">
-    <define name="BibDataExtensionType">
-      <optional>
-        <attribute name="schema-version"/>
-      </optional>
-      <ref name="doctype"/>
-      <ref name="editorialgroup"/>
-      <ref name="flavor"/>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="stagename"/>
-      </optional>
-    </define>
     <define name="DocumentType">
       <choice>
         <value>japanese-industrial-standard</value>
@@ -43,6 +28,13 @@
       </element>
     </define>
   </include>
+  <define name="BibDataExtensionType" combine="interleave">
+    <optional>
+      <ref name="stagename">
+        <a:documentation>Human-readable name of the stage of publication, corresponding to the numeric stage code given in `/bibdata/status/stage`</a:documentation>
+      </ref>
+    </optional>
+  </define>
   <define name="ISOProjectGroup">
     <zeroOrMore>
       <ref name="agency"/>
