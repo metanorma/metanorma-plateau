@@ -324,7 +324,7 @@ RSpec.describe IsoDoc do
                                      <fmt-xref type="inline" target="ISO712">ISO 712, Section 1</fmt-xref>
                                   </semx>
                                   —
-                                  <semx element="modification" source="_">with adjustments</semx>
+                                  with adjustments
                                </semx>
                             </source>
                          </td>
@@ -770,7 +770,7 @@ presxml = <<~PRESXML
                                      <fmt-xref type="inline" target="ISO712">ISO 712, セクション 1</fmt-xref>
                                   </semx>
                                   —
-                                  <semx element="modification" source="_">with adjustments</semx>
+                                  with adjustments
                                </semx>
                             </source>
                          </td>
