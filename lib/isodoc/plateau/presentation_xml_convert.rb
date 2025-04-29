@@ -24,29 +24,27 @@ module IsoDoc
         ret
       end
 
-      def source(docxml)
+      def source_types(docxml)
         super
-        docxml.xpath(ns("//p/source")).each { |f| parasource(f) }
-        docxml.xpath(ns("//ul/source")).each { |f| listsource(f) }
-        docxml.xpath(ns("//ol/source")).each { |f| listsource(f) }
-        docxml.xpath(ns("//dl/source")).each { |f| listsource(f) }
+        docxml.xpath(ns("//p/fmt-source")).each { |f| parasource(f) }
+        docxml.xpath(ns("//ul/fmt-source")).each { |f| listsource(f, :ul) }
+        docxml.xpath(ns("//ol/fmt-source")).each { |f| listsource(f, :ol) }
+        docxml.xpath(ns("//dl/fmt-source")).each { |f| listsource(f, :dl) }
       end
 
       def parasource(elem)
-        source1(elem)
+        source1(elem, :para)
         # if we haven't already removed it...
         elem.parent or return
-        elem.name = "p"
-        elem.delete("status")
-        elem.parent.next = elem
+        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        elem.parent.next = elem.remove
       end
 
-      def listsource(elem)
-        source1(elem)
+      def listsource(elem, ancestor)
+        source1(elem, ancestor)
         elem.parent or return
-        elem.name = "p"
-        elem.delete("status")
-        elem.parent.next = elem
+        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        elem.parent.next = elem.remove
       end
 
       def middle_title(docxml); end
@@ -124,14 +122,14 @@ module IsoDoc
 
       def table1(node)
         super
-        # move dl, notes, footnotes, source, fmt-footnote-container inside tfoot
+        # move dl, notes, footnotes, fmt-source, fmt-footnote-container inside tfoot
         if node.at(ns("./dl"))
           tf = initial_tfoot_cell(node)
           node.xpath(ns("./dl")).reverse_each do |x|
             tf.children.first.previous = x.remove
           end
         end
-        if node.at(ns("./note | ./source | ./example | ./fmt-footnote-container"))
+        if node.at(ns("./note | ./fmt-source | ./example | ./fmt-footnote-container"))
           tf = final_tfoot_cell(node)
           node.xpath(ns("./example")).each do |x|
             tf.children.last.next = x.remove
@@ -140,7 +138,7 @@ module IsoDoc
           node.xpath(ns("./fmt-footnote-container")).each do |x|
             tf.children.last.next = x.remove
           end
-          node.xpath(ns("./source")).each do |x|
+          node.xpath(ns("./fmt-source")).each do |x|
             tf.children.last.next = x.remove
           end
         end

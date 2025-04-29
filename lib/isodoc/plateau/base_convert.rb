@@ -13,6 +13,19 @@ module IsoDoc
         end
       end
 
+      def clause_etc1(clause, out, num)
+        out.div **attr_code(
+          id: clause["id"],
+          class: clause.name == "definitions" ? "Symbols" : nil,
+        ) do |div|
+          num = num + 1
+          clause_name(clause, clause&.at(ns("./fmt-title")), div, nil)
+          clause.elements.each do |e|
+            parse(e, div) unless %w{fmt-title}.include? e.name
+          end
+        end
+      end
+
       include Init
     end
   end

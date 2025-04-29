@@ -2,10 +2,10 @@ module Metanorma
   module Plateau
     class Converter < Jis::Converter
       def blocksource_cleanup(xmldoc)
-        xmldoc.xpath("//termsource").each do |s|
+        xmldoc.xpath("//source").each do |s|
           p = s.previous_element or next
           %w[p ol ul dl].include? p.name or next
-          s.name = "source"
+          #s.name = "source"
           s.delete("type")
           s.parent = p
         end
