@@ -1,0 +1,4 @@
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/termsource-to-source"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/termsource-to-source"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "features/termsource-to-source"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "features/termsource-to-source"

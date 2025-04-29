@@ -27,26 +27,24 @@ module IsoDoc
       def source_types(docxml)
         super
         docxml.xpath(ns("//p/fmt-source")).each { |f| parasource(f) }
-        docxml.xpath(ns("//ul/fmt-source")).each { |f| listsource(f) }
-        docxml.xpath(ns("//ol/fmt-source")).each { |f| listsource(f) }
-        docxml.xpath(ns("//dl/fmt-source")).each { |f| listsource(f) }
+        docxml.xpath(ns("//ul/fmt-source")).each { |f| listsource(f, :ul) }
+        docxml.xpath(ns("//ol/fmt-source")).each { |f| listsource(f, :ol) }
+        docxml.xpath(ns("//dl/fmt-source")).each { |f| listsource(f, :dl) }
       end
 
       def parasource(elem)
-        source1(elem)
+        source1(elem, :para)
         # if we haven't already removed it...
         elem.parent or return
-        elem.name = "p"
-        elem.delete("status")
-        elem.parent.next = elem
+        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        elem.parent.next = elem.remove
       end
 
-      def listsource(elem)
-        source1(elem)
+      def listsource(elem, ancestor)
+        source1(elem, ancestor)
         elem.parent or return
-        elem.name = "p"
-        elem.delete("status")
-        elem.parent.next = elem
+        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        elem.parent.next = elem.remove
       end
 
       def middle_title(docxml); end

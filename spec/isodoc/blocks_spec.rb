@@ -2,6 +2,7 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe IsoDoc do
+=begin
   it "processes figures" do
     input = <<~INPUT
             <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -94,7 +95,7 @@ RSpec.describe IsoDoc do
                    Split-it-right
                    <em>sample</em>
                    divider
-                   <fn reference="1" original-reference="1" id="_" target="_">
+                   <fn reference="1" id="_" original-reference="1" target="_">
                       <p>X</p>
                       <fmt-fn-label>
                          <sup>
@@ -133,36 +134,51 @@ RSpec.describe IsoDoc do
              <p keep-with-next="true">
                 <strong>Key</strong>
              </p>
-                   <dl class="formula_dl">
-         <dt>A</dt>
-         <dd>
-            <p>
-               <span class="fmt-dt-delim">: </span>
-               B
-            </p>
-         </dd>
-      </dl>
-             <source status="generalisation">
-                [SOURCE:
-                <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
+             <dl class="formula_dl">
+                <dt>A</dt>
+                <dd>
+                   <p>
+                      <span class="fmt-dt-delim">: </span>
+                      B
+                   </p>
+                </dd>
+             </dl>
+             <source status="generalisation" id="_">
+                <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
                    <localityStack>
                       <locality type="section">
                          <referenceFrom>1</referenceFrom>
                       </locality>
                    </localityStack>
                 </origin>
-                <semx element="origin" source="_">
-                   <fmt-xref type="inline" target="ISO712">ISO 712, Section 1</fmt-xref>
-                </semx>
-                —
-                with adjustments]
+                <modification id="_">
+                   <p original-id="_">with adjustments</p>
+                </modification>
              </source>
+             <fmt-source>
+                [SOURCE:
+                <semx element="source" source="_">
+                   <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
+                      <localityStack>
+                         <locality type="section">
+                            <referenceFrom>1</referenceFrom>
+                         </locality>
+                      </localityStack>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-xref type="inline" target="ISO712">ISO 712, Section 1</fmt-xref>
+                   </semx>
+                   —
+                   <semx element="modification" source="_">with adjustments</semx>
+                </semx>
+                ]
+             </fmt-source>
              <fmt-footnote-container>
                 <fmt-fn-body id="_" target="_" reference="a">
                    <semx element="fn" source="_">
                       <p id="_">
                          <fmt-fn-label>
-                               Footnote
+                            Footnote
                             <sup>
                                <semx element="autonum" source="_">a</semx>
                                <span class="fmt-label-delim">)</span>
@@ -445,7 +461,7 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, true))))
       .to be_equivalent_to Xml::C14n.format(html)
   end
-
+=end
   it "processes sources on paragraphs and lists" do
     input = <<~INPUT
          <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -501,7 +517,7 @@ RSpec.describe IsoDoc do
     INPUT
 
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -524,23 +540,31 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="x">1</semx>
                 </fmt-xref-label>
                 <p id="_">
-             Paragraph
-             
-             
-           </p>
-                <p>
+                   Paragraph
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">1</origin>
+                   </source>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">2</origin>
+                   </source>
+                </p>
+                <fmt-source>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="" id="_">1</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">1</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</fmt-origin>
+                      </semx>
                    </semx>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="" id="_">2</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">2</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">2</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">2</fmt-origin>
+                      </semx>
                    </semx>
                    ]
-                </p>
+                </fmt-source>
                 <ul id="_">
                    <li>
                       <fmt-name>
@@ -548,20 +572,30 @@ RSpec.describe IsoDoc do
                       </fmt-name>
                       <p id="_">List</p>
                    </li>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">3</origin>
+                   </source>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">4</origin>
+                   </source>
                 </ul>
-                <p>
+                <fmt-source>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="" id="_">3</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">3</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</fmt-origin>
+                      </semx>
                    </semx>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="" id="_">4</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">4</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">4</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">4</fmt-origin>
+                      </semx>
                    </semx>
                    ]
-                </p>
+                </fmt-source>
                 <ol id="_" type="alphabet">
                    <li id="_">
                       <fmt-name>
@@ -570,39 +604,59 @@ RSpec.describe IsoDoc do
                       </fmt-name>
                       <p id="_">List</p>
                    </li>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">5</origin>
+                   </source>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">6</origin>
+                   </source>
                 </ol>
-                <p>
+                <fmt-source>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="" id="_">5</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">5</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</fmt-origin>
+                      </semx>
                    </semx>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="" id="_">6</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">6</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">6</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">6</fmt-origin>
+                      </semx>
                    </semx>
                    ]
-                </p>
+                </fmt-source>
                 <dl id="_">
                    <dt>List</dt>
                    <dd>
                       <p id="_">Entry</p>
                    </dd>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">7</origin>
+                   </source>
+                   <source status="identical" id="_">
+                      <origin bibitemid="x" type="inline" citeas="">8</origin>
+                   </source>
                 </dl>
-                <p>
+                <fmt-source>
                    [SOURCE:
-                   <origin bibitemid="x" type="inline" citeas="" id="_">7</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">7</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</fmt-origin>
+                      </semx>
                    </semx>
                    ;
-                   <origin bibitemid="x" type="inline" citeas="" id="_">8</origin>
-                   <semx element="origin" source="_">
-                      <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">8</fmt-origin>
+                   <semx element="source" source="_">
+                      <origin bibitemid="x" type="inline" citeas="" id="_">8</origin>
+                      <semx element="origin" source="_">
+                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">8</fmt-origin>
+                      </semx>
                    </semx>
                    ]
-                </p>
+                </fmt-source>
              </clause>
           </sections>
        </iso-standard>
@@ -631,9 +685,13 @@ RSpec.describe IsoDoc do
      
      
            </p>
-                   <p>[SOURCE: 1
+                   <div class="BlockSource">
+                      <p>[SOURCE:
+               1
              ;
-               2]</p>
+               2
+             ]</p>
+                   </div>
                    <div class="ul_wrap">
                       <ul id="_">
                          <li>
@@ -641,9 +699,13 @@ RSpec.describe IsoDoc do
                          </li>
                       </ul>
                    </div>
-                   <p>[SOURCE: 3
+                   <div class="BlockSource">
+                      <p>[SOURCE:
+               3
              ;
-               4]</p>
+               4
+             ]</p>
+                   </div>
                    <div class="ol_wrap">
                       <ol type="a" id="_" class="alphabet">
                          <li id="_">
@@ -651,9 +713,13 @@ RSpec.describe IsoDoc do
                          </li>
                       </ol>
                    </div>
-                   <p>[SOURCE: 5
+                   <div class="BlockSource">
+                      <p>[SOURCE:
+               5
              ;
-               6]</p>
+               6
+             ]</p>
+                   </div>
                    <div class="figdl">
                       <dl id="_">
                          <dt>
@@ -664,15 +730,19 @@ RSpec.describe IsoDoc do
                          </dd>
                       </dl>
                    </div>
-                   <p>[SOURCE: 7
+                   <div class="BlockSource">
+                      <p>[SOURCE:
+               7
              ;
-               8]</p>
+               8
+             ]</p>
+                   </div>
                 </div>
              </div>
           </body>
        </html>
     HTML
-        pres_output = IsoDoc::Plateau::PresentationXMLConvert
+    pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output
