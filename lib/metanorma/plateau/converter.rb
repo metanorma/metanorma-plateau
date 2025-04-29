@@ -25,6 +25,10 @@ module Metanorma
         "MLIT"
       end
 
+      def boilerplate_file(_x_orig)
+        nil
+      end
+
       def init_misc(node)
         super
         @default_doctype = "technical-report"
