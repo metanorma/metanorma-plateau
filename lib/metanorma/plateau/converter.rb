@@ -6,9 +6,6 @@ module Metanorma
     class Converter < Jis::Converter
       register_for "plateau"
 
-      XML_ROOT_TAG = "plateau-standard".freeze
-      XML_NAMESPACE = "https://www.metanorma.org/ns/plateau".freeze
-
       def default_requirement_model
         "ogc"
       end
