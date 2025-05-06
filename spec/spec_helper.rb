@@ -44,6 +44,7 @@ end
 
 def strip_guid(xml)
   xml.gsub(%r{ id="_[^"]+"}, ' id="_"')
+    .gsub(%r{ semx-id="[^"]*"}, '')
     .gsub(%r{ original-id="_[^"]+"}, ' original-id="_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
