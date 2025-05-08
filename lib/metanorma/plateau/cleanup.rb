@@ -5,7 +5,6 @@ module Metanorma
         xmldoc.xpath("//source").each do |s|
           p = s.previous_element or next
           %w[p ol ul dl].include? p.name or next
-          #s.name = "source"
           s.delete("type")
           s.parent = p
         end

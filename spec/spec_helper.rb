@@ -44,6 +44,7 @@ end
 
 def strip_guid(xml)
   xml.gsub(%r{ id="_[^"]+"}, ' id="_"')
+    .gsub(%r{ semx-id="[^"]*"}, '')
     .gsub(%r{ original-id="_[^"]+"}, ' original-id="_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
@@ -153,31 +154,6 @@ end
 
 ASCIIDOCTOR_ISO_DIR = Pathname
   .new(File.dirname(__FILE__)) / "../lib/metanorma/plateau"
-
-=begin
-BOILERPLATE_EN =
-  boilerplate_read(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-en.adoc", encoding: "utf-8")
-      .gsub(/\{\{ agency \}\}/, "JIS")
-      .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
-  ).freeze
-
-BOILERPLATE =
-  boilerplate_read(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-ja.adoc", encoding: "utf-8")
-    .gsub(/\{\{ agency \}\}/, "JIS")
-  .gsub(/\{\{ revdate \}\}/, "")
-  .gsub(/\{\{ announceddate \}\}/, "")
-  .gsub(/\{\{ investigative-organization \}\}/, "日本工業規格")
-  .gsub(/\{\{ investigative-committee \}\}/, "")
-  .gsub(/\{\{ investigative-committee-representative-name \}\}/, "")
-  .gsub(/\{\{ investigative-committee-representative-role \}\}/, "")
-  .gsub(/\{% if.+?\{% endif %\}/, "")
-    .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-    .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
-  ).freeze
-=end
 
 BOILERPLATE = "".freeze
 

@@ -415,7 +415,7 @@ RSpec.describe Metanorma::Plateau do
     INPUT
     output = <<~OUTPUT
       <sections>
-          <clause id="x" inline-header="false" obligation="normative">
+          <clause id="_" anchor="x" inline-header="false" obligation="normative">
             <title>Clause</title>
             <p id="_">
               Paragraph
