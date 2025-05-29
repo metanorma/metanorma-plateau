@@ -36,14 +36,14 @@ module IsoDoc
         source1(elem, :para)
         # if we haven't already removed it...
         elem.parent or return
-        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        # elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
         elem.parent.next = elem.remove
       end
 
       def listsource(elem, ancestor)
         source1(elem, ancestor)
         elem.parent or return
-        #elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
+        # elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
         elem.parent.next = elem.remove
       end
 
@@ -88,33 +88,35 @@ module IsoDoc
         cols
       end
 
-      # if there is already a full-row cell at the start of tfoot, use that to move content into
+      # if there is already a full-row cell at the start of tfoot,
+      # use that to move content into
       # else create a full-row cell at the start of tfoot
       def initial_tfoot_cell(node)
         colspan = table_col_count(node)
         tfoot_start = node.at(ns("./tfoot/tr/td"))
         if !tfoot_start
-          node.at(ns("./tbody")).after("<tfoot><tr><td colspan='#{colspan}'> </td></tr></tfoot>").first
+          node.at(ns("./tbody")).after("<tfoot><tr #{add_id_text}><td #{add_id_text} colspan='#{colspan}'> </td></tr></tfoot>").first
           tfoot_start = node.at(ns("./tfoot/tr/td"))
         end
         if tfoot_start["colspan"] != colspan.to_s
-          tfoot_start.parent.previous = "<tr><td colspan='#{colspan}'> </td></tr>"
+          tfoot_start.parent.previous = "<tr #{add_id_text}><td #{add_id_text} colspan='#{colspan}'> </td></tr>"
           tfoot_start = node.at(ns("./tfoot/tr/td"))
         end
         tfoot_start
       end
 
-      # if there is already a full-row cell at the end of tfoot, use that to move content into
+      # if there is already a full-row cell at the end of tfoot,
+      # use that to move content into
       # else create a full-row cell at the end of tfoot
       def final_tfoot_cell(node)
         colspan = table_col_count(node)
         tfoot_start = node.at(ns("./tfoot/tr[last()]/td"))
         if !tfoot_start
-          node.at(ns("./tbody")).after("<tfoot><tr><td colspan='#{colspan}'> </td></tr></tfoot>").first
+          node.at(ns("./tbody")).after("<tfoot><tr #{add_id_text}><td #{add_id_text} colspan='#{colspan}'> </td></tr></tfoot>").first
           tfoot_start = node.at(ns("./tfoot/tr[last()]/td"))
         end
         if tfoot_start["colspan"] != colspan.to_s
-          tfoot_start.parent.next = "<tr><td colspan='#{colspan}'> </td></tr>"
+          tfoot_start.parent.next = "<tr #{add_id_text}><td #{add_id_text} colspan='#{colspan}'> </td></tr>"
           tfoot_start = node.at(ns("./tfoot/tr[last()]/td"))
         end
         tfoot_start
@@ -122,23 +124,27 @@ module IsoDoc
 
       def table1(node)
         super
-        # move dl, notes, footnotes, fmt-source, fmt-footnote-container inside tfoot
-        if node.at(ns("./dl"))
-          tf = initial_tfoot_cell(node)
-          node.xpath(ns("./dl")).reverse_each do |x|
-            tf.children.first.previous = x.remove
-          end
+        # move dl, notes, footnotes, fmt-source,
+        # fmt-footnote-container inside tfoot
+        table_dl_to_tfoot(node)
+        table_content_to_tfoot(node)
+      end
+
+      def table_dl_to_tfoot(node)
+        node.at(ns("./dl")) or return
+        tf = initial_tfoot_cell(node)
+        node.xpath(ns("./dl")).reverse_each do |x|
+          tf.children.first.previous = x.remove
         end
-        if node.at(ns("./note | ./fmt-source | ./example | ./fmt-footnote-container"))
-          tf = final_tfoot_cell(node)
-          node.xpath(ns("./example")).each do |x|
-            tf.children.last.next = x.remove
-          end
-          node.xpath(ns("./note")).each { |x| tf.children.last.next = x.remove }
-          node.xpath(ns("./fmt-footnote-container")).each do |x|
-            tf.children.last.next = x.remove
-          end
-          node.xpath(ns("./fmt-source")).each do |x|
+      end
+
+      def table_content_to_tfoot(node)
+        node.at(ns("./note | ./fmt-source | ./example | " \
+          "./fmt-footnote-container")) or return
+        tf = final_tfoot_cell(node)
+        %w(example note fmt-footnote-container
+           fmt-source).each do |n|
+          node.xpath(ns("./#{n}")).each do |x|
             tf.children.last.next = x.remove
           end
         end

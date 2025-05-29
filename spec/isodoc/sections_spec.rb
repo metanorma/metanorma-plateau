@@ -136,30 +136,30 @@ RSpec.describe IsoDoc::Plateau do
           <preface>
              <abstract id="abstract1" obligation="informative" displayorder="1">
                 <title id="_">Abstract 1</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Abstract 1</semx>
                 </fmt-title>
                 <p id="A0">This is an abstract</p>
              </abstract>
              <abstract id="abstract2" obligation="informative" displayorder="2">
                 <title id="_">Abstract 2</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Abstract 2</semx>
                 </fmt-title>
                 <p id="A1">This is another abstract</p>
              </abstract>
              <clause id="U" type="revhistory" displayorder="3">
                 <title id="_">Rev History</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Rev History</semx>
                 </fmt-title>
              </clause>
              <clause type="toc" id="_" displayorder="4">
-                <fmt-title depth="1">目　次</fmt-title>
+                <fmt-title id="_" depth="1">目　次</fmt-title>
              </clause>
              <foreword id="foreword" obligation="informative" displayorder="5">
                 <title id="_">Foreword</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Foreword</semx>
                 </fmt-title>
                 <p id="A">This is a preamble</p>
@@ -168,12 +168,12 @@ RSpec.describe IsoDoc::Plateau do
           <sections>
              <introduction id="B" obligation="informative" unnumbered="true" displayorder="6">
                 <title id="_">Introduction</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Introduction</semx>
                 </fmt-title>
                 <clause id="C" inline-header="false" obligation="informative">
                    <title id="_">Introduction Subsection</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <semx element="title" source="_">Introduction Subsection</semx>
                    </fmt-title>
                 </clause>
@@ -181,7 +181,7 @@ RSpec.describe IsoDoc::Plateau do
              </introduction>
              <clause id="D" obligation="normative" type="scope" displayorder="7">
                 <title id="_">Scope</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="D">1</semx>
                    </span>
@@ -198,7 +198,7 @@ RSpec.describe IsoDoc::Plateau do
              </clause>
              <clause id="H" obligation="normative" displayorder="8">
                 <title id="_">Terms, definitions, symbols and abbreviated terms</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="H">2</semx>
                    </span>
@@ -213,7 +213,7 @@ RSpec.describe IsoDoc::Plateau do
                 </fmt-xref-label>
                 <terms id="I" obligation="normative">
                    <title id="_">Normal Terms</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="H">2</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -230,7 +230,7 @@ RSpec.describe IsoDoc::Plateau do
                       <semx element="autonum" source="I">1</semx>
                    </fmt-xref-label>
                    <term id="J">
-                      <fmt-name>
+                      <fmt-name id="_">
                          <span class="fmt-caption-label">
                             <semx element="autonum" source="H">2</semx>
                             <span class="fmt-autonum-delim">.</span>
@@ -262,7 +262,7 @@ RSpec.describe IsoDoc::Plateau do
                 </terms>
                 <definitions id="K">
                    <title id="_">記号</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="H">2</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -286,7 +286,7 @@ RSpec.describe IsoDoc::Plateau do
              </clause>
              <definitions id="L" displayorder="9">
                 <title id="_">記号</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="L">3</semx>
                    </span>
@@ -306,7 +306,7 @@ RSpec.describe IsoDoc::Plateau do
              </definitions>
              <clause id="M" inline-header="false" obligation="normative" displayorder="10">
                 <title id="_">Clause 4</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="M">4</semx>
                    </span>
@@ -321,7 +321,7 @@ RSpec.describe IsoDoc::Plateau do
                 </fmt-xref-label>
                 <clause id="N" inline-header="false" obligation="normative">
                    <title id="_">Introduction</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="M">4</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -340,7 +340,7 @@ RSpec.describe IsoDoc::Plateau do
                 </clause>
                 <clause id="O" inline-header="false" obligation="normative">
                    <title id="_">Clause 4.2</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="M">4</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -360,7 +360,7 @@ RSpec.describe IsoDoc::Plateau do
              </clause>
              <references id="R" normative="true" obligation="informative" displayorder="11">
                 <title id="_">Normative References</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="R">5</semx>
                    </span>
@@ -379,7 +379,7 @@ RSpec.describe IsoDoc::Plateau do
              <title id="_">
                 <strong>Annex</strong>
              </title>
-             <fmt-title>
+             <fmt-title id="_">
                 <span class="fmt-caption-label">
                    <span class="fmt-element-name">附属書</span>
                    <semx element="autonum" source="P">A</semx>
@@ -399,7 +399,7 @@ RSpec.describe IsoDoc::Plateau do
              </fmt-xref-label>
              <clause id="Q" inline-header="false" obligation="normative">
                 <title id="_">Annex A.1</title>
-                <fmt-title depth="2">
+                <fmt-title id="_" depth="2">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="P">A</semx>
                       <span class="fmt-autonum-delim">.</span>
@@ -417,7 +417,7 @@ RSpec.describe IsoDoc::Plateau do
                 </fmt-xref-label>
                 <clause id="Q1" inline-header="false" obligation="normative">
                    <title id="_">Annex A.1a</title>
-                   <fmt-title depth="3">
+                   <fmt-title id="_" depth="3">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="P">A</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -441,7 +441,7 @@ RSpec.describe IsoDoc::Plateau do
              </clause>
              <appendix id="Q2" inline-header="false" obligation="normative" autonum="1">
                 <title id="_">An Appendix</title>
-                <fmt-title depth="2">
+                <fmt-title id="_" depth="2">
                    <span class="fmt-caption-label">
                       <span class="fmt-element-name">Appendix</span>
                       <semx element="autonum" source="Q2">1</semx>
@@ -469,12 +469,12 @@ RSpec.describe IsoDoc::Plateau do
           <bibliography>
              <clause id="S" obligation="informative" displayorder="13">
                 <title id="_">Bibliography</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Bibliography</semx>
                 </fmt-title>
                 <references id="T" normative="false" obligation="informative">
                    <title id="_">Bibliography Subsection</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <semx element="title" source="_">Bibliography Subsection</semx>
                    </fmt-title>
                 </references>
@@ -490,7 +490,7 @@ RSpec.describe IsoDoc::Plateau do
                 <strong>Part du Titre</strong>
              </p>
              <title id="_">Commentary</title>
-             <fmt-title>
+             <fmt-title id="_">
                 <semx element="title" source="_">Commentary</semx>
              </fmt-title>
           </annex>
@@ -693,18 +693,18 @@ RSpec.describe IsoDoc::Plateau do
           <preface>
              <clause id="U" type="revhistory" displayorder="1">
                 <title id="_">Rev History</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Rev History</semx>
                 </fmt-title>
              </clause>
              <clause type="toc" id="_" displayorder="2">
-                <fmt-title depth="1">目　次</fmt-title>
+                <fmt-title id="_" depth="1">目　次</fmt-title>
              </clause>
           </preface>
           <sections>
              <clause id="D" obligation="normative" type="scope" displayorder="3">
                 <title id="_">Scope</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="D">1</semx>
                    </span>
@@ -788,13 +788,13 @@ RSpec.describe IsoDoc::Plateau do
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
              <clause id="S1" obligation="normative" displayorder="2">
                 <title id="_">Scope</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="S1">1</semx>
                    </span>
@@ -809,7 +809,7 @@ RSpec.describe IsoDoc::Plateau do
                 </fmt-xref-label>
                 <clause id="S2" obligation="normative">
                    <title id="_">Scope</title>
-                   <fmt-title depth="2">
+                   <fmt-title id="_" depth="2">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="S1">1</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -827,7 +827,7 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <clause id="S3" obligation="normative">
                       <title id="_">Scope</title>
-                      <fmt-title depth="3">
+                      <fmt-title id="_" depth="3">
                          <span class="fmt-caption-label">
                             <semx element="autonum" source="S1">1</semx>
                             <span class="fmt-autonum-delim">.</span>
@@ -849,7 +849,7 @@ RSpec.describe IsoDoc::Plateau do
                       </fmt-xref-label>
                       <clause id="S4" obligation="normative">
                          <title id="_">Scope</title>
-                         <fmt-title depth="4">
+                         <fmt-title id="_" depth="4">
                             <span class="fmt-caption-label">
                                <semx element="autonum" source="S1">1</semx>
                                <span class="fmt-autonum-delim">.</span>
@@ -875,7 +875,7 @@ RSpec.describe IsoDoc::Plateau do
                          </fmt-xref-label>
                          <clause id="S5" obligation="normative">
                             <title id="_">Scope</title>
-                            <fmt-title depth="5">
+                            <fmt-title id="_" depth="5">
                                <span class="fmt-caption-label">
                                   <semx element="autonum" source="S1">1</semx>
                                   <span class="fmt-autonum-delim">.</span>
@@ -905,7 +905,7 @@ RSpec.describe IsoDoc::Plateau do
                             </fmt-xref-label>
                             <clause id="S6a" obligation="normative">
                                <title id="_">Scope</title>
-                               <fmt-title depth="6">
+                               <fmt-title id="_" depth="6">
                                   <span class="fmt-caption-label">
                                      <semx element="autonum" source="S1">1</semx>
                                      <span class="fmt-autonum-delim">.</span>
@@ -940,7 +940,7 @@ RSpec.describe IsoDoc::Plateau do
                             </clause>
                             <clause id="S6b" obligation="normative">
                                <title id="_">Scope</title>
-                               <fmt-title depth="6">
+                               <fmt-title id="_" depth="6">
                                   <span class="fmt-caption-label">
                                      <semx element="autonum" source="S1">1</semx>
                                      <span class="fmt-autonum-delim">.</span>
@@ -975,7 +975,7 @@ RSpec.describe IsoDoc::Plateau do
                             </clause>
                             <clause id="S6c" obligation="normative">
                                <title id="_">Scope</title>
-                               <fmt-title depth="6">
+                               <fmt-title id="_" depth="6">
                                   <span class="fmt-caption-label">
                                      <semx element="autonum" source="S1">1</semx>
                                      <span class="fmt-autonum-delim">.</span>
@@ -1018,7 +1018,7 @@ RSpec.describe IsoDoc::Plateau do
              <title id="_">
                 <strong>Annex</strong>
              </title>
-             <fmt-title>
+             <fmt-title id="_">
                 <span class="fmt-caption-label">
                    <span class="fmt-element-name">Annex</span>
                    <semx element="autonum" source="P">A</semx>
@@ -1038,7 +1038,7 @@ RSpec.describe IsoDoc::Plateau do
              </fmt-xref-label>
              <clause id="A1" obligation="normative">
                 <title id="_">Scope</title>
-                <fmt-title depth="2">
+                <fmt-title id="_" depth="2">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="P">A</semx>
                       <span class="fmt-autonum-delim">.</span>
@@ -1056,7 +1056,7 @@ RSpec.describe IsoDoc::Plateau do
                 </fmt-xref-label>
                 <clause id="A2" obligation="normative">
                    <title id="_">Scope</title>
-                   <fmt-title depth="3">
+                   <fmt-title id="_" depth="3">
                       <span class="fmt-caption-label">
                          <semx element="autonum" source="P">A</semx>
                          <span class="fmt-autonum-delim">.</span>
@@ -1078,7 +1078,7 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <clause id="A3" obligation="normative">
                       <title id="_">Scope</title>
-                      <fmt-title depth="4">
+                      <fmt-title id="_" depth="4">
                          <span class="fmt-caption-label">
                             <semx element="autonum" source="P">A</semx>
                             <span class="fmt-autonum-delim">.</span>
@@ -1104,7 +1104,7 @@ RSpec.describe IsoDoc::Plateau do
                       </fmt-xref-label>
                       <clause id="A4" obligation="normative">
                          <title id="_">Scope</title>
-                         <fmt-title depth="5">
+                         <fmt-title id="_" depth="5">
                             <span class="fmt-caption-label">
                                <semx element="autonum" source="P">A</semx>
                                <span class="fmt-autonum-delim">.</span>
@@ -1134,7 +1134,7 @@ RSpec.describe IsoDoc::Plateau do
                          </fmt-xref-label>
                          <clause id="A6a" obligation="normative">
                             <title id="_">Scope</title>
-                            <fmt-title depth="6">
+                            <fmt-title id="_" depth="6">
                                <span class="fmt-caption-label">
                                   <semx element="autonum" source="P">A</semx>
                                   <span class="fmt-autonum-delim">.</span>
@@ -1169,7 +1169,7 @@ RSpec.describe IsoDoc::Plateau do
                          </clause>
                          <clause id="A6b" obligation="normative">
                             <title id="_">Scope</title>
-                            <fmt-title depth="6">
+                            <fmt-title id="_" depth="6">
                                <span class="fmt-caption-label">
                                   <semx element="autonum" source="P">A</semx>
                                   <span class="fmt-autonum-delim">.</span>
@@ -1204,7 +1204,7 @@ RSpec.describe IsoDoc::Plateau do
                          </clause>
                          <clause id="A6c" obligation="normative">
                             <title id="_">Scope</title>
-                            <fmt-title depth="6">
+                            <fmt-title id="_" depth="6">
                                <span class="fmt-caption-label">
                                   <semx element="autonum" source="P">A</semx>
                                   <span class="fmt-autonum-delim">.</span>
