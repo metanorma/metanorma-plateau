@@ -416,7 +416,7 @@ RSpec.describe Metanorma::Plateau do
     output = <<~OUTPUT
       <sections>
           <clause id="_" anchor="x" inline-header="false" obligation="normative">
-            <title>Clause</title>
+            <title id="_">Clause</title>
             <p id="_">
               Paragraph
               <source status="identical">
@@ -450,7 +450,7 @@ RSpec.describe Metanorma::Plateau do
             </ol>
             <dl id="_">
               <dt>List</dt>
-              <dd>
+              <dd id="_">
                 <p id="_">Entry</p>
               </dd>
               <source status="identical">
