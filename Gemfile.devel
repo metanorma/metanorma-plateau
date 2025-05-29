@@ -1,0 +1,4 @@
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/missing-id-202505"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/missing-id-202505"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "fix/missing-id-202505"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "fix/missing-id-202505"
