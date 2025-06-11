@@ -91,6 +91,7 @@ module IsoDoc
       # if there is already a full-row cell at the start of tfoot,
       # use that to move content into
       # else create a full-row cell at the start of tfoot
+      # # KILL
       def initial_tfoot_cell(node)
         colspan = table_col_count(node)
         tfoot_start = node.at(ns("./tfoot/tr/td"))
@@ -108,6 +109,7 @@ module IsoDoc
       # if there is already a full-row cell at the end of tfoot,
       # use that to move content into
       # else create a full-row cell at the end of tfoot
+      # # KILL
       def final_tfoot_cell(node)
         colspan = table_col_count(node)
         tfoot_start = node.at(ns("./tfoot/tr[last()]/td"))
@@ -126,10 +128,11 @@ module IsoDoc
         super
         # move dl, notes, footnotes, fmt-source,
         # fmt-footnote-container inside tfoot
-        table_dl_to_tfoot(node)
-        table_content_to_tfoot(node)
+        #table_dl_to_tfoot(node)
+        #table_content_to_tfoot(node)
       end
 
+      # KILL
       def table_dl_to_tfoot(node)
         node.at(ns("./dl")) or return
         tf = initial_tfoot_cell(node)
@@ -138,6 +141,7 @@ module IsoDoc
         end
       end
 
+      # KILL
       def table_content_to_tfoot(node)
         node.at(ns("./note | ./fmt-source | ./example | " \
           "./fmt-footnote-container")) or return
