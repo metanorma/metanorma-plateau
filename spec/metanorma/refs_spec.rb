@@ -9,11 +9,7 @@ RSpec.describe Metanorma::Plateau do
 
   it "sorts bibliography" do
     input = <<~INPUT
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib-cache:
+      #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
 
       [bibliography]
       == Bibliography
@@ -67,19 +63,15 @@ RSpec.describe Metanorma::Plateau do
 
 
     INPUT
-    VCR.use_cassette "sortrefs" do
       out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
       expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
         .map(&:value))
         .to be_equivalent_to ["ref1", "ref3", "ref6", "ref5", "ref2", "ref4"]
-    end
 
-    VCR.use_cassette "sortrefs" do
       out = Nokogiri::XML(Asciidoctor.convert(input
         .sub("== Bibliography", "== Normative References"), *OPTIONS))
       expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
         .map(&:value))
         .to be_equivalent_to ["ref1", "ref3", "ref6", "ref5", "ref2", "ref4"]
-    end
   end
 end
