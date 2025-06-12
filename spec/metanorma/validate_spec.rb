@@ -2,14 +2,6 @@ require "spec_helper"
 require "relaton_iso"
 
 RSpec.describe Metanorma::Plateau do
-  before do
-    # Force to download Relaton index file
-    allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
-      .and_return(false)
-    allow_any_instance_of(Relaton::Index::FileIO).to receive(:check_file)
-      .and_return(nil)
-  end
-
   it "Warns of illegal doctype" do
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
