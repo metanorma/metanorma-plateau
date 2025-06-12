@@ -2,11 +2,6 @@ require "spec_helper"
 require "relaton_iso"
 
 RSpec.describe Metanorma::Plateau do
-  before do
-    allow_any_instance_of(Relaton::Index::FileIO)
-      .to receive(:check_file).and_return(nil)
-  end
-
   it "sorts bibliography" do
     input = <<~INPUT
       #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
