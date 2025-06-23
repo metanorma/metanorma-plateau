@@ -1751,6 +1751,11 @@
 	<!-- Key title after the table -->
 	<!-- <xsl:template match="mn:table/mn:p[@class = 'ListTitle']" priority="2" mode="update_xml_step1"/> -->
 
+	<!-- prevent nested <font_en><font_en>...</font_en></font_en> in the auto-layout table width XSL-FO -->
+	<xsl:template match="*[local-name() = 'font_en'] | *[local-name() = 'font_en_bold']" mode="update_xml_step1">
+		<xsl:copy-of select="."/>
+	</xsl:template>
+
 	<xsl:template match="*[local-name() = 'font_en_bold'][normalize-space() != '']">
 		<xsl:if test="ancestor::*[local-name() = 'td' or local-name() = 'th']">
 			<xsl:choose>
@@ -1785,6 +1790,7 @@
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'font_en'][normalize-space() != '']">
+		<!-- <debug><xsl:copy-of select="ancestor::mn:td"/></debug> -->
 		<xsl:if test="ancestor::*[local-name() = 'td' or local-name() = 'th']">
 			<xsl:choose>
 				<xsl:when test="$isGenerateTableIF = 'false'"><fo:inline font-size="0.1pt"><xsl:text> </xsl:text></fo:inline></xsl:when>
@@ -2982,11 +2988,13 @@
 
 	<xsl:template match="mn:review-container" mode="update_xml_step1"/>
 
-  <xsl:template match="mn:fmt-identifier[not(ancestor::*[local-name() = 'bibdata'])]//text()" mode="update_xml_step1">
-    <xsl:element name="{$element_name_keep-together_within-line}" namespace="{$namespace_full}">
-      <xsl:value-of select="."/>
-    </xsl:element>
-  </xsl:template>
+	<xsl:template match="mn:fmt-identifier[not(ancestor::*[local-name() = 'bibdata'])]//text()" mode="update_xml_step1">
+		<xsl:element name="{$element_name_keep-together_within-line}" namespace="{$namespace_full}">
+			<xsl:value-of select="."/>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="@semx-id | @anchor" mode="update_xml_step1"/>
 
 	<!-- END: update new Presentation XML -->
 
@@ -9328,13 +9336,28 @@
 		<xsl:if test="../mn:author">
 			<xsl:text>, </xsl:text>
 		</xsl:if>
-		<xsl:call-template name="insert_basic_link">
-			<xsl:with-param name="element">
-				<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
-					<xsl:apply-templates/>
-				</fo:basic-link>
-			</xsl:with-param>
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="not(parent::quote)">
+				<fo:block>
+					<xsl:call-template name="insert_basic_link">
+						<xsl:with-param name="element">
+							<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+								<xsl:apply-templates/>
+							</fo:basic-link>
+						</xsl:with-param>
+					</xsl:call-template>
+				</fo:block>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="insert_basic_link">
+					<xsl:with-param name="element">
+						<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+							<xsl:apply-templates/>
+						</fo:basic-link>
+					</xsl:with-param>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="mn:author">
@@ -14700,15 +14723,17 @@
 	</xsl:template>
 
 	<xsl:template name="setNamedDestination">
-		<!-- skip GUID, e.g. _33eac3cb-9663-4291-ae26-1d4b6f4635fc -->
-		<xsl:if test="@id and      normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}')) = 'false'">
-			<fox:destination internal-destination="{@id}"/>
-		</xsl:if>
-		<xsl:for-each select=". | mn:title | mn:name">
-			<xsl:if test="@named_dest">
-				<fox:destination internal-destination="{@named_dest}"/>
+		<xsl:if test="$isGenerateTableIF = 'false'">
+			<!-- skip GUID, e.g. _33eac3cb-9663-4291-ae26-1d4b6f4635fc -->
+			<xsl:if test="@id and       normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}')) = 'false'">
+				<fox:destination internal-destination="{@id}"/>
 			</xsl:if>
-		</xsl:for-each>
+			<xsl:for-each select=". | mn:title | mn:name">
+				<xsl:if test="@named_dest">
+					<fox:destination internal-destination="{@named_dest}"/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="add-letter-spacing">
