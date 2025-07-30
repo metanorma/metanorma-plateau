@@ -240,11 +240,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references subfigures" do
@@ -448,11 +448,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references tables" do
@@ -693,11 +693,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references sections" do
@@ -983,11 +983,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references deep-nested sections" do
@@ -1258,11 +1258,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references lists" do
@@ -1448,11 +1448,11 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "cross-references list items in English and Japanese" do
@@ -1680,11 +1680,11 @@ RSpec.describe IsoDoc do
            </p>
         </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
     input1 = input.sub(%r{<language>en</language>}, "<language>ja</language>")
     output = <<~OUTPUT
        <foreword id="_" displayorder="2">
@@ -1842,10 +1842,10 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(Nokogiri.XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input1, true))
       .at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

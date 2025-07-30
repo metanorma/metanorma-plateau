@@ -194,11 +194,11 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         </bibdata>
       </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <bibdata>
@@ -209,12 +209,12 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         </bibdata>
       </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input.sub!("<language>en</language>",
                                   "<language>ja</language"), true)))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!("</bibdata>", <<~SUB
       </bibdata><metanorma-extension>
@@ -222,13 +222,12 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       </metanorma-extension>
     SUB
     )
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Xml::C14n
-        .format(output
+      .to be_equivalent_to Canon.format(output
         .sub('<date type="created">令和2年10月11日</date>',
              '<date type="created">令和二年十月十一日</date>')
         .sub('<date type="issued">令和2年10月</date>',

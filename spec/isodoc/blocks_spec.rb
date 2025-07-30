@@ -294,14 +294,14 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(pres_output)
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(pres_output)
       .at("//xmlns:clause[@id = 'A']").to_xml)
       .gsub(/&lt;/, "&#x3c;")))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Plateau::HtmlConvert.new({})
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@id = 'A']").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(html)
+      .to be_equivalent_to Canon.format_xml(html)
   end
 
   it "processes subfigures" do
@@ -432,12 +432,12 @@ RSpec.describe IsoDoc do
         pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output
+    expect(Canon.format_xml(strip_guid(pres_output
       .gsub(/&lt;/, "&#x3c;"))))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))))
-      .to be_equivalent_to Xml::C14n.format(html)
+      .to be_equivalent_to Canon.format_xml(html)
   end
 
   it "indent Japanese paragraphs" do
@@ -458,15 +458,15 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true)))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true)))).to be_equivalent_to Canon.format_xml(html)
     presxml.sub!(/<sections>/,
                  "<bibdata><language>ja</language></bibdata><sections>")
     html.gsub!('lang="en"', 'lang="ja"')
       .sub!("<p>ABC</p>", "<p>&#x3000;ABC</p>")
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true))))
-      .to be_equivalent_to Xml::C14n.format(html)
+      .to be_equivalent_to Canon.format_xml(html)
   end
 
   it "processes sources on paragraphs and lists" do
@@ -752,12 +752,12 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output
+    expect(Canon.format_xml(strip_guid(pres_output
       .gsub(/&lt;/, "&#x3c;"))))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))))
-      .to be_equivalent_to Xml::C14n.format(html)
+      .to be_equivalent_to Canon.format_xml(html)
   end
 
   it "do not label figures embedded within other assets" do
@@ -937,10 +937,10 @@ RSpec.describe IsoDoc do
           </annex>
        </standard-document>
     OUTPUT
-    expect(strip_guid(Xml::C14n.format(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(Canon.format_xml(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+      .to be_equivalent_to Canon.format_xml(presxml)
   end
 end
