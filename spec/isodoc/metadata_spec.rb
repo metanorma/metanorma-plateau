@@ -125,50 +125,55 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <stagename abbreviation="WD">Working Draft International Standard</stagename>
           </ext>
         </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <sections> </sections>
       </jis-standard>
     INPUT
     output =
-      {:agency=>"MLIT",
-      :docnumber=>"1000-1.3:2000",
-      :docnumber_undated=>"1000-1.3",
-      :docnumeric=>"1000",
-      :docsubtitle=>"Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; &#xa0;1: Part du Titre",
-      :docsubtitleintro=>"Introduction Fran&#xe7;aise",
-      :docsubtitlemain=>"Titre Principal",
-      :docsubtitlepart=>"Part du Titre",
-      :docsubtitlepartlabel=>"その&#xa0;1",
-      :doctitle=>"Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
-      :doctitleintro=>"Introduction",
-      :doctitlemain=>"Main Title&#x2009;&#x2014;&#x2009;Title",
-      :doctitlepart=>"Title Part",
-      :doctitlepartlabel=>"Part&#xa0;1",
-      :doctype=>"Standard",
-      :doctype_display=>"Standard",
-      :docyear=>"2000",
-      :draft=>"0.3.4",
-      :draftinfo=>" (draft 0.3.4, 2000-01-01)",
-      :edition=>"2",
-      :horizontal=>"true",
-      :"investigative-committee"=>"Committee 123",
-      :"investigative-committee-representative-name"=>"KUROSAWA Akira",
-      :"investigative-committee-representative-role"=>"chairperson",
-      :"investigative-organization"=>"Japanese Industrial Standards Committee",
-      :lang=>"en",
-      :publisher=>"Japanese Industrial Standards",
-      :revdate=>"2000-01-01",
-      :revdate_monthyear=>"January 2000",
-      :sc=>"B 2",
-      :script=>"Latn",
-      :secretariat=>"SECRETARIAT",
-      :stage=>"20",
-      :stage_int=>20,
-      :stageabbr=>"WD",
-      :statusabbr=>"PreWD3",
-      :substage_int=>"20",
-      :tc=>"A 1",
-      :unpublished=>true,
-      :wg=>"C 3"}
+      { agency: "MLIT",
+        docnumber: "1000-1.3:2000",
+        docnumber_undated: "1000-1.3",
+        docnumeric: "1000",
+        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; &#xa0;1: Part du Titre",
+        docsubtitleintro: "Introduction Fran&#xe7;aise",
+        docsubtitlemain: "Titre Principal",
+        docsubtitlepart: "Part du Titre",
+        docsubtitlepartlabel: "その&#xa0;1",
+        doctitle: "Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+        doctitleintro: "Introduction",
+        doctitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
+        doctitlepart: "Title Part",
+        doctitlepartlabel: "Part&#xa0;1",
+        doctype: "Standard",
+        doctype_display: "Standard",
+        docyear: "2000",
+        draft: "0.3.4",
+        draftinfo: " (draft 0.3.4, 2000-01-01)",
+        edition: "2",
+        horizontal: "true",
+        "investigative-committee": "Committee 123",
+        "investigative-committee-representative-name": "KUROSAWA Akira",
+        "investigative-committee-representative-role": "chairperson",
+        "investigative-organization": "Japanese Industrial Standards Committee",
+        lang: "en",
+        publisher: "Japanese Industrial Standards",
+        revdate: "2000-01-01",
+        revdate_monthyear: "January 2000",
+        sc: "B 2",
+        script: "Latn",
+        secretariat: "SECRETARIAT",
+        stage: "20",
+        stage_int: 20,
+        stageabbr: "WD",
+        statusabbr: "PreWD3",
+        substage_int: "20",
+        tc: "A 1",
+        unpublished: true,
+        wg: "C 3" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -233,7 +238,6 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         .sub('<date type="issued">令和2年10月</date>',
              '<date type="issued">令和二年十月</date>')
         .sub('<date type="published">令和2年</date>',
-             '<date type="published">令和二年</date>')
-               )
+             '<date type="published">令和二年</date>'))
   end
 end
