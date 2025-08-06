@@ -330,6 +330,9 @@ RSpec.describe Metanorma::Plateau do
     INPUT
     output = <<~OUTPUT
       <metanorma-extension>
+      <semantic-metadata>
+          <stage-published>true</stage-published>
+      </semantic-metadata>
         <presentation-metadata>
           <name>coverpage-image</name>
           <value>
