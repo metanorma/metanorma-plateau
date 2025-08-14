@@ -163,17 +163,13 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         publisher: "Japanese Industrial Standards",
         revdate: "2000-01-01",
         revdate_monthyear: "January 2000",
-        sc: "B 2",
         script: "Latn",
-        secretariat: "SECRETARIAT",
         stage: "20",
         stage_int: 20,
         stageabbr: "WD",
         statusabbr: "PreWD3",
         substage_int: "20",
-        tc: "A 1",
-        unpublished: true,
-        wg: "C 3" }
+        unpublished: true }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
