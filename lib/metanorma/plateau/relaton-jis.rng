@@ -22,11 +22,6 @@
         </group>
       </element>
     </define>
-    <define name="editorialgroup">
-      <element name="editorialgroup">
-        <ref name="ISOProjectGroup"/>
-      </element>
-    </define>
   </include>
   <define name="BibDataExtensionType" combine="interleave">
     <optional>
@@ -34,28 +29,6 @@
         <a:documentation>Human-readable name of the stage of publication, corresponding to the numeric stage code given in `/bibdata/status/stage`</a:documentation>
       </ref>
     </optional>
-  </define>
-  <define name="ISOProjectGroup">
-    <zeroOrMore>
-      <ref name="agency"/>
-    </zeroOrMore>
-    <oneOrMore>
-      <ref name="technical-committee"/>
-    </oneOrMore>
-    <zeroOrMore>
-      <ref name="subcommittee"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="workgroup"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="secretariat"/>
-    </optional>
-  </define>
-  <define name="agency">
-    <element name="agency">
-      <text/>
-    </element>
   </define>
   <define name="documentnumber">
     <element name="project-number">
@@ -90,21 +63,6 @@
   <define name="tc-documentnumber">
     <element name="tc-document-number">
       <data type="int"/>
-    </element>
-  </define>
-  <define name="subcommittee">
-    <element name="subcommittee">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="workgroup">
-    <element name="workgroup">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="secretariat">
-    <element name="secretariat">
-      <text/>
     </element>
   </define>
   <define name="stagename">
