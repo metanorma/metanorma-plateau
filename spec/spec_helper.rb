@@ -191,12 +191,6 @@ BLANK_HDR = <<~"HDR".freeze
     </copyright>
     <ext>
       <doctype>japanese-industrial-standard</doctype>
-    <editorialgroup>
-      <agency>JIS</agency>
-    </editorialgroup>
-          <approvalgroup>
-        <agency>JIS</agency>
-      </approvalgroup>
            <structuredidentifier>
        <project-number>0</project-number>
      </structuredidentifier>
