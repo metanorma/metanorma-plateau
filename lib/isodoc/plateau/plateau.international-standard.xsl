@@ -3715,6 +3715,7 @@
 	</xsl:attribute-set> <!-- copyright-statement-p-style -->
 
 	<xsl:template name="refine_copyright-statement-p-style">
+
 	</xsl:template>
 
 	<xsl:attribute-set name="license-statement-style">
@@ -3726,6 +3727,10 @@
 
 	<xsl:attribute-set name="license-statement-p-style">
 	</xsl:attribute-set> <!-- license-statement-p-style -->
+
+	<xsl:template name="refine_license-statement-p-style">
+
+	</xsl:template>
 
 	<xsl:attribute-set name="legal-statement-style">
 	</xsl:attribute-set> <!-- legal-statement-style -->
