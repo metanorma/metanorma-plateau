@@ -73,7 +73,7 @@ RSpec.describe IsoDoc do
                 Split-it-right
                 <em>sample</em>
                 divider
-                <fn reference="1" original-reference="1" target="_" original-id="_">
+                <fn reference="1" original-id="_" original-reference="1" id="_" target="_">
                    <p>X</p>
                    <fmt-fn-label>
                       <span class="fmt-caption-label">

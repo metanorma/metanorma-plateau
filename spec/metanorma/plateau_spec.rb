@@ -94,6 +94,14 @@ RSpec.describe Metanorma::Plateau do
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
+      <contributor>
+         <role type="author">
+            <description>secretariat</description>
+         </role>
+         <organization>
+            <name>SECRETARIAT</name>
+         </organization>
+      </contributor>
              <contributor>
                 <role type="publisher"/>
                 <organization>
@@ -201,6 +209,14 @@ RSpec.describe Metanorma::Plateau do
                    <abbreviation>MLIT</abbreviation>
                 </organization>
              </contributor>
+      <contributor>
+         <role type="author">
+            <description>secretariat</description>
+         </role>
+         <organization>
+            <name>SECRETARIAT</name>
+         </organization>
+      </contributor>
              <contributor>
                 <role type="publisher"/>
                 <organization>
