@@ -1227,8 +1227,6 @@
 	<xsl:template match="mn:note[not(ancestor::mn:table)]" priority="2">
 
 		<fo:block-container id="{@id}" xsl:use-attribute-sets="note-style" role="SKIP">
-			<xsl:attribute name="margin-top">6pt</xsl:attribute>
-			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 
 			<xsl:call-template name="setBlockSpanAll"/>
 
@@ -1289,10 +1287,6 @@
 				<fo:block xsl:use-attribute-sets="list-item-label-style">
 
 					<xsl:call-template name="refine_list-item-label-style"/>
-
-					<xsl:if test="$doctype = 'technical-report'">
-						<xsl:attribute name="line-height">1.8</xsl:attribute>
-					</xsl:if>
 
 					<xsl:variable name="list_item_label">
 						<xsl:call-template name="getListItemFormat"/>
@@ -4024,6 +4018,12 @@
 	<xsl:template name="refine_sourcecode-style">
 	</xsl:template> <!-- refine_sourcecode-style -->
 
+	<xsl:attribute-set name="sourcecode-number-style">
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_sourcecode-number-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="sourcecode-name-style">
 		<xsl:attribute name="font-size">11pt</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
@@ -5411,6 +5411,12 @@
 	<xsl:template name="refine_term-name-style">
 	</xsl:template>
 
+	<xsl:attribute-set name="preferred-style">
+	</xsl:attribute-set> <!-- preferred-style -->
+
+	<xsl:template name="refine_preferred-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="preferred-block-style">
 	</xsl:attribute-set> <!-- preferred-block-style -->
 
@@ -6045,6 +6051,12 @@
 
 		<xsl:call-template name="setBordersTableArray"/>
 	</xsl:template> <!-- refine_table-style -->
+
+	<xsl:attribute-set name="table-number-style">
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_table-number-style">
+	</xsl:template>
 
 	<xsl:attribute-set name="table-name-style">
 		<xsl:attribute name="role">Caption</xsl:attribute>
@@ -9341,6 +9353,10 @@
 	</xsl:attribute-set> <!-- note-style -->
 
 	<xsl:template name="refine_note-style">
+		<xsl:if test="not(ancestor::mn:table or ancestor::mn:figure or ancestor::mn:dl)">
+			<xsl:attribute name="margin-top">6pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+		</xsl:if>
 	</xsl:template> <!-- refine_note-style -->
 
 	<xsl:variable name="note-body-indent">10mm</xsl:variable>
@@ -9675,6 +9691,12 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_figure-style">
+	</xsl:template>
+
+	<xsl:attribute-set name="figure-number-style">
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_figure-number-style">
 	</xsl:template>
 
 	<xsl:attribute-set name="figure-name-style">
@@ -11357,6 +11379,9 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_list-item-label-style">
+		<xsl:if test="$doctype = 'technical-report'">
+			<xsl:attribute name="line-height">1.8</xsl:attribute>
+		</xsl:if>
 	</xsl:template> <!-- refine_list-item-label-style -->
 
 	<xsl:attribute-set name="list-item-body-style">
@@ -14502,6 +14527,13 @@
 					<xsl:apply-templates/>
 				</xsl:otherwise>
 			</xsl:choose>
+	</xsl:template>
+
+	<xsl:attribute-set name="clause-style">
+
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_clause-style">
 	</xsl:template>
 
 	<!-- main sections -->
