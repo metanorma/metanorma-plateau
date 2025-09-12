@@ -73,15 +73,8 @@ RSpec.describe IsoDoc do
                 Split-it-right
                 <em>sample</em>
                 divider
-                <fn reference="1" original-id="_" original-reference="1" id="_" target="_">
+                 <fn original-id="_" original-reference="1">
                    <p>X</p>
-                   <fmt-fn-label>
-                      <span class="fmt-caption-label">
-                         <sup>
-                            <semx element="autonum" source="_">1</semx>
-                         </sup>
-                      </span>
-                   </fmt-fn-label>
                 </fn>
              </name>
              <fmt-name id="_">

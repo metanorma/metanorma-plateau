@@ -73,14 +73,14 @@ RSpec.describe Metanorma::Plateau do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="plateau">
                <bibdata type="standard">
-           <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
-           <title language="en" format="text/plain" type="title-intro">Introduction</title>
-           <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-           <title language="en" format="text/plain" type="title-part">Title Part</title>
-           <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
-           <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
-           <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
-           <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+           <title language="en" type="main">Introduction — Main Title — Title — Title Part</title>
+           <title language="en" type="title-intro">Introduction</title>
+           <title language="en" type="title-main">Main Title — Title</title>
+           <title language="en" type="title-part">Title Part</title>
+           <title language="ja" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+           <title language="ja" type="title-intro">Introduction Française</title>
+           <title language="ja" type="title-main">Titre Principal</title>
+           <title language="ja" type="title-part">Part du Titre</title>
            <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
            <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">
@@ -188,14 +188,14 @@ RSpec.describe Metanorma::Plateau do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="plateau">
                <bibdata type="standard">
-           <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
-           <title language="en" format="text/plain" type="title-intro">Introduction</title>
-           <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-           <title language="en" format="text/plain" type="title-part">Title Part</title>
-           <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
-           <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
-           <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
-           <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+           <title language="en" type="main">Introduction — Main Title — Title — Title Part</title>
+           <title language="en" type="title-intro">Introduction</title>
+           <title language="en" type="title-main">Main Title — Title</title>
+           <title language="en" type="title-part">Title Part</title>
+           <title language="ja" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+           <title language="ja" type="title-intro">Introduction Française</title>
+           <title language="ja" type="title-main">Titre Principal</title>
+           <title language="ja" type="title-part">Part du Titre</title>
            <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
            <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">

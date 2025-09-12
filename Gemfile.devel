@@ -1,0 +1,4 @@
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "features/title-type-lang-template"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "features/title-type-lang-template"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/title-type-lang-template"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
