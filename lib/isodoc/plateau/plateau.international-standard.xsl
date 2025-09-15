@@ -2242,6 +2242,7 @@
 	<xsl:variable name="en_dash">–</xsl:variable>
 	<xsl:variable name="em_dash">—</xsl:variable>
 	<xsl:variable name="nonbreak_space_em_dash_space"> — </xsl:variable>
+	<xsl:variable name="nonbreak_space_em_dash"> —</xsl:variable>
 	<xsl:variable name="cr">&#13;</xsl:variable>
 	<xsl:variable name="lf">
 </xsl:variable>
@@ -12265,7 +12266,7 @@
 
 			<fo:list-item>
 				<fo:list-item-label end-indent="label-end()">
-					<fo:block role="SKIP">
+					<fo:block role="SKIP" id="__internal_layout__bibitem_{@id}_{generate-id()}">
 						<fo:inline role="SKIP">
 							<xsl:apply-templates select="mn:biblio-tag">
 								<xsl:with-param name="biblio_tag_part">first</xsl:with-param>
