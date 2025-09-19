@@ -1,14 +1,16 @@
 module Metanorma
   module Plateau
+    # after term def processed, process source after paragraphs so that
+    # the moving of paragraphs there does not nclude termdef
     class Converter < Jis::Converter
-      def blocksource_cleanup(xmldoc)
+      def termdef_cleanup(xmldoc)
+        super
         xmldoc.xpath("//source").each do |s|
           p = s.previous_element or next
           %w[p ol ul dl].include? p.name or next
           s.delete("type")
           s.parent = p
         end
-        super
       end
 
       # Abandoned in favour of JIS ordering

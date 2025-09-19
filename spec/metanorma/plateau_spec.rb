@@ -334,7 +334,8 @@ RSpec.describe Metanorma::Plateau do
          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
+                                                                         *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
   end
@@ -437,6 +438,88 @@ RSpec.describe Metanorma::Plateau do
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:sections").to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
+  end
+
+  it "does not include termdefs in nesting of sources" do
+    input = <<~INPUT
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+
+      [[toc1_05]]
+      [heading=terms and definitions]
+      [source="jpgis_2014"]
+      === 用語と定義
+
+      // TODO: use "SOURCE" to generate
+
+      標準製品仕様書で使用する用語を示す。以下に記載のない用語とその定義については、 +
+      JPGIS 2014付属書5（規定）定義に従う。 +
+
+      // NOTE: 標準製品仕様書は、i-UR及びCityGMLから3D都市モデルとして必要な地物型等をi-UR及びCityGMLと矛盾なく抽出した、i-UR及びCityGMLのプロファイルである。
+      また、各都市で作成される拡張製品仕様書も、i-UR及びCityGMLのプロファイルでなくてはならない。
+
+      ==== BIM（Building Information Modeling）
+
+      コンピュータ上に作成した主に三次元の形状情報に加え、室等の名称・⾯積、材料・部材の仕様・性能、仕上げ等、建築物の属性情報を併せ持つ建築物情報モデルを構築
+      するもの。
+
+      [.source]
+      <<plateau_003_annex>>
+      // ［出典　3D都市モデル整備のためのBIM活⽤マニュアル第3.0版］
+
+      [bibliography]
+      == Bibliography
+      * [[[plateau_003_annex,PLATEAU Handbook #03-1]]],
+      span:title[3D都市モデル整備のためのBIM活用マニュアル（第3.0版）（別冊）3D都市モデルとの連携のためのBIMモデルIDM・MVD].
+      span:organization[国土交通省 都市局].
+      span:docid.PLATEAU[PLATEAU Handbook #03-1].
+      span:edition[第2.0版].
+      span:date[2023-03-27].
+      span:uri.citation[https://www.mlit.go.jp/plateau/libraries/handbooks/].
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+         <terms id="_" anchor="toc1_05" obligation="normative">
+            <title id="_">用語及び定義</title>
+            <p id="_">
+               この規格で用いる主な用語及び定義は，次によるほか，
+               <xref target="jpgis_2014"/>
+               による。
+            </p>
+            <p id="_">
+               標準製品仕様書で使用する用語を示す。以下に記載のない用語とその定義については、
+               <br/>
+               JPGIS 2014付属書5（規定）定義に従う。
+               <br/>
+            </p>
+            <p id="_">また、各都市で作成される拡張製品仕様書も、i-UR及びCityGMLのプロファイルでなくてはならない。</p>
+            <term id="_" anchor="term-BIM_Building-Information-Modeling_">
+               <preferred>
+                  <expression>
+                     <name>BIM（Building Information Modeling）</name>
+                  </expression>
+               </preferred>
+               <definition id="_">
+                  <verbal-definition id="_">
+                     <p id="_">コンピュータ上に作成した主に三次元の形状情報に加え、室等の名称・⾯積、材料・部材の仕様・性能、仕上げ等、建築物の属性情報を併せ持つ建築物情報モデルを構築するもの。</p>
+                  </verbal-definition>
+               </definition>
+               <source status="identical" type="authoritative">
+                  <origin bibitemid="plateau_003_annex" type="inline" citeas="PLATEAU Handbook #03-1"/>
+               </source>
+            </term>
+         </terms>
+      </sections>
+    OUTPUT
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+          .convert(input, *OPTIONS))
+          .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
   end
 
