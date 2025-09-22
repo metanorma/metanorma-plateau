@@ -100,6 +100,11 @@ module IsoDoc
         end
       end
 
+      def termsource_label(elem, sources)
+        colon = %w(zh ja ko).include?(@lang) ? "：" : ": "
+        elem.replace(l10n("[#{@i18n.source}#{colon}#{sources}]"))
+      end
+
       include Init
     end
   end
