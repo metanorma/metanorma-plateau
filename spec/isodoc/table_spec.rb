@@ -794,7 +794,7 @@ RSpec.describe IsoDoc do
                                </fmt-fn-body>
                             </fmt-footnote-container>
                             <fmt-source>
-                               出典:
+                               出典：
                                <semx element="source" source="_">
                                   <origin bibitemid="ISO712" type="inline" citeas="" id="_">
                                      <localityStack>
@@ -804,7 +804,7 @@ RSpec.describe IsoDoc do
                                      </localityStack>
                                   </origin>
                                   <semx element="origin" source="_">
-                                     <fmt-xref type="inline" target="ISO712">ISO 712, セクション 1</fmt-xref>
+                                     <fmt-xref type="inline" target="ISO712">ISO 712, セクション1</fmt-xref>
                                   </semx>
                                   —
                                   <semx element="modification" source="_">with adjustments</semx>
@@ -1000,8 +1000,8 @@ RSpec.describe IsoDoc do
                                </aside>
                                <div class="BlockSource">
                                   <p>
-                                     出典:
-                                     <a href="#ISO712">ISO 712, セクション 1</a>
+                                     出典：
+                                     <a href="#ISO712">ISO 712, セクション1</a>
                                      — with adjustments
                                   </p>
                                </div>

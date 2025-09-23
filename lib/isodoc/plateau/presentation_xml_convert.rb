@@ -36,14 +36,12 @@ module IsoDoc
         source1(elem, :para)
         # if we haven't already removed it...
         elem.parent or return
-        # elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
         elem.parent.next = elem.remove
       end
 
       def listsource(elem, ancestor)
         source1(elem, ancestor)
         elem.parent or return
-        # elem.parent.next = "<p>#{to_xml(elem.remove)}</p>"
         elem.parent.next = elem.remove
       end
 
@@ -100,7 +98,9 @@ module IsoDoc
         end
       end
 
+      # KILL
       def termsource_label(elem, sources)
+        return super
         colon = %w(zh ja ko).include?(@lang) ? "：" : ": "
         elem.replace(l10n("[#{@i18n.source}#{colon}#{sources}]"))
       end
