@@ -98,11 +98,9 @@ module IsoDoc
         end
       end
 
-      # KILL
-      def termsource_label(elem, sources)
-        return super
-        colon = %w(zh ja ko).include?(@lang) ? "：" : ": "
-        elem.replace(l10n("[#{@i18n.source}#{colon}#{sources}]"))
+      def source1(a, b)
+        require "debug"; binding.b
+super
       end
 
       include Init
