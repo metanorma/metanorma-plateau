@@ -98,11 +98,6 @@ module IsoDoc
         end
       end
 
-      def source1(a, b)
-        require "debug"; binding.b
-super
-      end
-
       include Init
     end
   end
