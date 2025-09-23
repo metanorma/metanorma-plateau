@@ -252,6 +252,8 @@
 						<xsl:with-param name="num" select="$num"/>
 					</xsl:call-template>
 
+					<xsl:call-template name="inner-cover-page"/>
+
 					<!-- ========================== -->
 					<!-- Preface and contents pages -->
 					<!-- ========================== -->
@@ -722,6 +724,9 @@
 			</fo:flow>
 		</fo:page-sequence>
 	</xsl:template> <!-- cover-page -->
+
+	<xsl:template name="inner-cover-page">
+	</xsl:template>
 
 	<xsl:template match="mn:p[@class = 'JapaneseIndustrialStandard']" priority="4"/>
 	<xsl:template match="mn:p[@class = 'StandardNumber']" priority="4"/>
