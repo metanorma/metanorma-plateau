@@ -3774,7 +3774,6 @@
 	</xsl:attribute-set> <!-- feedback-statement-title-style -->
 
 	<xsl:template name="refine_feedback-statement-title-style">
-
 	</xsl:template>
 
 	<xsl:attribute-set name="feedback-statement-p-style">
