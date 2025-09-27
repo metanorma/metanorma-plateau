@@ -58,15 +58,15 @@ RSpec.describe Metanorma::Plateau do
 
 
     INPUT
-      out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
-      expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
-        .map(&:value))
-        .to be_equivalent_to ["ref1", "ref3", "ref6", "ref5", "ref2", "ref4"]
+    out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
+      .map(&:value))
+      .to be_equivalent_to ["ref1", "ref3", "ref6", "ref5", "ref2", "ref4"]
 
-      out = Nokogiri::XML(Asciidoctor.convert(input
-        .sub("== Bibliography", "== Normative References"), *OPTIONS))
-      expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
-        .map(&:value))
-        .to be_equivalent_to ["ref1", "ref3", "ref6", "ref5", "ref2", "ref4"]
+    out = Nokogiri::XML(Asciidoctor.convert(input
+      .sub("== Bibliography", "== Normative References"), *OPTIONS))
+    expect(out.xpath("//xmlns:references/xmlns:bibitem/@anchor")
+      .map(&:value))
+      .to be_equivalent_to ["ref1", "ref5", "ref3", "ref6", "ref2", "ref4"]
   end
 end
