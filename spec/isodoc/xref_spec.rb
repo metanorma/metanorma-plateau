@@ -1689,7 +1689,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
        <foreword id="_" displayorder="2">
           <title id="_">まえがき</title>
-          <fmt-title id="_" depth="1">
+          <fmt-title depth="1" id="_">
              <semx element="title" source="_">まえがき</semx>
           </fmt-title>
           <p>
@@ -1699,6 +1699,7 @@ RSpec.describe IsoDoc do
                    <span class="fmt-xref-container">
                       <semx element="acknowledgements" source="intro">謝辞</semx>
                    </span>
+                    
                    <semx element="autonum" source="N1">a</semx>
                    <span class="fmt-autonum-delim">)</span>
                 </fmt-xref>
@@ -1709,6 +1710,7 @@ RSpec.describe IsoDoc do
                    <span class="fmt-xref-container">
                       <semx element="acknowledgements" source="intro">謝辞</semx>
                    </span>
+                    
                    <semx element="autonum" source="N1">a</semx>
                    <span class="fmt-autonum-delim">)</span>
                    <span class="fmt-conn">の</span>
@@ -1722,6 +1724,7 @@ RSpec.describe IsoDoc do
                    <span class="fmt-xref-container">
                       <semx element="acknowledgements" source="intro">謝辞</semx>
                    </span>
+                    
                    <semx element="autonum" source="N1">a</semx>
                    <span class="fmt-autonum-delim">)</span>
                    <span class="fmt-conn">の</span>
@@ -1747,6 +1750,7 @@ RSpec.describe IsoDoc do
                 <fmt-xref target="N">
                    <span class="fmt-xref-container">
                       <span class="fmt-element-name">箇条</span>
+                       
                       <semx element="autonum" source="scope">1</semx>
                    </span>
                    <semx element="autonum" source="N">i</semx>
@@ -1763,6 +1767,7 @@ RSpec.describe IsoDoc do
                    </span>
                    <span class="fmt-conn">の</span>
                    <span class="fmt-element-name">リスト</span>
+                    
                    <semx element="autonum" source="note1l">1</semx>
                    <span class="fmt-conn">の</span>
                    <semx element="autonum" source="note1">a</semx>
@@ -1779,6 +1784,7 @@ RSpec.describe IsoDoc do
                    </span>
                    <span class="fmt-conn">の</span>
                    <span class="fmt-element-name">リスト</span>
+                    
                    <semx element="autonum" source="note2l">2</semx>
                    <span class="fmt-conn">の</span>
                    <semx element="autonum" source="note2">I</semx>
@@ -1807,6 +1813,7 @@ RSpec.describe IsoDoc do
                    </span>
                    <span class="fmt-conn">の</span>
                    <span class="fmt-element-name">リスト</span>
+                    
                    <semx element="autonum" source="Anote1l">1</semx>
                    <span class="fmt-conn">の</span>
                    <semx element="autonum" source="Anote1">iv</semx>
@@ -1823,6 +1830,7 @@ RSpec.describe IsoDoc do
                    </span>
                    <span class="fmt-conn">の</span>
                    <span class="fmt-element-name">リスト</span>
+                    
                    <semx element="autonum" source="Anote2l">2</semx>
                    <span class="fmt-conn">の</span>
                    <semx element="autonum" source="Anote2">a</semx>

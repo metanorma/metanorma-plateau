@@ -587,6 +587,7 @@ RSpec.describe IsoDoc do
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">箇条</span>
+                    
                    <semx element="autonum" source="A">1</semx>
                 </fmt-xref-label>
                 <table id="tableD-1" alt="tool tip" summary="long desc" width="70%" keep-with-next="true" keep-lines-together="true" autonum="1-1">
@@ -609,6 +610,7 @@ RSpec.describe IsoDoc do
                    <fmt-name id="_">
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">表</span>
+                          
                          <semx element="autonum" source="A">1</semx>
                          <span class="fmt-autonum-delim">-</span>
                          <semx element="autonum" source="tableD-1">1</semx>
@@ -633,6 +635,7 @@ RSpec.describe IsoDoc do
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">表</span>
+                       
                       <semx element="autonum" source="A">1</semx>
                       <span class="fmt-autonum-delim">-</span>
                       <semx element="autonum" source="tableD-1">1</semx>
@@ -794,7 +797,7 @@ RSpec.describe IsoDoc do
                                </fmt-fn-body>
                             </fmt-footnote-container>
                             <fmt-source>
-                               出典：
+                               出典： 
                                <semx element="source" source="_">
                                   <origin bibitemid="ISO712" type="inline" citeas="" id="_">
                                      <localityStack>
@@ -804,9 +807,9 @@ RSpec.describe IsoDoc do
                                      </localityStack>
                                   </origin>
                                   <semx element="origin" source="_">
-                                     <fmt-xref type="inline" target="ISO712">ISO 712, セクション1</fmt-xref>
+                                     <fmt-xref type="inline" target="ISO712">ISO 712、  第1 セクション</fmt-xref>
                                   </semx>
-                                  —
+                                  ⸺
                                   <semx element="modification" source="_">with adjustments</semx>
                                </semx>
                             </fmt-source>
@@ -848,9 +851,11 @@ RSpec.describe IsoDoc do
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">箇条</span>
+                    
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
+                   <biblio-tag>ISO 712, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -864,7 +869,6 @@ RSpec.describe IsoDoc do
                          <name>International Organization for Standardization</name>
                       </organization>
                    </contributor>
-                   <biblio-tag>ISO 712, </biblio-tag>
                 </bibitem>
              </references>
           </sections>
@@ -896,7 +900,7 @@ RSpec.describe IsoDoc do
                          <tr>
                             <td colspan="5" style="" scope="colgroup">
                                <p class="TableTitle" style="text-align:center;;">
-                                  　 表 1 - 1  — Repeatability and reproducibility of
+                                  　 表 1-1 — Repeatability and reproducibility of
                                   <i>husked</i>
                                   rice yield
                                   <a href="#tableD-11" class="TableFootnoteRef">1)</a>
@@ -1000,9 +1004,9 @@ RSpec.describe IsoDoc do
                                </aside>
                                <div class="BlockSource">
                                   <p>
-                                     出典：
-                                     <a href="#ISO712">ISO 712, セクション1</a>
-                                     — with adjustments
+                                     出典： 
+                                     <a href="#ISO712">ISO 712、  第1 セクション</a>
+                                     ⸺ with adjustments
                                   </p>
                                </div>
                             </td>
