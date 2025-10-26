@@ -221,7 +221,7 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
-                         , modified —
+                         , modified, 
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
                       ]
@@ -429,7 +429,7 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
-                         , modified —
+                         , modified, 
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
                       ]
@@ -745,7 +745,7 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">第3.1</span>
                             </fmt-origin>
                          </semx>
-                         、を変更 —
+                          、を一部変更し、
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
                       ］
@@ -955,7 +955,7 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">第3.1</span>
                             </fmt-origin>
                          </semx>
-                         、を変更 —
+                          、を一部変更し、
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
                       ］

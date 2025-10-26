@@ -336,7 +336,7 @@ RSpec.describe IsoDoc do
                                   <semx element="origin" source="_">
                                      <fmt-xref type="inline" target="ISO712">ISO 712,  Section 1</fmt-xref>
                                   </semx>
-                                  —
+                                  ,
                                   <semx element="modification" source="_">with adjustments</semx>
                                </semx>
                             </fmt-source>
@@ -529,7 +529,7 @@ RSpec.describe IsoDoc do
                                   <p>
                                      SOURCE:
                                      <a href="#ISO712">ISO 712, Section 1</a>
-                                     — with adjustments
+                                     , with adjustments
                                   </p>
                                </div>
                             </td>
@@ -809,7 +809,7 @@ RSpec.describe IsoDoc do
                                   <semx element="origin" source="_">
                                      <fmt-xref type="inline" target="ISO712">ISO 712、  第1 セクション</fmt-xref>
                                   </semx>
-                                  ⸺
+                                  、
                                   <semx element="modification" source="_">with adjustments</semx>
                                </semx>
                             </fmt-source>
@@ -1006,7 +1006,7 @@ RSpec.describe IsoDoc do
                                   <p>
                                      出典： 
                                      <a href="#ISO712">ISO 712、  第1 セクション</a>
-                                     ⸺ with adjustments
+                                     、with adjustments
                                   </p>
                                </div>
                             </td>

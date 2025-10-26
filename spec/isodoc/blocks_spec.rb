@@ -166,7 +166,7 @@ RSpec.describe IsoDoc do
                    <semx element="origin" source="_">
                       <fmt-xref type="inline" target="ISO712">ISO 712, Section 1</fmt-xref>
                    </semx>
-                   —
+                   ,
                    <semx element="modification" source="_">with adjustments</semx>
                 </semx>
                 )
@@ -252,7 +252,7 @@ RSpec.describe IsoDoc do
                 <p>
                    (SOURCE:
                    <a href="#ISO712">ISO 712, Section 1</a>
-                   — with adjustments)
+                   , with adjustments)
                 </p>
              </div>
              <aside id="fn:figureA-1a" class="footnote">
