@@ -1,8 +1,9 @@
+gem "isodoc-i18n", git: "https://github.com/metanorma/isodoc-i18n", branch: "main"
 gem "html2doc", git: "https://github.com/metanorma/html2doc", branch: "main"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/log-config"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/configure-cite"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/log-config"
 gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "features/log-config"
-gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "features/log-config"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "features/configure-cite"
 gem "metanorma-utils", git: "https://github.com/metanorma/metanorma-utils", branch: "features/log-config"
-
+gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "features/configure-cite"
 

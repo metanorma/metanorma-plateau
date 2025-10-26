@@ -2,3 +2,8 @@ doctype_dict:
   handbook: ガイドブック
   annex: 別冊
   technical-report: 技術資料
+punct:
+  open-title: 「
+  close-title: 」
+  open-secondary-title:  『
+  close-secondary-title: 』

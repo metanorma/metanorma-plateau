@@ -334,7 +334,7 @@ RSpec.describe IsoDoc do
                                      </localityStack>
                                   </origin>
                                   <semx element="origin" source="_">
-                                     <fmt-xref type="inline" target="ISO712">ISO 712, Section 1</fmt-xref>
+                                     <fmt-xref type="inline" target="ISO712">ISO 712,  Section 1</fmt-xref>
                                   </semx>
                                   —
                                   <semx element="modification" source="_">with adjustments</semx>
@@ -381,6 +381,7 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
+                   <biblio-tag>ISO 712, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -394,7 +395,6 @@ RSpec.describe IsoDoc do
                          <name>International Organization for Standardization</name>
                       </organization>
                    </contributor>
-                   <biblio-tag>ISO 712, </biblio-tag>
                 </bibitem>
              </references>
           </sections>
@@ -857,7 +857,7 @@ RSpec.describe IsoDoc do
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>ISO 712, </biblio-tag>
                    <formattedref>
-                      <span class="stddocTitle">Cereals and cereal products</span>
+                      <span class="stddocTitle">「Cereals and cereal products」</span>
                    </formattedref>
                    <title format="text/plain">Cereals or cereal products</title>
                    <title type="main" format="text/plain">Cereals and cereal products</title>
@@ -1026,7 +1026,7 @@ RSpec.describe IsoDoc do
                    <h1>2　Normative References</h1>
                    <p id="ISO712" class="NormRef">
                       ISO 712,
-                      <span class="stddocTitle">Cereals and cereal products</span>
+                      <span class="stddocTitle">「Cereals and cereal products」</span>
                    </p>
                 </div>
              </div>

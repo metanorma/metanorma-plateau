@@ -556,7 +556,7 @@ RSpec.describe IsoDoc do
                          <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</fmt-origin>
                       </semx>
                    </semx>
-                   ;
+                   /
                    <semx element="source" source="_">
                       <origin bibitemid="x" type="inline" citeas="" id="_">2</origin>
                       <semx element="origin" source="_">
@@ -587,7 +587,7 @@ RSpec.describe IsoDoc do
                          <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</fmt-origin>
                       </semx>
                    </semx>
-                   ;
+                   /
                    <semx element="source" source="_">
                       <origin bibitemid="x" type="inline" citeas="" id="_">4</origin>
                       <semx element="origin" source="_">
@@ -619,7 +619,7 @@ RSpec.describe IsoDoc do
                          <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</fmt-origin>
                       </semx>
                    </semx>
-                   ;
+                   /
                    <semx element="source" source="_">
                       <origin bibitemid="x" type="inline" citeas="" id="_">6</origin>
                       <semx element="origin" source="_">
@@ -648,7 +648,7 @@ RSpec.describe IsoDoc do
                          <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</fmt-origin>
                       </semx>
                    </semx>
-                   ;
+                   /
                    <semx element="source" source="_">
                       <origin bibitemid="x" type="inline" citeas="" id="_">8</origin>
                       <semx element="origin" source="_">
@@ -688,7 +688,7 @@ RSpec.describe IsoDoc do
                    <div class="BlockSource">
                       <p>(SOURCE:
                1
-             ;
+             /
                2
              )</p>
                    </div>
@@ -702,7 +702,7 @@ RSpec.describe IsoDoc do
                    <div class="BlockSource">
                       <p>(SOURCE:
                3
-             ;
+             /
                4
              )</p>
                    </div>
@@ -716,7 +716,7 @@ RSpec.describe IsoDoc do
                    <div class="BlockSource">
                       <p>(SOURCE:
                5
-             ;
+             /
                6
              )</p>
                    </div>
@@ -733,7 +733,7 @@ RSpec.describe IsoDoc do
                    <div class="BlockSource">
                       <p>(SOURCE:
                7
-             ;
+             /
                8
              )</p>
                    </div>
