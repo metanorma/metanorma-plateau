@@ -39,8 +39,7 @@ module Metanorma
 
       def doctype_validate(_xmldoc)
         %w(handbook technical-report annex).include? @doctype or
-          @log.add("Document Attributes", nil,
-                   "#{@doctype} is not a recognised document type")
+          @log.add("PLATEAU_1", nil, params: [@doctype])
       end
 
       def metadata_id(node, xml)
@@ -100,3 +99,5 @@ module Metanorma
     end
   end
 end
+
+require_relative "log"
