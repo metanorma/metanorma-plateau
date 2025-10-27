@@ -106,8 +106,8 @@ module IsoDoc
         @lang == "ja" ? "／" : "/"
       end
 
-       def termsource_mod_text_delim(_elem)
-        @lang == "ja" ? "、": ", "
+      def termsource_mod_text_delim(_elem)
+        @lang == "ja" ? "、" : ", "
       end
 
       include Init
