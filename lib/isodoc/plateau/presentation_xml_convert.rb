@@ -1,4 +1,5 @@
 require_relative "init"
+require_relative "../../relaton/render-plateau/general"
 
 module IsoDoc
   module Plateau

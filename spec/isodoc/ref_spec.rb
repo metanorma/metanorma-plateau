@@ -488,7 +488,7 @@ RSpec.describe IsoDoc do
                       ISO 1234 / B,
                    </biblio-tag>
                    <formattedref>
-                      Wozniak S., Jobs S., &amp; Hoover J.E..
+                      Wozniak S., Jobs S., &amp; Hoover J.E.
                       <em>Work</em>
                       . Collected Essays UNICEF). Fourth edition. (Bibliographers Anonymous). Geneva: International Standardization Organization. 1996. vol. 4 p. 19. Available from:
                       <span class="biburl">
@@ -983,7 +983,7 @@ RSpec.describe IsoDoc do
                       [1]
                       <tab/>
                    </biblio-tag>
-                   <formattedref>「Chemicals for analytical laboratory use」。都市はありません。：日付なし。</formattedref>
+                   <formattedref>「Chemicals for analytical laboratory use」、都市はありません。：日付なし</formattedref>
                    <title format="text/plain">Chemicals for analytical laboratory use</title>
                    <docidentifier type="metanorma-ordinal">[1]</docidentifier>
                    <docidentifier type="ISBN">ISBN</docidentifier>
@@ -1001,9 +1001,9 @@ RSpec.describe IsoDoc do
                       ISO 1234 / B,
                    </biblio-tag>
                    <formattedref>
-                      Wozniak S.、 Jobs S.、 Hoover J.E.。『
+                      Wozniak S.、 Jobs S.、 Hoover J.E.、『
                       <em>Work</em>
-                      』。 Collected Essays UNICEF）。第4版。（Bibliographers Anonymous）。 Geneva： International Standardization Organization。 1996。巻4 19頁。入手先： 
+                      』、 Collected Essays UNICEF）、第4版、（Bibliographers Anonymous）、 Geneva： International Standardization Organization、 1996、巻4 19頁、入手先： 
                       <span class="biburl">
                          <link target="http://www.example.com" id="_">http://www.example.com</link>
                          <semx element="link" source="_">
@@ -1120,7 +1120,7 @@ RSpec.describe IsoDoc do
                       [3]
                       <tab/>
                    </biblio-tag>
-                   <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）。『Facets of Algebraic Geometry： A Collection in Honor of William Fulton's 80th Birthday』。「London Mathematical Society Lecture Note Series （N。S。）」。 2022、巻1 いいえ7、 89〜112頁</formattedref>
+                   <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）、『Facets of Algebraic Geometry： A Collection in Honor of William Fulton's 80th Birthday』、「London Mathematical Society Lecture Note Series （N。S。）」、 2022、巻1 いいえ7、 89〜112頁</formattedref>
                    <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
                    <docidentifier type="metanorma-ordinal">[3]</docidentifier>
                    <docidentifier type="DOI">DOI https://doi.org/10.1017/9781108877831</docidentifier>
