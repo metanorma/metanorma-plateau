@@ -17,6 +17,7 @@ RSpec.describe IsoDoc do
               <eref bibitemid="ref1"/>
               <eref bibitemid="ref10"/>
               <eref bibitemid="ref12"/>
+              <eref bibitemid="A"/>
             </p>
           </foreword>
         </preface>
@@ -100,8 +101,7 @@ RSpec.describe IsoDoc do
                <em>Work</em>
              </title>
              <uri type="citation">http://www.example.com</uri>
-             <docidentifier type="ISO">ISO 1234</docidentifier>
-             <docidentifier>B</docidentifier>
+             <docidentifier type="title">Work</docidentifier>
              <date type="issued">
                <from>1991</from>
                <to>1992</to>
@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <language current="true">en</language>
           </bibdata>
@@ -339,6 +339,12 @@ RSpec.describe IsoDoc do
                    <semx element="eref" source="_">
                       <fmt-xref target="ref12">Citn</fmt-xref>
                    </semx>
+                               <eref bibitemid="A" id="_"/>
+            <semx element="eref" source="_">
+                           <fmt-link target="http://www.example.com">
+                  <em>Work</em>
+               </fmt-link>
+            </semx>
                 </p>
              </foreword>
           </preface>
@@ -485,7 +491,6 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [2]
                       <tab/>
-                      ISO 1234 / B,
                    </biblio-tag>
                    <formattedref>
                       Wozniak S., Jobs S., &amp; Hoover J.E.
@@ -503,10 +508,7 @@ RSpec.describe IsoDoc do
                    </title>
                    <uri type="citation">http://www.example.com</uri>
                    <docidentifier type="metanorma-ordinal">[2]</docidentifier>
-                   <docidentifier type="ISO">ISO 1234</docidentifier>
-                   <docidentifier>B</docidentifier>
-                   <docidentifier scope="biblio-tag">ISO 1234</docidentifier>
-                   <docidentifier scope="biblio-tag">B</docidentifier>
+                   <docidentifier type="title">Work</docidentifier>
                    <date type="issued">
                       <from>1991</from>
                       <to>1992</to>
@@ -849,8 +851,16 @@ RSpec.describe IsoDoc do
                    </semx>
                    <eref bibitemid="ref12" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ref12">Citn</fmt-xref>
+                   <fmt-link target="http://www.example.com">
+                  「
+                  <em>Work</em>
+                  」
+               </fmt-link>
                    </semx>
+                               <eref bibitemid="A" id="_"/>
+            <semx element="eref" source="_">
+               <fmt-link target="http://www.example.com">Work</fmt-link>
+            </semx>
                 </p>
              </foreword>
           </preface>
@@ -998,7 +1008,6 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [2]
                       <tab/>
-                      ISO 1234 / B,
                    </biblio-tag>
                    <formattedref>
                       Wozniak S.、 Jobs S.、 Hoover J.E.、『
@@ -1016,10 +1025,7 @@ RSpec.describe IsoDoc do
                    </title>
                    <uri type="citation">http://www.example.com</uri>
                    <docidentifier type="metanorma-ordinal">[2]</docidentifier>
-                   <docidentifier type="ISO">ISO 1234</docidentifier>
-                   <docidentifier>B</docidentifier>
-                   <docidentifier scope="biblio-tag">ISO 1234</docidentifier>
-                   <docidentifier scope="biblio-tag">B</docidentifier>
+                   <docidentifier type="title">Work</docidentifier>
                    <date type="issued">
                       <from>1991</from>
                       <to>1992</to>

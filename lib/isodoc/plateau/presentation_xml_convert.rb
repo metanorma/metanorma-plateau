@@ -99,6 +99,24 @@ module IsoDoc
         end
       end
 
+      def anchor_linkend(node, linkend)
+        title_fallback_docid?(node) and
+          node["style"] ||= "title"
+        super
+      end
+
+      # if we are falling back to a title identifier for citation,
+      # cite title-style, which gives us title marks
+      def title_fallback_docid?(elem)
+        sem_xml_descendant?(elem) and return
+        id = elem["bibitemid"] or return
+        b = @bibitem_lookup[id] or return
+        x = <<~XPATH
+          ./docidentifier[not(#{SKIP_DOCID} or @scope = 'biblio-tag' or @type = 'metanorma' or @type = 'metanorma-ordinal' or @type='title')]
+        XPATH
+        !b.at(ns(x)) && b.at(ns("./docidentifier[@type='title']"))
+      end
+
       def termsource_join_delim(_elem)
         @lang == "ja" ? "／" : "/"
       end
