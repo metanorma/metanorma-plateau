@@ -675,7 +675,7 @@ RSpec.describe IsoDoc::Plateau do
                             </fmt-origin>
                          </semx>
                          、を一部変更し、
-                         <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
+                         <semx element="modification" source="_">The term "cargo rice" is shown as deprecated、 and Note 1 to entry is not included here</semx>
                       </semx>
                       ）
                    </fmt-termsource>
@@ -885,7 +885,7 @@ RSpec.describe IsoDoc::Plateau do
                             </fmt-origin>
                          </semx>
                          、を一部変更し、
-                         <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
+                         <semx element="modification" source="_">The term "cargo rice" is shown as deprecated、 and Note 1 to entry is not included here</semx>
                       </semx>
                       ）
                    </fmt-termsource>
