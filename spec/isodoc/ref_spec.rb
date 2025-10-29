@@ -883,7 +883,7 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag>ISO 712, </biblio-tag>
+                   <biblio-tag>ISO 712、 </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </formattedref>
@@ -900,9 +900,9 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO16634" type="standard">
                    <biblio-tag>
-                      ISO 16634:-- (規格群)
+                      ISO 16634：-- （規格群）
                       <fn id="_" reference="1" original-reference="1" target="_">
-                         <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
+                         <p>Under preparation。（Stage at the time of publication ISO/DIS 16634）</p>
                          <fmt-fn-label>
                             <span class="fmt-caption-label">
                                <sup>
@@ -911,7 +911,7 @@ RSpec.describe IsoDoc do
                             </span>
                          </fmt-fn-label>
                       </fn>
-                      ,
+                      、
                    </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals, pulses, milled cereal products, xxxx, oilseeds and animal feeding stuffs」</span>
@@ -935,7 +935,7 @@ RSpec.describe IsoDoc do
                    </extent>
                 </bibitem>
                 <bibitem id="ISO20483" type="standard">
-                   <biblio-tag>ISO 20483:2013-2014, </biblio-tag>
+                   <biblio-tag>ISO 20483：2013-2014、 </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals and pulses」</span>
                    </formattedref>
@@ -954,7 +954,7 @@ RSpec.describe IsoDoc do
                    </contributor>
                 </bibitem>
                 <bibitem id="ref1">
-                   <biblio-tag>ICC 167, </biblio-tag>
+                   <biblio-tag>ICC 167、 </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
                       <smallcap>Standard No I.C.C 167</smallcap>
                       .
@@ -990,7 +990,7 @@ RSpec.describe IsoDoc do
                 </fmt-title>
                 <bibitem id="ISBN" type="book">
                    <biblio-tag>
-                      [1]
+                      ［1］
                       <tab/>
                    </biblio-tag>
                    <formattedref>「Chemicals for analytical laboratory use」、都市はありません。：日付なし</formattedref>
@@ -1006,7 +1006,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="A" anchor="A" type="inbook">
                    <biblio-tag>
-                      [2]
+                      ［2］
                       <tab/>
                    </biblio-tag>
                    <formattedref>
@@ -1123,7 +1123,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem type="article" id="ISSN">
                    <biblio-tag>
-                      [3]
+                      ［3］
                       <tab/>
                    </biblio-tag>
                    <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）、『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』、「London Mathematical Society Lecture Note Series （N.S.）」、 2022、巻1 いいえ7、 89〜112頁</formattedref>
@@ -1232,9 +1232,9 @@ RSpec.describe IsoDoc do
                 </note>
                 <bibitem id="ISO3696" type="standard">
                    <biblio-tag>
-                      [4]
+                      ［4］
                       <tab/>
-                      ISO 3696,
+                      ISO 3696、
                    </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Water for analytical laboratory use」</span>
@@ -1252,7 +1252,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ref10">
                    <biblio-tag>
-                      [5]
+                      ［5］
                       <tab/>
                    </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
@@ -1270,9 +1270,9 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ref11">
                    <biblio-tag>
-                      [6]
+                      ［6］
                       <tab/>
-                      IETF RFC 10,
+                      IETF RFC 10、
                    </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Internet Calendaring and Scheduling Core Object Specification (iCalendar)」</span>
@@ -1286,7 +1286,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       Citn
                       <tab/>
-                      IETF RFC 20,
+                      IETF RFC 20、
                    </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
                       CitationWorks. 2019.
@@ -1313,7 +1313,7 @@ RSpec.describe IsoDoc do
                             <tab/>
                          </span>
                       </fmt-fn-label>
-                      Under preparation. (Stage at the time of publication ISO/DIS 16634)
+                      Under preparation。（Stage at the time of publication ISO/DIS 16634）
                    </p>
                 </semx>
              </fmt-fn-body>
