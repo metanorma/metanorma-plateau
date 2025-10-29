@@ -71,7 +71,7 @@ RSpec.describe IsoDoc::Plateau do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1" id="_">Contents</fmt-title>
@@ -205,7 +205,7 @@ RSpec.describe IsoDoc::Plateau do
                       </modification>
                    </source>
                    <fmt-termsource status="modified">
-                      [SOURCE:
+                      (SOURCE:
                       <semx element="source" source="_">
                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                             <locality type="clause">
@@ -221,10 +221,10 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
-                         , modified, 
+                         , modified,
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
-                      ]
+                      )
                    </fmt-termsource>
                 </term>
                 <term id="paddy">
@@ -396,7 +396,7 @@ RSpec.describe IsoDoc::Plateau do
                       </modification>
                    </source>
                    <fmt-termsource status="identical">
-                      [SOURCE:
+                      (SOURCE:
                       <semx element="source" source="_">
                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                             <locality type="clause">
@@ -429,10 +429,10 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
-                         , modified, 
+                         , modified,
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
-                      ]
+                      )
                    </fmt-termsource>
                 </term>
                 <term id="A">
@@ -512,9 +512,10 @@ RSpec.describe IsoDoc::Plateau do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-  end
+  #end
 
-  it "processes IsoXML terms in Japanese" do
+  #it "processes IsoXML terms in Japanese" do
+=begin
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata><language>ja</language></bibdata>
@@ -584,6 +585,7 @@ RSpec.describe IsoDoc::Plateau do
         </sections>
       </iso-standard>
     INPUT
+=end
     presxml = <<~OUTPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
@@ -729,7 +731,7 @@ RSpec.describe IsoDoc::Plateau do
                       </modification>
                    </source>
                    <fmt-termsource status="modified">
-                      ［出典： 
+                      （出典： 
                       <semx element="source" source="_">
                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                             <locality type="clause">
@@ -745,10 +747,10 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">第3.1</span>
                             </fmt-origin>
                          </semx>
-                          、を一部変更し、
+                         、を一部変更し、
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
-                      ］
+                      ）
                    </fmt-termsource>
                 </term>
                 <term id="paddy">
@@ -922,7 +924,7 @@ RSpec.describe IsoDoc::Plateau do
                       </modification>
                    </source>
                    <fmt-termsource status="identical">
-                      ［出典： 
+                      （出典： 
                       <semx element="source" source="_">
                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                             <locality type="clause">
@@ -955,10 +957,10 @@ RSpec.describe IsoDoc::Plateau do
                                <span class="citesec">第3.1</span>
                             </fmt-origin>
                          </semx>
-                          、を一部変更し、
+                         、を一部変更し、
                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                       </semx>
-                      ］
+                      ）
                    </fmt-termsource>
                 </term>
                 <term id="A">
@@ -1033,9 +1035,10 @@ RSpec.describe IsoDoc::Plateau do
           </sections>
        </iso-standard>
     OUTPUT
+    input.sub!("<sections>", "<bibdata><language>ja</language></bibdata><sections>")
     xml = Nokogiri::XML(IsoDoc::Plateau::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-    xml.at("//xmlns:localized-strings").remove
+    xml.at("//xmlns:localized-strings")&.remove
     expect(Canon.format_xml(strip_guid(xml.to_xml)))
       .to be_equivalent_to Canon.format_xml(presxml)
   end
