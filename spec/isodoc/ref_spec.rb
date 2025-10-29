@@ -831,15 +831,15 @@ RSpec.describe IsoDoc do
                    </semx>
                    <eref bibitemid="ISBN" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ISBN">［1］</fmt-xref>
+                      <fmt-xref target="ISBN">[1]</fmt-xref>
                    </semx>
                    <eref bibitemid="ISSN" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ISSN">［3］</fmt-xref>
+                      <fmt-xref target="ISSN">[3]</fmt-xref>
                    </semx>
                    <eref bibitemid="ISO16634" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ISO16634">ISO 16634：-- （規格群）</fmt-xref>
+                      <fmt-xref target="ISO16634">ISO 16634:-- (規格群)</fmt-xref>
                    </semx>
                    <eref bibitemid="ref1" id="_"/>
                    <semx element="eref" source="_">
@@ -847,7 +847,7 @@ RSpec.describe IsoDoc do
                    </semx>
                    <eref bibitemid="ref10" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ref10">［5］</fmt-xref>
+                      <fmt-xref target="ref10">[5]</fmt-xref>
                    </semx>
                    <eref bibitemid="ref12" id="_"/>
                    <semx element="eref" source="_">
@@ -900,7 +900,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO16634" type="standard">
                    <biblio-tag>
-                      ISO 16634：-- （規格群）
+                      ISO 16634:-- (規格群)
                       <fn id="_" reference="1" original-reference="1" target="_">
                          <p>Under preparation。（Stage at the time of publication ISO/DIS 16634）</p>
                          <fmt-fn-label>
@@ -935,7 +935,7 @@ RSpec.describe IsoDoc do
                    </extent>
                 </bibitem>
                 <bibitem id="ISO20483" type="standard">
-                   <biblio-tag>ISO 20483：2013-2014、 </biblio-tag>
+                   <biblio-tag>ISO 20483:2013-2014、 </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals and pulses」</span>
                    </formattedref>
@@ -990,7 +990,7 @@ RSpec.describe IsoDoc do
                 </fmt-title>
                 <bibitem id="ISBN" type="book">
                    <biblio-tag>
-                      ［1］
+                      [1]
                       <tab/>
                    </biblio-tag>
                    <formattedref>「Chemicals for analytical laboratory use」、都市はありません。：日付なし</formattedref>
@@ -1006,7 +1006,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="A" anchor="A" type="inbook">
                    <biblio-tag>
-                      ［2］
+                      [2]
                       <tab/>
                    </biblio-tag>
                    <formattedref>
@@ -1123,7 +1123,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem type="article" id="ISSN">
                    <biblio-tag>
-                      ［3］
+                      [3]
                       <tab/>
                    </biblio-tag>
                    <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）、『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』、「London Mathematical Society Lecture Note Series （N.S.）」、 2022、巻1 いいえ7、 89〜112頁</formattedref>
@@ -1232,7 +1232,7 @@ RSpec.describe IsoDoc do
                 </note>
                 <bibitem id="ISO3696" type="standard">
                    <biblio-tag>
-                      ［4］
+                      [4]
                       <tab/>
                       ISO 3696、
                    </biblio-tag>
@@ -1252,7 +1252,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ref10">
                    <biblio-tag>
-                      ［5］
+                      [5]
                       <tab/>
                    </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
@@ -1270,7 +1270,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ref11">
                    <biblio-tag>
-                      ［6］
+                      [6]
                       <tab/>
                       IETF RFC 10、
                    </biblio-tag>
