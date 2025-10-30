@@ -19,19 +19,26 @@ module Relaton
         end
 
         def citation_renderers
-          ret = { en: bibrenderer_lang("en", deep_clone(@config)),
+          { en: bibrenderer_lang("en", deep_clone(@config)),
             ja: bibrenderer_lang("ja", deep_clone(@config)) }
-          #require "debug"; binding.b
-          ret
         end
 
         SWITCH_PUNCT_KEYS =
-          %w(open-title close-title open-secondary-title close-secondary-title).freeze
+          %w(open-title close-title open-secondary-title close-secondary-title
+             biblio-field-delimiter).freeze
+
+        def bibrenderer_lang_config(lang, i18n, cit_i18n)
+          SWITCH_PUNCT_KEYS.each { |k| i18n["punct"][k] = cit_i18n["punct"][k] }
+          # keep Latin punct half-width in Japanese context
+          lang == "en" and
+            i18n["punct"]["biblio-field-delimiter"] = "<esc>.</esc> "
+          i18n
+        end
 
         def bibrenderer_lang(lang, options)
           yaml, script, cit_i18n = bibrenderer_lang_prep(lang)
           i18n = deep_clone(@i18n.get)
-          SWITCH_PUNCT_KEYS.each { |k| i18n["punct"][k] = cit_i18n["punct"][k] }
+          i18n = bibrenderer_lang_config(lang, i18n, cit_i18n)
           ::Relaton::Render::Plateau::General.new(options
             .deep_merge(yaml)
             .merge(language: lang, script: script, i18nhash: i18n))
