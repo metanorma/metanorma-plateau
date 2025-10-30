@@ -1,4 +1,4 @@
-gem "isodoc-i18n", git: "https://github.com/metanorma/isodoc-i18n", branch: "main"
+gem "isodoc-i18n", git: "https://github.com/metanorma/isodoc-i18n", branch: "fix/multi-i18n-Liquid-populate"
 gem "html2doc", git: "https://github.com/metanorma/html2doc", branch: "main"
 gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/configure-cite"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/log-config"
