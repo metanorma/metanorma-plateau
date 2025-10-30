@@ -810,6 +810,7 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"'))))
       .to be_equivalent_to Canon.format_xml(presxml)
+
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <bibdata>
@@ -993,7 +994,7 @@ RSpec.describe IsoDoc do
                      [1]
                      <tab/>
                   </biblio-tag>
-                  <formattedref>「Chemicals for analytical laboratory use」、都市はありません。：日付なし</formattedref>
+                  <formattedref>「Chemicals for analytical laboratory use」　都市はありません。：日付なし</formattedref>
                   <title format="text/plain">Chemicals for analytical laboratory use</title>
                   <docidentifier type="metanorma-ordinal">[1]</docidentifier>
                   <docidentifier type="ISBN">ISBN</docidentifier>
@@ -1010,9 +1011,9 @@ RSpec.describe IsoDoc do
                      <tab/>
                   </biblio-tag>
                   <formattedref>
-                     Wozniak S.、 Jobs S.、 Hoover J.E.、『
+                     Wozniak S.、 Jobs S.、 Hoover J.E.　『
                      <em>Work</em>
-                     』、 Collected Essays UNICEF）、第4版、（Bibliographers Anonymous）、 Geneva： International Standardization Organization、 1996、巻4 19頁、入手先：#{' '}
+                     』　Collected Essays UNICEF）　第4版　（Bibliographers Anonymous）　Geneva： International Standardization Organization　1996　巻4 19頁　入手先：#{' '}
                      <span class="biburl">
                         <link target="http://www.example.com" id="_">http://www.example.com</link>
                         <semx element="link" source="_">
@@ -1126,7 +1127,7 @@ RSpec.describe IsoDoc do
                      [3]
                      <tab/>
                   </biblio-tag>
-                  <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）、『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』、「London Mathematical Society Lecture Note Series （N.S.）」、 2022、巻1 いいえ7、 89〜112頁</formattedref>
+                  <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022、巻1 いいえ7、 89〜112頁</formattedref>
                   <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
                   <docidentifier type="metanorma-ordinal">[3]</docidentifier>
                   <docidentifier type="DOI">DOI https://doi.org/10.1017/9781108877831</docidentifier>
@@ -1332,14 +1333,14 @@ RSpec.describe IsoDoc do
 
   it "tailors rendering to language of reference" do
     input = <<~INPUT
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <language>en</language>
         </bibdata>
         <bibliography>
           <references id="_normative_references" normative="true" obligation="informative">
             <title>Normative References</title>
-                      <bibitem type="article" id="ISSN" language="en">
+                      <bibitem type="article" id="ISSN">
               <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
         <docidentifier type="DOI">https://doi.org/10.1017/9781108877831</docidentifier>
         <docidentifier type="ISBN">9781108877831</docidentifier>
@@ -1375,6 +1376,7 @@ RSpec.describe IsoDoc do
           </person>
         </contributor>
         <edition>1</edition>
+        <language>en</language>
         <series>
         <title>London Mathematical Society Lecture Note Series</title>
         <number>472</number>
@@ -1436,6 +1438,7 @@ RSpec.describe IsoDoc do
           </person>
         </contributor>
         <edition>1</edition>
+        <language>ja</language>
         <series>
         <title>London Mathematical Society Lecture Note Series</title>
         <number>472</number>
@@ -1469,12 +1472,11 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     issn_en = <<~OUTPUT
-<formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022a, vol. 1 no. 7, pp. 89–112</formattedref>
+      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022a, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
     issn_ja = <<~OUTPUT
+      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.). 『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』. 「London Mathematical Society Lecture Note Series (N.S.)」. 2022b, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
-     
-
     expect(Canon.format_xml(pres_output
       .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
       .to be_equivalent_to Canon.format_xml(issn_en)
@@ -1482,10 +1484,16 @@ RSpec.describe IsoDoc do
       .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml))
       .to be_equivalent_to Canon.format_xml(issn_ja)
 
-    pres_output = IsoDoc::Plateau::PresentationXMLConvert
+    issn_en = <<~OUTPUT
+      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）　Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday　London Mathematical Society Lecture Note Series （N.S.）　2022a、巻1 いいえ7、 89〜112頁</formattedref>
+    OUTPUT
+    issn_ja = <<~OUTPUT
+      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022b、巻1 いいえ7、 89〜112頁</formattedref>
+    OUTPUT
+    pres_output = Nokogiri::XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input
-      .sub("<language>en</language>", "<language>ja</language>"), true)
+      .sub("<language>en</language>", "<language>ja</language>"), true))
     expect(Canon.format_xml(pres_output
       .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
       .to be_equivalent_to Canon.format_xml(issn_en)
