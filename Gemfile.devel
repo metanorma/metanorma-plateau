@@ -5,7 +5,7 @@ gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", 
 gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "main"
 gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "features/configure-cite"
 gem "metanorma-utils", git: "https://github.com/metanorma/metanorma-utils", branch: "main"
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "feature/field-delim"
+gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "features/select-i18n"
 
 
 
