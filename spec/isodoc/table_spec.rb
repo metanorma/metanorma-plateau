@@ -1025,7 +1025,7 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2　Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      ISO 712,
+                      ISO 712, 
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </p>
                 </div>

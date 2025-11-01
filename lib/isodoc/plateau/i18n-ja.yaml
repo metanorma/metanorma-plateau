@@ -7,3 +7,7 @@ punct:
   close-title: 」
   open-secondary-title:  『
   close-secondary-title: 』
+  # If this is a punct symbol, we need a trailing half-width space, to allow it to be converted to cjk-latin-separator if Latn text follows
+  biblio-field-delimiter: "　"
+  biblio-terminator: ""
+  comma: 、
