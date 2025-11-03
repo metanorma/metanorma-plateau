@@ -2,10 +2,13 @@ require "isodoc"
 require_relative "metadata"
 require_relative "i18n"
 require_relative "xref"
+require "metanorma-utils"
 
 module IsoDoc
   module Plateau
     module Init
+      Hash.include Metanorma::Utils::Hash
+
       def metadata_init(lang, script, locale, labels)
         @meta = Metadata.new(lang, script, locale, labels)
       end
@@ -21,7 +24,7 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        ::Relaton::Render::Jis::General.new(options
+        ::Relaton::Render::Plateau::General.new(options
           .merge(language: @lang, script: @script, i18nhash: @i18n.get))
       end
     end
