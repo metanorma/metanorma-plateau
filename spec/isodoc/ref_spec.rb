@@ -388,7 +388,7 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag>ISO 712, </biblio-tag>
+                   <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -407,7 +407,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO16634" type="standard">
                    <biblio-tag>
-                      ISO 16634:-- (all parts)
+                      <strong>ISO 16634:-- (all parts)</strong>
                       <fn id="_" reference="1" original-reference="1" target="_">
                          <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
                          <fmt-fn-label>
@@ -444,7 +444,7 @@ RSpec.describe IsoDoc do
                    </extent>
                 </bibitem>
                 <bibitem id="ISO20483" type="standard">
-                   <biblio-tag>ISO 20483:2013-2014, </biblio-tag>
+                   <biblio-tag><strong>ISO 20483:2013-2014</strong>, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and pulses</span>
                    </formattedref>
@@ -465,7 +465,7 @@ RSpec.describe IsoDoc do
                    <script>Latn</script>
                 </bibitem>
                 <bibitem id="ref1">
-                   <biblio-tag>ICC 167, </biblio-tag>
+                   <biblio-tag><strong>ICC 167</strong>, </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
                       <smallcap>Standard No I.C.C 167</smallcap>
                       .
@@ -857,7 +857,7 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Canon.format_xml(presxml)
 
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <language current="true">ja</language>
           </bibdata>
@@ -927,7 +927,10 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag>ISO 712, </biblio-tag>
+                   <biblio-tag>
+                      <strong>ISO 712</strong>
+                      ,
+                   </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -946,7 +949,9 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO16634" type="standard">
                    <biblio-tag>
-                      ISO 16634:-- (規格群)
+                      <strong>ISO 16634:-- (</strong>
+                      <span style="font-family:&quot;MS Gothic&quot;">規格群</span>
+                      <strong>)</strong>
                       <fn id="_" reference="1" original-reference="1" target="_">
                          <p>Under preparation。（Stage at the time of publication ISO/DIS 16634）</p>
                          <fmt-fn-label>
@@ -983,7 +988,10 @@ RSpec.describe IsoDoc do
                    </extent>
                 </bibitem>
                 <bibitem id="ISO20483" type="standard">
-                   <biblio-tag>ISO 20483:2013-2014, </biblio-tag>
+                   <biblio-tag>
+                      <strong>ISO 20483:2013-2014</strong>
+                      ,
+                   </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and pulses</span>
                    </formattedref>
@@ -1004,7 +1012,10 @@ RSpec.describe IsoDoc do
                    <script>Latn</script>
                 </bibitem>
                 <bibitem id="ref1">
-                   <biblio-tag>ICC 167, </biblio-tag>
+                   <biblio-tag>
+                      <strong>ICC 167</strong>
+                      ,
+                   </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
                       <smallcap>Standard No I.C.C 167</smallcap>
                       .

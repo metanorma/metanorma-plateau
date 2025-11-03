@@ -381,7 +381,7 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag>ISO 712, </biblio-tag>
+                   <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -548,7 +548,7 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2  Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      ISO 712,
+                      <b>ISO 712</b>,
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </p>
                 </div>
@@ -855,7 +855,7 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag>ISO 712, </biblio-tag>
+                   <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </formattedref>
@@ -1025,7 +1025,7 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2　Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      ISO 712, 
+                      <b>ISO 712</b>, 
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </p>
                 </div>
