@@ -23,6 +23,7 @@ module Relaton
         def klass_initialize(_options)
           super
           @i18nklass = Relaton::Render::Plateau::I18n
+          @citeklass = Relaton::Render::Plateau::Citations
         end
 
         def deep_clone(obj)
