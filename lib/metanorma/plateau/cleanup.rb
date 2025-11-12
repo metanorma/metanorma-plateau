@@ -1,7 +1,7 @@
 module Metanorma
   module Plateau
     # after term def processed, process source after paragraphs so that
-    # the moving of paragraphs there does not nclude termdef
+    # the moving of paragraphs there does not include termdef
     class Converter < Jis::Converter
       def termdef_cleanup(xmldoc)
         super
@@ -12,16 +12,6 @@ module Metanorma
           s.parent = p
         end
       end
-
-      # Abandoned in favour of JIS ordering
-      #       def pub_class(bib)
-      #         return 1 if bib.at("#{PUBLISHER}[name = '#{pub_hash['en']}']") ||
-      #           bib.at("#{PUBLISHER}[name = '#{pub_hash['ja']}']") ||
-      #           bib.at("#{PUBLISHER}[abbreviation = 'MLIT']")
-      #         return 2 if bib["type"] == "standard"
-      #
-      #         3
-      #       end
 
       def biblio_reorder(xmldoc)
         xmldoc.xpath("//references").each do |r|

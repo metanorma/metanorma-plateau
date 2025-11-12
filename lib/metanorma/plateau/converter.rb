@@ -44,8 +44,9 @@ module Metanorma
 
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")
-          xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
-                            **attr_code(type: "PLATEAU", primary: "true")
+          add_noko_elem(xml, "docidentifier",
+                        "PLATEAU #{id.sub(/^PLATEAU /, '')}", type: "PLATEAU",
+                                                              primary: "true")
         else iso_id(node, xml)
         end
       end
@@ -53,16 +54,17 @@ module Metanorma
       # do not use pubid
       def iso_id(node, xml)
         id = node.attr("docnumber") or return
-        xml.docidentifier "PLATEAU #{id.sub(/^PLATEAU /, '')}",
-                          **attr_code(type: "PLATEAU", primary: "true")
+        add_noko_elem(xml, "docidentifier",
+                      "PLATEAU #{id.sub(/^PLATEAU /, '')}", type: "PLATEAU",
+                                                            primary: "true")
       end
 
       # do not use pubid
       def metadata_status(node, xml)
         stage = get_stage(node)
         xml.status do |s|
-          s.stage stage
-          i = node.attr("iteration") and s.iteration i
+          add_noko_elem(s, "stage", stage)
+          add_noko_elem(s, "iteration", node.attr("iteration"))
         end
       end
 
