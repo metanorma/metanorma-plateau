@@ -10,6 +10,7 @@ module Relaton
     module Plateau
       class General < ::Relaton::Render::Jis::General
         def initialize(opt = {})
+          @configpath = opt[:config]
           i18n = opt[:i18n] ||
             i18n_klass(language: opt[:language], script: opt[:script],
                        locale: opt[:locale], i18nhash: opt[:i18nhash])
@@ -77,7 +78,8 @@ module Relaton
           i18n = i18n_config(lang, @i18n.config[@lang]).get
           ::Relaton::Render::Plateau::General.new(options
             .deep_merge(yaml)
-            .merge(language: lang, script: script, i18nhash: i18n))
+            .merge(language: lang, script: script, i18nhash: i18n,
+                   config: @configpath))
         end
 
         def bibrenderer_lang_prep(lang)
