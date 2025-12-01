@@ -112,7 +112,7 @@ module IsoDoc
         id = elem["bibitemid"] or return
         b = @bibitem_lookup[id] or return
         x = <<~XPATH
-          ./docidentifier[not(#{SKIP_DOCID} or @scope = 'biblio-tag' or @type = 'metanorma' or @type = 'metanorma-ordinal' or @type='title')]
+          ./docidentifier[not(#{SERIAL_NUM_DOCID} or @scope = 'biblio-tag' or @type = 'metanorma' or @type = 'metanorma-ordinal' or @type='title')]
         XPATH
         !b.at(ns(x)) && b.at(ns("./docidentifier[@type='title']"))
       end
