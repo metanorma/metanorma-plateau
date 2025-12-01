@@ -20,6 +20,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
           <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
           <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
           <docnumber>1000</docnumber>
+          <date type="published">2020-10-11</date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -160,10 +161,62 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         "investigative-committee-representative-role": "chairperson",
         "investigative-organization": "Japanese Industrial Standards Committee",
         lang: "en",
+        published_date_labelled: "Published: 2020-10-11",
+        publisheddate: "2020-10-11",
         publisher: "Japanese Industrial Standards",
         revdate: "2000-01-01",
         revdate_monthyear: "January 2000",
         script: "Latn",
+        stage: "20",
+        stage_int: 20,
+        stageabbr: "WD",
+        statusabbr: "PreWD3",
+        substage_int: "20",
+        unpublished: true }
+    expect(metadata(c.info(Nokogiri::XML(input),
+                           nil))).to be_equivalent_to output
+
+    c = IsoDoc::Plateau::HtmlConvert.new({})
+    _ = c.convert_init(<<~"INPUT", "test", false)
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+       <bibdata>
+          <language>ja</language>
+        </bibdata>
+      </iso-standard>
+    INPUT
+    output =
+      { agency: "MLIT",
+        docnumber: "1000-1.3:2000",
+        docnumber_undated: "1000-1.3",
+        docnumeric: "1000",
+        docsubtitle: "Introduction&#xa0;&#x2014; Main Title — Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+        docsubtitleintro: "Introduction",
+        docsubtitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
+        docsubtitlepart: "Title Part",
+        docsubtitlepartlabel: "Part&#xa0;1",
+        doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; &#xa0;1: Part du Titre",
+        doctitleintro: "Introduction Fran&#xE7;aise",
+        doctitlemain: "Titre Principal",
+        doctitlepart: "Part du Titre",
+        doctitlepartlabel: "その&#xa0;1",
+        doctype: "Standard",
+        doctype_display: "Standard",
+        docyear: "2000",
+        draft: "0.3.4",
+        draftinfo: " （案 0.3.4、平成12年1月1日）",
+        edition: "2",
+        horizontal: "true",
+        "investigative-committee": "Committee 123",
+        "investigative-committee-representative-name": "KUROSAWA Akira",
+        "investigative-committee-representative-role": "&#x59d4;&#x54e1;&#x4f1a;&#x9577;",
+        "investigative-organization": "&#x65e5;&#x672c;&#x7523;&#x696d;&#x6a19;&#x6e96;&#x8abf;&#x67fb;&#x4f1a;",
+        lang: "ja",
+        published_date_labelled: "令和2年10月11日　発行",
+        publisheddate: "令和2年10月11日",
+        publisher: "Japanese Industrial Standards",
+        revdate: "平成12年1月1日",
+        revdate_monthyear: "1月 2000",
+        script: "Jpan",
         stage: "20",
         stage_int: 20,
         stageabbr: "WD",
