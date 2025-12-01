@@ -18,6 +18,13 @@ module Metanorma
           biblio_reorder1(r)
         end
       end
+
+      def boilerplate_cleanup(xmldoc)
+        super
+        conv = boilerplate_isodoc(xmldoc) or return
+        c = process_boilerplate_file(File.join(@libdir, "colophon.adoc"), conv)
+        xmldoc.root << "<colophon>#{c.children.first.to_xml}</colophon>"
+      end
     end
   end
 end

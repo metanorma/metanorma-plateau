@@ -69,6 +69,7 @@ RSpec.describe Metanorma::Plateau do
       :investigative-organization-ja: 日本産業標準調査会
       :investigative-organization-en: Japanese Industrial Standards Committee
       :investigative-committee: 日本産業標準調査会 標準第一部会
+      :sponsor: Flintstone Enterprises
     INPUT
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="plateau">
@@ -127,6 +128,12 @@ RSpec.describe Metanorma::Plateau do
                    <name>日本産業標準調査会 標準第一部会</name>
                 </organization>
              </contributor>
+                   <contributor>
+         <role type="enabler"/>
+         <organization>
+            <name>Flintstone Enterprises</name>
+         </organization>
+      </contributor>
            <edition>2</edition>
            <version>
              <revision-date>2000-01-01</revision-date>
@@ -173,6 +180,16 @@ RSpec.describe Metanorma::Plateau do
          </boilerplate>
          -->
          <sections> </sections>
+         <colophon>
+         <clause id="_" inline-header="false" obligation="normative">
+            <p id="_" anchor="_colophon_title">
+               Introduction Française — Titre Principal —  1: Part du Titre&#x3000;
+               <span class="colophon_edition">第2版</span>
+            </p>
+            <p id="_" anchor="_colophon_author">国土交通省</p>
+            <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
+         </clause>
+        </colophon>
        </metanorma>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
@@ -242,6 +259,12 @@ RSpec.describe Metanorma::Plateau do
                    <name>日本産業標準調査会 標準第一部会</name>
                 </organization>
              </contributor>
+                   <contributor>
+            <role type="enabler"/>
+            <organization>
+                <name>Flintstone Enterprises</name>
+            </organization>
+          </contributor>
            <edition>2</edition>
            <version>
              <revision-date>2000-01-01</revision-date>
@@ -287,6 +310,16 @@ RSpec.describe Metanorma::Plateau do
          </boilerplate>
          -->
          <sections> </sections>
+            <colophon>
+       <clause id="_" inline-header="false" obligation="normative">
+         <p id="_" anchor="_colophon_title">
+            Introduction — Main Title — Title — Part 1: Title Part
+            <span class="colophon_edition">second edition</span>
+         </p>
+         <p id="_" anchor="_colophon_author">Ministry of Land, Infrastructure, Transport and Tourism</p>
+         <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
+      </clause>
+      </colophon>
        </metanorma>
     OUTPUT
     expect(Canon.format_xml(strip_guid(xml.to_xml)))
