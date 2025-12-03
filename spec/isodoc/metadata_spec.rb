@@ -136,6 +136,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
     INPUT
     output =
       { agency: "MLIT",
+        authorizer: ["Japanese Industrial Standards Committee"],
         docnumber: "1000-1.3:2000",
         docnumber_undated: "1000-1.3",
         docnumeric: "1000",
@@ -186,6 +187,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
     INPUT
     output =
       { agency: "MLIT",
+        authorizer: ["日本産業標準調査会"],
         docnumber: "1000-1.3:2000",
         docnumber_undated: "1000-1.3",
         docnumeric: "1000",
