@@ -108,6 +108,16 @@ RSpec.describe IsoDoc::Plateau do
             </references>
           </clause>
         </bibliography>
+                 <colophon>
+         <clause id="_" inline-header="false" obligation="normative">
+            <p id="_" anchor="_colophon_title">
+               Introduction Française — Titre Principal —  1: Part du Titre&#x3000;
+               <span class="colophon_edition">第2版</span>
+            </p>
+            <p id="_" anchor="_colophon_author">国土交通省</p>
+            <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
+         </clause>
+        </colophon>
       </iso-standard>
     INPUT
 
@@ -502,6 +512,16 @@ RSpec.describe IsoDoc::Plateau do
                 <semx element="title" source="_">Commentary</semx>
              </fmt-title>
           </annex>
+            <colophon inline-header="true">
+        <clause id="_" inline-header="true" obligation="normative" displayorder="15">
+            <p id="_" anchor="_colophon_title">
+              Introduction Française — Titre Principal — 1: Part du Titre　
+              <span class="colophon_edition">第2版</span>
+            </p>
+            <p id="_" anchor="_colophon_author">国土交通省</p>
+            <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
+        </clause>
+  </colophon>
        </iso-standard>
     OUTPUT
 
@@ -635,6 +655,16 @@ RSpec.describe IsoDoc::Plateau do
                    </p>
                    <h1 class="Annex">Commentary</h1>
                 </div>
+                <br/>
+        <div class="colophon" id="_">
+           <h1 class="IntroTitle"/>
+           <p id="_">
+              　 Introduction Française — Titre Principal — 1: Part du Titre　
+              <span class="colophon_edition">第2版</span>
+           </p>
+           <p id="_">　国土交通省</p>
+           <p id="_">　Flintstone Enterprises</p>
+        </div>
              </div>
           </body>
        </html>
