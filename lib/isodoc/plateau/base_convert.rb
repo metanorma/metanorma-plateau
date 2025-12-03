@@ -26,6 +26,18 @@ module IsoDoc
         end
       end
 
+      def colophon(node, out)
+        @seen_colophon or page_break(out)
+        @seen_colophon = true
+        out.div class: "colophon", id: node["id"] do |div|
+          clause_name(node, node.at(ns("./fmt-title")), div,
+                      { class: "IntroTitle" })
+          node.elements.each do |e|
+            parse(e, div) unless e.name == "fmt-title"
+          end
+        end
+      end
+
       include Init
     end
   end
