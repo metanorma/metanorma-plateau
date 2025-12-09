@@ -88,9 +88,11 @@ module IsoDoc
       end
 
       # Insert localised colon at start of dd in table and figure key,
-      # replacing JIS Word <p class='dl' id='#{dt['id']}'>#{term}: #{bkmk}#{defn}</p>
-      # with <dt>{term}</dt> <dd>: {defn}<dd>; the space should be stripped and
-      # the colon double-width for Japanese text
+      # replacing JIS Word
+      #    <p class='dl' id='#{dt['id']}'>#{term}: #{bkmk}#{defn}</p>
+      # with
+      #   <dt>{term}</dt> <dd>: {defn}<dd>
+      # Space should be stripped and the colon double-width for Japanese text
       def table_key(node)
         node.xpath(ns(".//dd")).each do |dd|
           text_node = dd.xpath(".//text()[normalize-space()]").first or next
@@ -127,6 +129,20 @@ module IsoDoc
 
       def termsource_mod_text_delim(_elem)
         @lang == "ja" ? "、" : ", "
+      end
+
+      def short_style_origin(docxml)
+        docxml.xpath(ns("//fmt-origin")).each do |o|
+          xref_empty?(o) or next
+          fmt_origin_cite_full?(o) and o["style"] ||= "reference-tag"
+        end
+      end
+
+      def fmt_origin_cite_full?(elem)
+        sem_xml_descendant?(elem) and return
+        id = elem["bibitemid"] or return
+        b = @bibitem_lookup[id] or return
+        true
       end
 
       include Init
