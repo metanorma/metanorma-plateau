@@ -527,7 +527,7 @@ RSpec.describe IsoDoc do
                    <formattedref>
                       Wozniak S., Jobs S., &amp; Hoover J.E.
                       <em>Work</em>
-                      . Collected Essays UNICEF). Fourth edition. (Bibliographers Anonymous). Geneva: International Standardization Organization. 1996. vol. 4 p. 19. Available from:
+                      . Collected Essays UNICEF). Fourth edition. (Bibliographers Anonymous). Geneva: International Standardization Organization. 1996. vol. 4 p. 19. Available at:
                       <span class="biburl">
                          <fmt-link target="http://www.example.com">http://www.example.com</fmt-link>
                       </span>
