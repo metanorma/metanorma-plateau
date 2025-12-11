@@ -525,7 +525,7 @@ RSpec.describe IsoDoc do
                       <tab/>
                    </biblio-tag>
                    <formattedref>
-                      Wozniak S., Jobs S., &amp; Hoover J.E.
+                      Wozniak S., Jobs S. &amp; Hoover J.E.
                       <em>Work</em>
                       . Collected Essays UNICEF). Fourth edition. (Bibliographers Anonymous). Geneva: International Standardization Organization. 1996. vol. 4 p. 19. Available at:
                       <span class="biburl">
@@ -640,7 +640,7 @@ RSpec.describe IsoDoc do
                       [3]
                       <tab/>
                    </biblio-tag>
-                   <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022, vol. 1 no. 7, pp. 89–112</formattedref>
+                   <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M. &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022, vol. 1 no. 7, pp. 89–112</formattedref>
                    <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
                    <docidentifier type="metanorma-ordinal">[3]</docidentifier>
                    <docidentifier type="DOI">DOI https://doi.org/10.1017/9781108877831</docidentifier>
@@ -1540,10 +1540,10 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     issn_en = <<~OUTPUT
-      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022a, vol. 1 no. 7, pp. 89–112</formattedref>
+      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M. &amp; Payne S. (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series (N.S.). 2022a, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
     issn_ja = <<~OUTPUT
-      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., &amp; Payne S. (eds.)　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series (N.S.)」　2022b, vol. 1 no. 7, pp. 89–112</formattedref>
+      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M. &amp; Payne S. (eds.)　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series (N.S.)」　2022b, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
     expect(Canon.format_xml(pres_output
       .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
@@ -1557,7 +1557,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     issn_ja = <<~OUTPUT
-      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、  Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022b、巻1 いいえ7、 89〜112頁</formattedref>
+      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、 Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022b、巻1 いいえ7、 89〜112頁</formattedref>
     OUTPUT
 
     pres_output = Nokogiri::XML(IsoDoc::Plateau::PresentationXMLConvert
