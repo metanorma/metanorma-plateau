@@ -1,8 +1,8 @@
 published_date_labelled: "%　発行"
 doctype_dict:
-  handbook: ガイドブック
-  annex: 別冊
-  technical-report: 技術資料
+  handbook: 3D都市モデル導入のためのガイドブック
+  annex: （別冊）3D都市モデル導入のためのガイドブック
+  technical-report: 3D都市モデル活用のための技術資料
 punct:
   open-title: 「
   close-title: 」
