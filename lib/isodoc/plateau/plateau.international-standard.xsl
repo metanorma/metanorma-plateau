@@ -11,6 +11,7 @@
 	<xsl:variable name="doctype" select="//mn:metanorma[1]/mn:bibdata/mn:ext/mn:doctype[@language = '' or not(@language)]"/>
 
 	<xsl:variable name="i18n_doctype_dict_annex"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.annex</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_doctype_dict_handbook"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.handbook</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_doctype_dict_technical_report"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">doctype_dict.technical-report</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_table_of_contents"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">table_of_contents</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_table_footnote"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">table_footnote</xsl:with-param></xsl:call-template></xsl:variable>
@@ -273,7 +274,7 @@
 										<!-- <xsl:apply-templates select="/*/mn:preface/mn:clause[@type = 'toc']">
 											<xsl:with-param name="num" select="$num"/>
 										</xsl:apply-templates>
-										
+
 										<xsl:if test="not(/*/mn:preface/mn:clause[@type = 'toc'])">
 											<fo:block> --><!-- prevent fop error for empty document --><!-- </fo:block>
 										</xsl:if> -->
@@ -708,18 +709,33 @@
 									<xsl:attribute name="font-size">16pt</xsl:attribute>
 									<xsl:attribute name="margin-top">8mm</xsl:attribute>
 								</xsl:if>
-								<xsl:apply-templates select="/*/mn:bibdata/mn:title[@language = 'en' and @type = 'title-intro']/node()"/>
+								<!-- TODO: need English version of doctype description -->
+								<xsl:choose>
+									<xsl:when test="$doctype = 'handbook'">
+										<xsl:value-of select="$i18n_doctype_dict_handbook"/>
+									</xsl:when>
+									<xsl:when test="$doctype = 'technical-report'">
+										<xsl:value-of select="$i18n_doctype_dict_technical_report"/>
+									</xsl:when>
+									<xsl:when test="$doctype = 'annex'">
+										<xsl:value-of select="$i18n_doctype_dict_annex"/>
+									</xsl:when>
+								</xsl:choose>
 							</fo:block>
 							<fo:block font-family="Noto Sans JP" font-size="14.2pt" margin-top="2mm">
-								<xsl:if test="$doctype = 'annex'">
-									<xsl:attribute name="text-indent">-3.5mm</xsl:attribute>
-									<xsl:value-of select="concat('（', $i18n_doctype_dict_annex)"/>
-									<fo:inline letter-spacing="-1mm">）</fo:inline>
-								</xsl:if>
-								<xsl:if test="$doctype = 'technical-report'">
-									<xsl:attribute name="font-size">12pt</xsl:attribute>
-								</xsl:if>
-								<xsl:apply-templates select="/*/mn:bibdata/mn:title[@language = 'ja' and @type = 'title-intro']/node()"/>
+								<xsl:choose>
+									<xsl:when test="$doctype = 'handbook'">
+										<xsl:value-of select="$i18n_doctype_dict_handbook"/>
+									</xsl:when>
+									<xsl:when test="$doctype = 'technical-report'">
+                    <xsl:attribute name="font-size">12pt</xsl:attribute>
+										<xsl:value-of select="$i18n_doctype_dict_technical_report"/>
+									</xsl:when>
+									<xsl:when test="$doctype = 'annex'">
+                    <xsl:attribute name="text-indent">-3.5mm</xsl:attribute>
+										<xsl:value-of select="$i18n_doctype_dict_annex"/>
+									</xsl:when>
+								</xsl:choose>
 							</fo:block>
 						</fo:block-container>
 					</fo:static-content>
@@ -1188,7 +1204,7 @@
 					<xsl:apply-templates mode="list_jis"/>
 
 					<!-- <xsl:apply-templates select="node()[not(local-name() = 'note')]" />
-					
+
 					<xsl:for-each select="./bsi:note">
 						<xsl:call-template name="note"/>
 					</xsl:for-each> -->
@@ -1486,7 +1502,7 @@
 	</xsl:template>
 	<xsl:template match="mn:example/mn:fmt-name/text()" mode="update_xml_step1">
 		<xsl:variable name="example_name" select="."/>
-		<!-- 
+		<!--
 			<xsl:choose>
 				<xsl:when test="contains(., ' — ')"><xsl:value-of select="substring-before(., ' — ')"/></xsl:when>
 				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
@@ -1932,10 +1948,10 @@
 						<p_len>39354</p_len>
 						<word_len>39354</word_len>
 					</td>
-					
+
 		OLD:
 			<tables>
-					<table id="table_if_tab-symdu" page-width="75"> - table id prefixed by 'table_if_' to simple search in IF 
+					<table id="table_if_tab-symdu" page-width="75"> - table id prefixed by 'table_if_' to simple search in IF
 						<tbody>
 							<tr>
 								<td id="tab-symdu_1_1">
@@ -2788,14 +2804,14 @@
 			<xsl:apply-templates mode="update_xml_step1"/>
 		</xsl:element>
 	</xsl:template>
-	
+
 	<xsl:template match="mn:fmt-termsource" mode="update_xml_step1">
 		<xsl:element name="termsource" namespace="{$namespace_full}">
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="update_xml_step1"/>
 		</xsl:element>
 	</xsl:template>
-	
+
 	<xsl:template match="mn:fmt-source" mode="update_xml_step1">
 		<xsl:element name="source" namespace="{$namespace_full}">
 			<xsl:copy-of select="@*"/>
@@ -2910,7 +2926,7 @@
 		<xsl:param name="page_sequence_at_top"/>
 		<!-- <xsl:choose>
 			<xsl:when test="ancestor::mn:sections">
-			
+
 			</xsl:when>
 			<xsl:when test="ancestor::mn:annex">
 			</xsl:when>
@@ -3105,7 +3121,7 @@
 			<xsl:copy>
 				<xsl:apply-templates select="@*" mode="update_xml_step2"/>
 				<xsl:attribute name="id">_abc<xsl:value-of select="generate-id()"/></xsl:attribute>
-				
+
 				<xsl:apply-templates select="node()" mode="update_xml_step2"/>
 			</xsl:copy>
 		</xsl:template> -->
@@ -3123,11 +3139,11 @@
 	<!-- <xsl:template match="mn:bibitem/mn:note" mode="update_xml_step2">
 			<xsl:copy>
 				<xsl:apply-templates select="@*" mode="update_xml_step2"/>
-				
+
 				<xsl:attribute name="reference">
 					<xsl:value-of select="concat('bibitem_', ../@id, '_', count(preceding-sibling::mn:note))"/>
 				</xsl:attribute>
-				
+
 				<xsl:apply-templates select="node()" mode="update_xml_step2"/>
 			</xsl:copy>
 		</xsl:template> -->
@@ -3522,7 +3538,7 @@
 
 		<xsl:copy-of select="document($updated_xml_step_move_pagebreak_filename)"/>
 
-		<!-- TODO: instead of 
+		<!-- TODO: instead of
 		<xsl:for-each select=".//mn:page_sequence[normalize-space() != '' or .//image or .//svg]">
 		in each template, add removing empty page_sequence here
 		-->
@@ -5564,7 +5580,7 @@
 	</xsl:template>
 
 	<!-- <xsl:template match="mn:domain"> -->
-		<!-- https://github.com/metanorma/isodoc/issues/607 
+		<!-- https://github.com/metanorma/isodoc/issues/607
 		<fo:inline xsl:use-attribute-sets="domain-style">&lt;<xsl:apply-templates/>&gt;</fo:inline>
 		<xsl:text> </xsl:text> -->
 		<!-- <xsl:if test="not(@hidden = 'true')">
@@ -6251,7 +6267,7 @@
 						<!-- <xsl:choose>
 							<xsl:when test="$namespace = 'plateau'"></xsl:when>
 							<xsl:otherwise>
-								
+
 							</xsl:otherwise>
 						</xsl:choose> -->
 						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute><!-- set 0pt border, because there is a separete table below for footer -->
@@ -6715,11 +6731,11 @@
 					<column divider="100"><xsl:value-of select="."/></column>
 				</xsl:for-each>
 			</xsl:when>
-			<!-- 3. The maximum width of the table is greater than the available space, but the minimum table width is smaller. 
-			In this case, find the difference between the available space and the minimum table width, lets call it W. 
-			Lets also call D the difference between maximum and minimum width of the table. 
-			For each column, let d be the difference between maximum and minimum width of that column. 
-			Now set the column's width to the minimum width plus d times W over D. 
+			<!-- 3. The maximum width of the table is greater than the available space, but the minimum table width is smaller.
+			In this case, find the difference between the available space and the minimum table width, lets call it W.
+			Lets also call D the difference between maximum and minimum width of the table.
+			For each column, let d be the difference between maximum and minimum width of that column.
+			Now set the column's width to the minimum width plus d times W over D.
 			This makes columns with large differences between minimum and maximum widths wider than columns with smaller differences. -->
 			<xsl:when test="(@width_max &gt; $page_width and @width_min &lt; $page_width) or (@width_min &gt;= $page_width)">
 				<!-- difference between the available space and the minimum table width -->
@@ -7450,7 +7466,7 @@
 	</xsl:template>
 
 	<!-- <xsl:template match="mn:fmt-footnote-container/mn:fmt-fn-body//mn:fmt-fn-label//mn:tab"/> -->
-	<!-- 
+	<!--
 	<xsl:template name="create_fn">
 		<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
 			<xsl:if test="ancestor::*[local-name()='table'][1]/@id">  - for footnotes in tables -
@@ -7879,13 +7895,13 @@
 	<!-- ================================== -->
 
 	<!-- ===================== -->
-	<!-- 1. mode "simple-table-colspan" 
+	<!-- 1. mode "simple-table-colspan"
 			1.1. remove thead, tbody, fn
 			1.2. rename th -> td
 			1.3. repeating N td with colspan=N
 			1.4. remove namespace
 			1.5. remove @colspan attribute
-			1.6. add @divide attribute for divide text width in further processing 
+			1.6. add @divide attribute for divide text width in further processing
 	-->
 	<!-- ===================== -->
 	<xsl:template match="*[local-name()='thead'] | *[local-name()='tbody']" mode="simple-table-colspan">
@@ -7956,7 +7972,7 @@
 	<!-- ===================== -->
 
 	<!-- ===================== -->
-	<!-- 2. mode "simple-table-rowspan" 
+	<!-- 2. mode "simple-table-rowspan"
 	Row span processing, more information http://andrewjwelch.com/code/xslt/table/table-normalization.html	-->
 	<!-- ===================== -->
 	<xsl:template match="@*|node()" mode="simple-table-rowspan">
@@ -8015,7 +8031,7 @@
 			</xsl:when>
 			<!-- <xsl:when test="xalan:nodeset($newRow)/*[not(@rowspan) or (@rowspan = 1)] and $nextrow_without_rowspan &gt; 0">
 				<xsl:copy-of select="following-sibling::tr[position() &lt;= $nextrow_without_rowspan]"/>
-				
+
 				<xsl:copy-of select="following-sibling::tr[$nextrow_without_rowspan + 1]"/>
 				<xsl:apply-templates select="following-sibling::tr[$nextrow_without_rowspan + 2]" mode="simple-table-rowspan">
 						<xsl:with-param name="previousRow" select="following-sibling::tr[$nextrow_without_rowspan + 1]"/>
@@ -8828,7 +8844,7 @@
 		</fo:table-row> -->
 		<!-- <tr>
 			<td number-columns-spanned="2">NOTE <xsl:apply-templates /> </td>
-		</tr> 
+		</tr>
 		-->
 		<fo:table-row>
 			<fo:table-cell number-columns-spanned="2">
@@ -9420,7 +9436,7 @@
 					<!-- <xsl:if test="$namespace = 'iho' or $namespace = 'gb' or $namespace = 'm3d' or $namespace = 'unece-rec' or $namespace = 'unece'  or $namespace = 'rsd'">
 						<xsl:text>:</xsl:text>
 					</xsl:if> -->
-					<!-- <xsl:if test="$namespace = 'itu' or $namespace = 'nist-cswp'  or $namespace = 'nist-sp'">				
+					<!-- <xsl:if test="$namespace = 'itu' or $namespace = 'nist-cswp'  or $namespace = 'nist-sp'">
 						<xsl:text> – </xsl:text> en dash &#x2013;
 					</xsl:if> -->
 				</xsl:otherwise>
@@ -9447,7 +9463,7 @@
 					<!-- <xsl:if test="$namespace = 'gb' or $namespace = 'iso' or $namespace = 'iec' or $namespace = 'ogc' or $namespace = 'ogc-white-paper' or $namespace = 'rsd' or $namespace = 'jcgm'">
 						<xsl:text>:</xsl:text>
 					</xsl:if> -->
-					<!-- <xsl:if test="$namespace = 'itu' or $namespace = 'nist-cswp'  or $namespace = 'nist-sp' or $namespace = 'unece-rec' or $namespace = 'unece'">				
+					<!-- <xsl:if test="$namespace = 'itu' or $namespace = 'nist-cswp'  or $namespace = 'nist-sp' or $namespace = 'unece-rec' or $namespace = 'unece'">
 						<xsl:text> – </xsl:text> en dash &#x2013;
 					</xsl:if> -->
 				</xsl:otherwise>
@@ -10129,7 +10145,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 
-								<!-- 
+								<!--
 								<xsl:if test="not(@mimetype = 'image/svg+xml') and (../mn:name or parent::mn:figure[@unnumbered = 'true']) and not(ancestor::mn:table)">
 								-->
 
@@ -10599,9 +10615,9 @@
 	</xsl:template>
 
 	<!-- replace
-			stroke="rgba(r, g, b, alpha)" to 
+			stroke="rgba(r, g, b, alpha)" to
 			stroke="rgb(r,g,b)" stroke-opacity="alpha", and
-			fill="rgba(r, g, b, alpha)" to 
+			fill="rgba(r, g, b, alpha)" to
 			fill="rgb(r,g,b)" fill-opacity="alpha" -->
 	<xsl:template match="@*[local-name() = 'stroke' or local-name() = 'fill'][starts-with(normalize-space(.), 'rgba')]" mode="svg_update">
 		<xsl:variable name="components_">
@@ -10854,7 +10870,7 @@
 	</xsl:template>
 
 	<xsl:template match="mn:formula/mn:fmt-name"> <!-- show in 'stem' template -->
-		<!-- https://github.com/metanorma/isodoc/issues/607 
+		<!-- https://github.com/metanorma/isodoc/issues/607
 		<xsl:if test="normalize-space() != ''">
 			<xsl:text>(</xsl:text><xsl:apply-templates /><xsl:text>)</xsl:text>
 		</xsl:if> -->
@@ -11249,8 +11265,8 @@
 
 	</xsl:template>
 
-	<!-- Examples: 
-		<stem type="AsciiMath">x = 1</stem> 
+	<!-- Examples:
+		<stem type="AsciiMath">x = 1</stem>
 		<stem type="AsciiMath"><asciimath>x = 1</asciimath></stem>
 		<stem type="AsciiMath"><asciimath>x = 1</asciimath><latexmath>x = 1</latexmath></stem>
 	-->
@@ -11649,7 +11665,7 @@
 					</xsl:apply-templates>
 
 					<!-- <xsl:apply-templates select="node()[not(local-name() = 'note')]" />
-					
+
 					<xsl:for-each select="./mn:note">
 						<xsl:call-template name="note"/>
 					</xsl:for-each> -->
@@ -11850,7 +11866,7 @@
 				<!-- itetation for:
 				footnotes in bibdata/title
 				footnotes in bibliography
-				footnotes in document's body (except table's head/body/foot and figure text) 
+				footnotes in document's body (except table's head/body/foot and figure text)
 				-->
 				<xsl:for-each select="ancestor::mn:metanorma/mn:bibdata/mn:note[@type='title-footnote']">
 					<fn gen_id="{generate-id(.)}">
@@ -12141,7 +12157,7 @@
 
 	<!-- Bibliography (non-normative references) -->
 	<xsl:template match="mn:references[not(@normative='true')]/mn:bibitem" name="bibitem_non_normative" priority="2">
-		<xsl:param name="skip" select="normalize-space(preceding-sibling::*[not(self::mn:note)][1][self::mn:bibitem] and 1 = 1)"/> <!-- current bibiitem is non-first --> <!-- $namespace = 'csd' or $namespace = 'gb' or $namespace = 'iec' or $namespace = 'ieee' or $namespace = 'iso' or $namespace = 'jcgm' or $namespace = 'm3d' or 
+		<xsl:param name="skip" select="normalize-space(preceding-sibling::*[not(self::mn:note)][1][self::mn:bibitem] and 1 = 1)"/> <!-- current bibiitem is non-first --> <!-- $namespace = 'csd' or $namespace = 'gb' or $namespace = 'iec' or $namespace = 'ieee' or $namespace = 'iso' or $namespace = 'jcgm' or $namespace = 'm3d' or
 			$namespace = 'mpfd' or $namespace = 'ogc' or $namespace = 'ogc-white-paper' -->
 		<!-- Example: [1] ISO 9:1995, Information and documentation – Transliteration of Cyrillic characters into Latin characters – Slavic and non-Slavic languages -->
 		<xsl:call-template name="setNamedDestination"/>
@@ -15920,7 +15936,7 @@
 									<xsl:attribute name="reference-orientation">0</xsl:attribute>
 								</xsl:if>
 								<xsl:if test="$char = '゜' or $char = '。' or $char = '﹒' or $char = '．'">
-									<!-- Rotate 180°: 
+									<!-- Rotate 180°:
 										U+309C KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK (゜)
 										U+3002 IDEOGRAPHIC FULL STOP (。)
 										U+FE52 SMALL FULL STOP (﹒)
