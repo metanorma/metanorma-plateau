@@ -671,7 +671,7 @@ RSpec.describe IsoDoc::Plateau do
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
                                ISO 7301:2011、
-                               <span class="citesec">第3.1</span>
+                               <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
                          、を一部変更し、
@@ -864,7 +864,7 @@ RSpec.describe IsoDoc::Plateau do
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
                                ISO 7301:2011、
-                               <span class="citesec">第3.1</span>
+                               <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
                       </semx>
@@ -881,7 +881,7 @@ RSpec.describe IsoDoc::Plateau do
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
                                ISO 7301:2011、
-                               <span class="citesec">第3.1</span>
+                               <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
                          、を一部変更し、
