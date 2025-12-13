@@ -2,137 +2,138 @@ require "spec_helper"
 require "nokogiri"
 
 RSpec.describe IsoDoc::Plateau::Metadata do
+  let (:input) { <<~INPUT }
+       <jis-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
+            <bibdata type="standard">
+        <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+        <title language="en" format="text/plain" type="title-intro">Introduction</title>
+        <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+        <title language="en" format="text/plain" type="title-part">Title Part</title>
+        <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+        <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
+        <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
+        <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+        <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
+        <docnumber>1000</docnumber>
+        <date type="published">2020-10-11</date>
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>Japanese Industrial Standards</name>
+            <abbreviation>MLIT</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>Japanese Industrial Standards</name>
+            <abbreviation>MLIT</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+           <role type="authorizer">
+             <description>Investigative organization</description>
+           </role>
+           <organization>
+               <name language="ja">日本産業標準調査会</name>
+               <name language="en">Japanese Industrial Standards Committee</name>
+           </organization>
+         </contributor>
+                    <contributor>
+           <role type="authorizer">
+             <description>Investigative committee</description>
+           </role>
+           <person>
+             <name>
+               <completename>KUROSAWA Akira</completename>
+             </name>
+             <affiliation>
+               <organization>
+                 <name>Committee 123</name>
+               </organization>
+             </affiliation>
+           </person>
+         </contributor>
+         <contributor>
+           <role type="authorizer">
+             <description>Investigative committee</description>
+           </role>
+           <person>
+             <name>
+               <completename>MIFUNE Toshiro</completename>
+             </name>
+             <affiliation>
+               <name>委員会長</name>
+               <name>lead actor</name>
+               <organization>
+                 <name>Committee 123</name>
+               </organization>
+             </affiliation>
+           </person>
+         </contributor>
+        <edition>2</edition>
+        <version>
+          <revision-date>2000-01-01</revision-date>
+          <draft>0.3.4</draft>
+        </version>
+        <language>ja</language>
+        <script>Jpan</script>
+        <status>
+          <stage abbreviation="WD">20</stage>
+          <substage>20</substage>
+          <iteration>3</iteration>
+        </status>
+        <copyright>
+          <from>2000</from>
+          <owner>
+            <organization>
+              <name>Japanese Industrial Standards</name>
+              <abbreviation>JIS</abbreviation>
+            </organization>
+          </owner>
+        </copyright>
+        <ext>
+          <doctype>standard</doctype>
+          <horizontal>true</horizontal>
+          <editorialgroup>
+            <agency>MLIT</agency>
+            <technical-committee number="1" type="A">TC</technical-committee>
+            <technical-committee number="11" type="A1">TC1</technical-committee>
+            <subcommittee number="2" type="B">SC</subcommittee>
+            <subcommittee number="21" type="B1">SC1</subcommittee>
+            <workgroup number="3" type="C">WG</workgroup>
+            <workgroup number="31" type="C1">WG1</workgroup>
+            <secretariat>SECRETARIAT</secretariat>
+          </editorialgroup>
+          <approvalgroup>
+            <agency>ISO</agency>
+            <agency>IEC</agency>
+            <technical-committee number="1a" type="Aa">TCa</technical-committee>
+            <technical-committee number="11a" type="A1a">TC1a</technical-committee>
+            <subcommittee number="2a" type="Ba">SCa</subcommittee>
+            <subcommittee number="21a" type="B1a">SC1a</subcommittee>
+            <workgroup number="3a" type="Ca">WGa</workgroup>
+            <workgroup number="31a" type="C1a">WG1a</workgroup>
+          </approvalgroup>
+          <structuredidentifier>
+            <project-number part="1">JIS 1000</project-number>
+          </structuredidentifier>
+          <stagename abbreviation="WD">Working Draft International Standard</stagename>
+        </ext>
+      </bibdata>
+      <metanorma-extension>
+      <semantic-metadata>
+      <stage-published>false</stage-published>
+      </semantic-metadata>
+      </metanorma-extension>
+      <sections> </sections>
+    </jis-standard>
+  INPUT
+
   it "processes IsoXML metadata" do
     c = IsoDoc::Plateau::HtmlConvert.new({})
     _ = c.convert_init(<<~"INPUT", "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-    INPUT
-    input = <<~INPUT
-         <jis-standard type="semantic" version="#{Metanorma::Plateau::VERSION}" xmlns="https://www.metanorma.org/ns/plateau">
-              <bibdata type="standard">
-          <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
-          <title language="en" format="text/plain" type="title-intro">Introduction</title>
-          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-          <title language="en" format="text/plain" type="title-part">Title Part</title>
-          <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
-          <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
-          <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
-          <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
-          <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
-          <docnumber>1000</docnumber>
-          <date type="published">2020-10-11</date>
-          <contributor>
-            <role type="author"/>
-            <organization>
-              <name>Japanese Industrial Standards</name>
-              <abbreviation>MLIT</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>Japanese Industrial Standards</name>
-              <abbreviation>MLIT</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-               <description>Investigative organization</description>
-             </role>
-             <organization>
-                 <name language="ja">日本産業標準調査会</name>
-                 <name language="en">Japanese Industrial Standards Committee</name>
-             </organization>
-           </contributor>
-                      <contributor>
-             <role type="authorizer">
-               <description>Investigative committee</description>
-             </role>
-             <person>
-               <name>
-                 <completename>KUROSAWA Akira</completename>
-               </name>
-               <affiliation>
-                 <organization>
-                   <name>Committee 123</name>
-                 </organization>
-               </affiliation>
-             </person>
-           </contributor>
-           <contributor>
-             <role type="authorizer">
-               <description>Investigative committee</description>
-             </role>
-             <person>
-               <name>
-                 <completename>MIFUNE Toshiro</completename>
-               </name>
-               <affiliation>
-                 <name>委員会長</name>
-                 <name>lead actor</name>
-                 <organization>
-                   <name>Committee 123</name>
-                 </organization>
-               </affiliation>
-             </person>
-           </contributor>
-          <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
-          <language>ja</language>
-          <script>Jpan</script>
-          <status>
-            <stage abbreviation="WD">20</stage>
-            <substage>20</substage>
-            <iteration>3</iteration>
-          </status>
-          <copyright>
-            <from>2000</from>
-            <owner>
-              <organization>
-                <name>Japanese Industrial Standards</name>
-                <abbreviation>JIS</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>standard</doctype>
-            <horizontal>true</horizontal>
-            <editorialgroup>
-              <agency>MLIT</agency>
-              <technical-committee number="1" type="A">TC</technical-committee>
-              <technical-committee number="11" type="A1">TC1</technical-committee>
-              <subcommittee number="2" type="B">SC</subcommittee>
-              <subcommittee number="21" type="B1">SC1</subcommittee>
-              <workgroup number="3" type="C">WG</workgroup>
-              <workgroup number="31" type="C1">WG1</workgroup>
-              <secretariat>SECRETARIAT</secretariat>
-            </editorialgroup>
-            <approvalgroup>
-              <agency>ISO</agency>
-              <agency>IEC</agency>
-              <technical-committee number="1a" type="Aa">TCa</technical-committee>
-              <technical-committee number="11a" type="A1a">TC1a</technical-committee>
-              <subcommittee number="2a" type="Ba">SCa</subcommittee>
-              <subcommittee number="21a" type="B1a">SC1a</subcommittee>
-              <workgroup number="3a" type="Ca">WGa</workgroup>
-              <workgroup number="31a" type="C1a">WG1a</workgroup>
-            </approvalgroup>
-            <structuredidentifier>
-              <project-number part="1">JIS 1000</project-number>
-            </structuredidentifier>
-            <stagename abbreviation="WD">Working Draft International Standard</stagename>
-          </ext>
-        </bibdata>
-        <metanorma-extension>
-        <semantic-metadata>
-        <stage-published>false</stage-published>
-        </semantic-metadata>
-        </metanorma-extension>
-        <sections> </sections>
-      </jis-standard>
     INPUT
     output =
       { agency: "MLIT",
@@ -229,6 +230,303 @@ RSpec.describe IsoDoc::Plateau::Metadata do
                            nil))).to be_equivalent_to output
   end
 
+  it "internationalises IsoXML metadata" do
+    output = <<~OUTPUT
+                   <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="1.2.3">
+         <bibdata type="standard">
+            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+            <title language="en" format="text/plain" type="title-intro">Introduction</title>
+            <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+            <title language="en" format="text/plain" type="title-part">Title Part</title>
+            <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
+            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
+            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+            <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
+            <docnumber>1000</docnumber>
+            <date type="published">令和2年10月11日</date>
+            <date type="published" language="ja">令和2年10月11日</date>
+            <date type="published" language="en">2020-10-11</date>
+            <contributor>
+               <role type="author"/>
+               <organization>
+                  <name>Japanese Industrial Standards</name>
+                  <abbreviation>MLIT</abbreviation>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="publisher"/>
+               <organization>
+                  <name>Japanese Industrial Standards</name>
+                  <abbreviation>MLIT</abbreviation>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative organization</description>
+               </role>
+               <organization>
+                  <name language="ja">日本産業標準調査会</name>
+                  <name language="en">Japanese Industrial Standards Committee</name>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative committee</description>
+               </role>
+               <person>
+                  <name>
+                     <completename>KUROSAWA Akira</completename>
+                  </name>
+                  <affiliation>
+                     <organization>
+                        <name>Committee 123</name>
+                     </organization>
+                  </affiliation>
+               </person>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative committee</description>
+               </role>
+               <person>
+                  <name>
+                     <completename>MIFUNE Toshiro</completename>
+                  </name>
+                  <affiliation>
+                     <name>委員会長</name>
+                     <name>lead actor</name>
+                     <organization>
+                        <name>Committee 123</name>
+                     </organization>
+                  </affiliation>
+               </person>
+            </contributor>
+            <edition language="">2</edition>
+            <edition language="ja">第2版</edition>
+            <edition language="ja" numberonly="true">2</edition>
+            <edition language="en">second edition</edition>
+            <edition language="en" numberonly="true">2</edition>
+            <version>
+               <revision-date>2000-01-01</revision-date>
+               <draft>0.3.4</draft>
+            </version>
+            <language current="true">ja</language>
+            <script current="true">Jpan</script>
+            <status>
+               <stage abbreviation="WD" language="">20</stage>
+               <stage abbreviation="WD" language="ja">Working draft</stage>
+               <stage abbreviation="WD" language="en">Working draft</stage>
+               <substage>20</substage>
+               <iteration>3</iteration>
+            </status>
+            <copyright>
+               <from>2000</from>
+               <owner>
+                  <organization>
+                     <name>Japanese Industrial Standards</name>
+                     <abbreviation>JIS</abbreviation>
+                  </organization>
+               </owner>
+            </copyright>
+            <ext>
+               <doctype>standard</doctype>
+               <horizontal>true</horizontal>
+               <editorialgroup>
+                  <agency>MLIT</agency>
+                  <technical-committee number="1" type="A">TC</technical-committee>
+                  <technical-committee number="11" type="A1">TC1</technical-committee>
+                  <subcommittee number="2" type="B">SC</subcommittee>
+                  <subcommittee number="21" type="B1">SC1</subcommittee>
+                  <workgroup number="3" type="C">WG</workgroup>
+                  <workgroup number="31" type="C1">WG1</workgroup>
+                  <secretariat>SECRETARIAT</secretariat>
+               </editorialgroup>
+               <approvalgroup>
+                  <agency>ISO</agency>
+                  <agency>IEC</agency>
+                  <technical-committee number="1a" type="Aa">TCa</technical-committee>
+                  <technical-committee number="11a" type="A1a">TC1a</technical-committee>
+                  <subcommittee number="2a" type="Ba">SCa</subcommittee>
+                  <subcommittee number="21a" type="B1a">SC1a</subcommittee>
+                  <workgroup number="3a" type="Ca">WGa</workgroup>
+                  <workgroup number="31a" type="C1a">WG1a</workgroup>
+               </approvalgroup>
+               <structuredidentifier>
+                  <project-number part="1">JIS 1000</project-number>
+               </structuredidentifier>
+               <stagename abbreviation="WD">Working Draft International Standard</stagename>
+            </ext>
+         </bibdata>
+
+         <metanorma-extension>
+            <semantic-metadata>
+               <stage-published>false</stage-published>
+            </semantic-metadata>
+         </metanorma-extension>
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1" id="_">目　次</fmt-title>
+            </clause>
+         </preface>
+         <sections> </sections>
+      </jis-standard>
+    OUTPUT
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+  .new(presxml_options)
+  .convert("test", input, true)))
+  .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Canon.format_xml(output)
+
+    output = <<~OUTPUT
+      <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="1.2.3">
+         <bibdata type="standard">
+            <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+            <title language="en" format="text/plain" type="title-intro">Introduction</title>
+            <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+            <title language="en" format="text/plain" type="title-part">Title Part</title>
+            <title language="ja" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+            <title language="ja" format="text/plain" type="title-intro">Introduction Française</title>
+            <title language="ja" format="text/plain" type="title-main">Titre Principal</title>
+            <title language="ja" format="text/plain" type="title-part">Part du Titre</title>
+            <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
+            <docnumber>1000</docnumber>
+            <date type="published">令和2年10月11日</date>
+            <date type="published" language="ja">令和2年10月11日</date>
+            <date type="published" language="en">2020-10-11</date>
+            <contributor>
+               <role type="author"/>
+               <organization>
+                  <name>Japanese Industrial Standards</name>
+                  <abbreviation>MLIT</abbreviation>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="publisher"/>
+               <organization>
+                  <name>Japanese Industrial Standards</name>
+                  <abbreviation>MLIT</abbreviation>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative organization</description>
+               </role>
+               <organization>
+                  <name language="ja">日本産業標準調査会</name>
+                  <name language="en">Japanese Industrial Standards Committee</name>
+               </organization>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative committee</description>
+               </role>
+               <person>
+                  <name>
+                     <completename>KUROSAWA Akira</completename>
+                  </name>
+                  <affiliation>
+                     <organization>
+                        <name>Committee 123</name>
+                     </organization>
+                  </affiliation>
+               </person>
+            </contributor>
+            <contributor>
+               <role type="authorizer">
+                  <description>Investigative committee</description>
+               </role>
+               <person>
+                  <name>
+                     <completename>MIFUNE Toshiro</completename>
+                  </name>
+                  <affiliation>
+                     <name>委員会長</name>
+                     <name>lead actor</name>
+                     <organization>
+                        <name>Committee 123</name>
+                     </organization>
+                  </affiliation>
+               </person>
+            </contributor>
+            <edition language="">2</edition>
+            <edition language="ja">第2版</edition>
+            <edition language="ja" numberonly="true">2</edition>
+            <edition language="en">second edition</edition>
+            <edition language="en" numberonly="true">2</edition>
+            <version>
+               <revision-date>2000-01-01</revision-date>
+               <draft>0.3.4</draft>
+            </version>
+            <language current="true">ja</language>
+            <script current="true">Jpan</script>
+            <status>
+               <stage abbreviation="WD" language="">20</stage>
+               <stage abbreviation="WD" language="ja">Working draft</stage>
+               <stage abbreviation="WD" language="en">Working draft</stage>
+               <substage>20</substage>
+               <iteration>3</iteration>
+            </status>
+            <copyright>
+               <from>2000</from>
+               <owner>
+                  <organization>
+                     <name>Japanese Industrial Standards</name>
+                     <abbreviation>JIS</abbreviation>
+                  </organization>
+               </owner>
+            </copyright>
+            <ext>
+               <doctype>standard</doctype>
+               <horizontal>true</horizontal>
+               <editorialgroup>
+                  <agency>MLIT</agency>
+                  <technical-committee number="1" type="A">TC</technical-committee>
+                  <technical-committee number="11" type="A1">TC1</technical-committee>
+                  <subcommittee number="2" type="B">SC</subcommittee>
+                  <subcommittee number="21" type="B1">SC1</subcommittee>
+                  <workgroup number="3" type="C">WG</workgroup>
+                  <workgroup number="31" type="C1">WG1</workgroup>
+                  <secretariat>SECRETARIAT</secretariat>
+               </editorialgroup>
+               <approvalgroup>
+                  <agency>ISO</agency>
+                  <agency>IEC</agency>
+                  <technical-committee number="1a" type="Aa">TCa</technical-committee>
+                  <technical-committee number="11a" type="A1a">TC1a</technical-committee>
+                  <subcommittee number="2a" type="Ba">SCa</subcommittee>
+                  <subcommittee number="21a" type="B1a">SC1a</subcommittee>
+                  <workgroup number="3a" type="Ca">WGa</workgroup>
+                  <workgroup number="31a" type="C1a">WG1a</workgroup>
+               </approvalgroup>
+               <structuredidentifier>
+                  <project-number part="1">JIS 1000</project-number>
+               </structuredidentifier>
+               <stagename abbreviation="WD">Working Draft International Standard</stagename>
+            </ext>
+         </bibdata>
+
+         <metanorma-extension>
+            <semantic-metadata>
+               <stage-published>false</stage-published>
+            </semantic-metadata>
+         </metanorma-extension>
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1" id="_">目　次</fmt-title>
+            </clause>
+         </preface>
+         <sections> </sections>
+      </jis-standard>
+    OUTPUT
+    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    .new(presxml_options)
+    .convert("test", input.sub("<language>en</language>",
+                               "<language>ja</language"), true)))
+    .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Canon.format_xml(output)
+  end
+
   it "internationalises dates in bibdata" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -242,13 +540,19 @@ RSpec.describe IsoDoc::Plateau::Metadata do
     INPUT
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-        <bibdata>
-          <language current="true">en</language>
-          <date type="created">2020-10-11</date>
-          <date type="issued">2020-10</date>
-          <date type="published">2020</date>
-        </bibdata>
-      </iso-standard>
+          <bibdata>
+             <language current="true">en</language>
+             <date type="created">2020-10-11</date>
+             <date type="created" language="en">2020-10-11</date>
+             <date type="created" language="ja">令和2年10月11日</date>
+             <date type="issued">2020-10</date>
+             <date type="issued" language="en">2020-10</date>
+             <date type="issued" language="ja">令和2年10月</date>
+             <date type="published">2020</date>
+             <date type="published" language="en">2020</date>
+             <date type="published" language="ja">令和2年</date>
+          </bibdata>
+       </iso-standard>
     OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
@@ -257,13 +561,19 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       .to be_equivalent_to Canon.format_xml(output)
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-        <bibdata>
-          <language current="true">ja</language>
-      <date type="created">令和2年10月11日</date>
-      <date type="issued">令和2年10月</date>
-      <date type="published">令和2年</date>
-        </bibdata>
-      </iso-standard>
+          <bibdata>
+             <language current="true">ja</language>
+             <date type="created">令和2年10月11日</date>
+             <date type="created" language="ja">令和2年10月11日</date>
+             <date type="created" language="en">2020-10-11</date>
+             <date type="issued">令和2年10月</date>
+             <date type="issued" language="ja">令和2年10月</date>
+             <date type="issued" language="en">2020-10</date>
+             <date type="published">令和2年</date>
+             <date type="published" language="ja">令和2年</date>
+             <date type="published" language="en">2020</date>
+          </bibdata>
+       </iso-standard>
     OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
@@ -278,17 +588,27 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       </metanorma-extension>
     SUB
     )
+    output = <<~OUTPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+            <language current="true">ja</language>
+            <date type="created">令和二年十月十一日</date>
+            <date type="created" language="ja">令和二年十月十一日</date>
+            <date type="created" language="en">2020-10-11</date>
+            <date type="issued">令和二年十月</date>
+            <date type="issued" language="ja">令和二年十月</date>
+            <date type="issued" language="en">2020-10</date>
+            <date type="published">令和二年</date>
+            <date type="published" language="ja">令和二年</date>
+            <date type="published" language="en">2020</date>
+         </bibdata>
+      </iso-standard>
+    OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Canon.format(output
-        .sub('<date type="created">令和2年10月11日</date>',
-             '<date type="created">令和二年十月十一日</date>')
-        .sub('<date type="issued">令和2年10月</date>',
-             '<date type="issued">令和二年十月</date>')
-        .sub('<date type="published">令和2年</date>',
-             '<date type="published">令和二年</date>'))
+      .to be_equivalent_to Canon.format(output)
   end
 end

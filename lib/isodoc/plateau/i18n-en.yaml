@@ -2,4 +2,5 @@ published_date_labelled: "Published: %"
 doctype_dict:
   guide: Guide
   annex: Annex
-  technical-report: Technical Report
+  technical-report: PLATEAU Technical Report
+  handbook: Handbook of 3D City Models

@@ -136,11 +136,13 @@ RSpec.describe IsoDoc::Plateau do
              <status>
                 <stage abbreviation="IS" language="">60</stage>
                 <stage abbreviation="IS" language="ja">International Standard</stage>
+                <stage abbreviation="IS" language="en">International Standard</stage>
              </status>
              <language current="true">ja</language>
              <ext>
                 <doctype language="">international-standard</doctype>
                 <doctype language="ja">日本産業規格</doctype>
+                <doctype language="en">International standard</doctype>
              </ext>
           </bibdata>
           <preface>
@@ -720,11 +722,13 @@ RSpec.describe IsoDoc::Plateau do
              <status>
                 <stage abbreviation="IS" language="">60</stage>
                 <stage abbreviation="IS" language="ja">International Standard</stage>
+                <stage abbreviation="IS" language="en">International Standard</stage>
              </status>
              <language current="true">ja</language>
              <ext>
                 <doctype language="">international-standard</doctype>
                 <doctype language="ja">日本産業規格</doctype>
+                <doctype language="en">International standard</doctype>
              </ext>
           </bibdata>
           

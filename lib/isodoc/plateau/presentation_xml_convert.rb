@@ -9,6 +9,36 @@ module IsoDoc
         super
       end
 
+      def i18n_init(lang, script, locale, i18nyaml = nil)
+        @i18n = super
+        alt_i18n_init(i18nyaml)
+        @i18n
+      end
+
+      def alt_i18n_init(i18nyaml)
+        @i18n_lg = {}
+        en = I18n.new("en", "Latn", i18nyaml: i18nyaml || @i18nyaml)
+        ja = I18n.new("ja", "Jpan", i18nyaml: i18nyaml || @i18nyaml)
+        @i18n_lg["default"] = { i18n: @i18n, lang: @lang, script: @script }
+        @i18n_lg["alt"] = if @lang == "ja"
+                            { i18n: en, lang: "en", script: "Latn" }
+                          else
+                            { i18n: ja, lang: "ja", script: "Jpan" }
+                          end
+      end
+
+      def alt_i18n
+        @i18n = @i18n_lg["alt"][:i18n]
+        @lang = @i18n_lg["alt"][:lang]
+        @script = @i18n_lg["alt"][:script]
+      end
+
+      def revert_i18n
+        @i18n = @i18n_lg["default"][:i18n]
+        @lang = @i18n_lg["default"][:lang]
+        @script = @i18n_lg["default"][:script]
+      end
+
       def toc_title_insert_pt(docxml)
         i = preface_init_insert_pt(docxml) or return nil
         a = i.at(ns("./abstract[last()] | ./clause[@type = 'revhistory']")) and
@@ -141,8 +171,31 @@ module IsoDoc
       def fmt_origin_cite_full?(elem)
         sem_xml_descendant?(elem) and return
         id = elem["bibitemid"] or return
-        b = @bibitem_lookup[id] or return
+        @bibitem_lookup[id] or return
         true
+      end
+
+      def bibdata_i18n(bib)
+        alt_i18n
+        super
+        revert_i18n
+        super
+      end
+
+      def date_translate(bibdata)
+        bibdata.xpath(ns("./date[not(@language)]")).each do |d|
+          d.next = d.dup
+          newdate = date_translate1(d.text)
+          d.next.children = newdate
+          d.next["language"] = @lang
+          @lang == @i18n_lg["default"][:lang] and d.children = newdate
+        end
+      end
+
+      def date_translate1(date)
+        if @lang == "en" then date
+        else super
+        end
       end
 
       include Init
