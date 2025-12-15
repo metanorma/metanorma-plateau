@@ -183,8 +183,7 @@ RSpec.describe Metanorma::Plateau do
          <colophon>
          <clause id="_" inline-header="false" obligation="normative">
             <p id="_" anchor="_colophon_title">
-               Introduction Française — Titre Principal —  1: Part du Titre&#x3000;
-               <span class="colophon_edition">第2版</span>
+               Titre Principal　<span class="colophon_edition">第2版</span>
             </p>
             <p id="_" anchor="_colophon_author">国土交通省</p>
             <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
@@ -313,7 +312,7 @@ RSpec.describe Metanorma::Plateau do
             <colophon>
        <clause id="_" inline-header="false" obligation="normative">
          <p id="_" anchor="_colophon_title">
-            Introduction — Main Title — Title — Part 1: Title Part
+            Main Title — Title
             <span class="colophon_edition">second edition</span>
          </p>
          <p id="_" anchor="_colophon_author">Ministry of Land, Infrastructure, Transport and Tourism</p>
