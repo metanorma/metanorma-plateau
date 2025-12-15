@@ -1,7 +1,7 @@
 == {blank}
 
 [[_colophon_title]]
-{{ doctitle }}{% if lang == "ja" %}　{% else %} {%endif%}span:colophon_edition[{{edition_display}}]
+{{ doctitlemain }}{% if lang == "ja" %}　{% else %} {%endif%}span:colophon_edition[{{edition_display}}]
 
 [[_colophon_date_published]]
 {{ published_date_labelled }}
