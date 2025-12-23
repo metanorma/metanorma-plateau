@@ -16,10 +16,11 @@ module IsoDoc
       end
 
       def alt_i18n_init(i18nyaml)
+        @i18n_lg and return
         @i18n_lg = {}
         en = I18n.new("en", "Latn", i18nyaml: i18nyaml || @i18nyaml)
         ja = I18n.new("ja", "Jpan", i18nyaml: i18nyaml || @i18nyaml)
-        @i18n_lg["default"] = { i18n: @i18n, lang: @lang, script: @script }
+        @i18n_lg["default"] = { i18n: @i18n.dup, lang: @lang, script: @script }
         @i18n_lg["alt"] = if @lang == "ja"
                             { i18n: en, lang: "en", script: "Latn" }
                           else

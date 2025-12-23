@@ -505,7 +505,6 @@ RSpec.describe IsoDoc::Plateau do
        </p>
              <p class="CommentaryStandardName">Introduction Française — Titre Principal — </p>
              <p class="zzSTDTitle1">
-                その :
                 <br/>
                 <strong>Part du Titre</strong>
              </p>
@@ -651,7 +650,7 @@ RSpec.describe IsoDoc::Plateau do
        </p>
                    <p class="CommentaryStandardName">　Introduction Française — Titre Principal — </p>
                    <p class="zzSTDTitle1">
-                      　その :
+                                  　
                       <br/>
                       <b>Part du Titre</b>
                    </p>
