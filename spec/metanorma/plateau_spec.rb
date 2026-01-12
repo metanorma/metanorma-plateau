@@ -341,33 +341,20 @@ RSpec.describe Metanorma::Plateau do
       :coverpage-image: images/image1.gif,images/image2.gif
     INPUT
     output = <<~OUTPUT
-      <metanorma-extension>
-      <semantic-metadata>
-          <stage-published>true</stage-published>
-      </semantic-metadata>
-        <presentation-metadata>
-          <name>coverpage-image</name>
-          <value>
-            <image src="images/image1.gif"/>
-            <image src="images/image2.gif"/>
-          </value>
-        </presentation-metadata>
-        <presentation-metadata>
-           <name>TOC Heading Levels</name>
-           <value>2</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>HTML TOC Heading Levels</name>
-           <value>2</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>DOC TOC Heading Levels</name>
-           <value>3</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>PDF TOC Heading Levels</name>
-           <value>3</value>
-         </presentation-metadata>
+       <metanorma-extension>
+          <semantic-metadata>
+             <stage-published>true</stage-published>
+          </semantic-metadata>
+          <presentation-metadata>
+             <coverpage-image>
+                <image src="images/image1.gif"/>
+                <image src="images/image2.gif"/>
+             </coverpage-image>
+             <toc-heading-levels>2</toc-heading-levels>
+             <html-toc-heading-levels>2</html-toc-heading-levels>
+             <doc-toc-heading-levels>3</doc-toc-heading-levels>
+             <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
+          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
