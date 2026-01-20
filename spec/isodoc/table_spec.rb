@@ -57,12 +57,14 @@ RSpec.describe IsoDoc do
               <td align="center">6,06</td>
             </tr>
           </tfoot>
-          <dl key="true">
+          <key>
+          <dl>
           <dt>Drago</dt>
         <dd>A type of rice</dd>
           <dt>**</dt>
         <dd><p>米の一種</p></dd>
         </dl>
+        </key>
               <source status="generalisation">
           <origin bibitemid="ISO712" type="inline" citeas="">
             <localityStack>
@@ -231,11 +233,9 @@ RSpec.describe IsoDoc do
                    <tfoot>
                       <tr id="_">
                          <td id="_" colspan="5">
-                            <dl key="true">
-                               <name id="_">Key</name>
-                               <fmt-name id="_">
-                                  <semx element="name" source="_">Key</semx>
-                               </fmt-name>
+                         <key>
+                         <name>Key</name>
+                            <dl>
                                <dt>Drago</dt>
                                <dd>
                                   <span class="fmt-dt-delim">: </span>
@@ -249,6 +249,7 @@ RSpec.describe IsoDoc do
                                   </p>
                                </dd>
                             </dl>
+                            </key>
                          </td>
                       </tr>
                       <tr>
@@ -469,9 +470,12 @@ RSpec.describe IsoDoc do
                       <tfoot>
                          <tr>
                             <td colspan="5" style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;">
-                               <div class="figdl">
-                                  <p class="ListTitle">Key</p>
-                                  <dl>
+                                                    <div class="key">
+                           <p style="page-break-after: avoid;">
+                              <b>Key</b>
+                           </p>
+                           <div class="figdl">
+                              <dl>
                                      <dt>
                                         <p>Drago</p>
                                      </dt>
@@ -489,6 +493,7 @@ RSpec.describe IsoDoc do
                                         </p>
                                      </dd>
                                   </dl>
+                                  </div>
                                </div>
                             </td>
                          </tr>
@@ -704,24 +709,23 @@ RSpec.describe IsoDoc do
                    <tfoot>
                       <tr id="_">
                          <td id="_" colspan="5">
-                            <dl key="true">
-                               <name id="_">記号説明</name>
-                               <fmt-name id="_">
-                                  <semx element="name" source="_">記号説明</semx>
-                               </fmt-name>
-                               <dt>Drago</dt>
-                               <dd>
-                                  <span class="fmt-dt-delim">：</span>
-                                  A type of rice
-                               </dd>
-                               <dt>**</dt>
-                               <dd>
-                                  <p>
+                          <key>
+                               <name>記号説明</name>
+                               <dl>
+                                  <dt>Drago</dt>
+                                  <dd>
                                      <span class="fmt-dt-delim">：</span>
-                                     米の一種
-                                  </p>
-                               </dd>
-                            </dl>
+                                     A type of rice
+                                  </dd>
+                                  <dt>**</dt>
+                                  <dd>
+                                     <p>
+                                        <span class="fmt-dt-delim">：</span>
+                                        米の一種
+                                     </p>
+                                  </dd>
+                               </dl>
+                            </key>
                          </td>
                       </tr>
                       <tr>
@@ -943,27 +947,31 @@ RSpec.describe IsoDoc do
                       <tfoot>
                          <tr>
                             <td colspan="5" style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;">
-                               <div class="figdl">
-                                  <p class="ListTitle">記号説明</p>
-                                  <dl>
-                                     <dt>
-                                        <p>Drago</p>
-                                     </dt>
-                                     <dd>
-                                        <span class="fmt-dt-delim">：</span>
-                                        A type of rice
-                                     </dd>
-                                     <dt>
-                                        <p>**</p>
-                                     </dt>
-                                     <dd>
-                                        <p>
-                                           　
+                              <div class="key">
+                                  <p style="page-break-after: avoid;">
+                                     <b>記号説明</b>
+                                  </p>
+                                  <div class="figdl">
+                                     <dl>
+                                        <dt>
+                                           <p>Drago</p>
+                                        </dt>
+                                        <dd>
                                            <span class="fmt-dt-delim">：</span>
-                                           米の一種
-                                        </p>
-                                     </dd>
-                                  </dl>
+                                           A type of rice
+                                        </dd>
+                                        <dt>
+                                           <p>**</p>
+                                        </dt>
+                                        <dd>
+                                           <p>
+                                              　
+                                              <span class="fmt-dt-delim">：</span>
+                                              米の一種
+                                           </p>
+                                        </dd>
+                                     </dl>
+                                  </div>
                                </div>
                             </td>
                          </tr>
