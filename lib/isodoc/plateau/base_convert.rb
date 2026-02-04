@@ -5,12 +5,8 @@ require_relative "init"
 module IsoDoc
   module Plateau
     module BaseConvert
-
-      def para_parse(node, out)
-        out.p **attr_code(para_attrs(node)) do |p|
-          @lang == "ja" and p << "&#x3000;"
-          node.children.each { |n| parse(n, p) }
-        end
+      def para_prefix(_node, out)
+        @lang == "ja" and out << "&#x3000;"
       end
 
       def clause_etc1(clause, out, num)
