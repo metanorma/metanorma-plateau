@@ -42,17 +42,20 @@ module Metanorma
           @log.add("PLATEAU_1", nil, params: [@doctype])
       end
 
-      def metadata_id(node, xml)
-        if id = node.attr("docidentifier")
-          add_noko_elem(xml, "docidentifier",
-                        "PLATEAU #{id.sub(/^PLATEAU /, '')}", type: "PLATEAU",
-                                                              primary: "true")
-        else iso_id(node, xml)
-        end
+      def metadata_id_docidentifier(node, xml)
+        id = node.attr("docidentifier")
+        add_noko_elem(xml, "docidentifier", "PLATEAU #{id.sub(/^PLATEAU /, '')}",
+                      primary: "true",
+                      boilerplate: true,
+                      type: metadata_id_primary_type(node))
+      end
+
+      def metadata_id_primary_type(node)
+        "PLATEAU"
       end
 
       # do not use pubid
-      def iso_id(node, xml)
+      def metadata_id_primary(node, xml)
         id = node.attr("docnumber") or return
         add_noko_elem(xml, "docidentifier",
                       "PLATEAU #{id.sub(/^PLATEAU /, '')}", type: "PLATEAU",
