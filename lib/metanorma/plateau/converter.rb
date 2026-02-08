@@ -66,7 +66,7 @@ module Metanorma
       def metadata_status(node, xml)
         stage = get_stage(node)
         xml.status do |s|
-          add_noko_elem(s, "stage", stage)
+          add_noko_elem(s, "stage", stage, abbreviation: node.attr("docstage-abbrev"))
           add_noko_elem(s, "iteration", node.attr("iteration"))
         end
       end
