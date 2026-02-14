@@ -50,7 +50,7 @@ module Metanorma
                       type: metadata_id_primary_type(node))
       end
 
-      def metadata_id_primary_type(node)
+      def metadata_id_primary_type(_node)
         "PLATEAU"
       end
 
@@ -66,7 +66,8 @@ module Metanorma
       def metadata_status(node, xml)
         stage = get_stage(node)
         xml.status do |s|
-          add_noko_elem(s, "stage", stage, abbreviation: node.attr("docstage-abbrev"))
+          add_noko_elem(s, "stage", stage,
+                        abbreviation: node.attr("docstage-abbrev"))
           add_noko_elem(s, "iteration", node.attr("iteration"))
         end
       end
@@ -98,7 +99,7 @@ module Metanorma
           IsoDoc::Plateau::PresentationXMLConvert
             .new(doc_extract_attributes(node)
             .merge(output_formats: ::Metanorma::Plateau::Processor.new
-            .output_formats))
+              .output_formats))
         end
       end
     end

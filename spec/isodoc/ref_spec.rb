@@ -814,10 +814,10 @@ RSpec.describe IsoDoc do
                          </locality>
                       </localityStack>
                    </extent>
-                   <note type="display" original-id="_" id="_" autonum="1">
+                   <note type="display" original-id="_" id="_">
                       <p>This is an annotation of document ISSN.</p>
                    </note>
-                   <note type="display" original-id="_" id="_" autonum="2">
+                   <note type="display" original-id="_" id="_">
                       <p>This is another annotation of document ISSN.</p>
                    </note>
                 </bibitem>
@@ -1434,10 +1434,10 @@ RSpec.describe IsoDoc do
                          </locality>
                       </localityStack>
                    </extent>
-                   <note type="display" original-id="_" id="_" autonum="1">
+                   <note type="display" original-id="_" id="_">
                       <p>This is an annotation of document ISSN.</p>
                    </note>
-                   <note type="display" original-id="_" id="_" autonum="2">
+                   <note type="display" original-id="_" id="_">
                       <p>This is another annotation of document ISSN.</p>
                    </note>
                 </bibitem>
