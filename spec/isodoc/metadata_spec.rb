@@ -234,7 +234,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
 
   it "internationalises IsoXML metadata" do
     output = <<~OUTPUT
-                   <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="1.2.3">
+      <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="#{Metanorma::Plateau::VERSION}">
          <bibdata type="standard">
             <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
             <title language="en" format="text/plain" type="title-intro">Introduction</title>
