@@ -10,20 +10,12 @@ module Metanorma
         "ogc"
       end
 
-      def schema_file
-        "plateau.rng"
-      end
-
       def org_abbrev
         super.merge(pub_hash["en"] => "MLIT")
       end
 
       def default_publisher
         "MLIT"
-      end
-
-      def boilerplate_file(_x_orig)
-        nil
       end
 
       def init_misc(node)

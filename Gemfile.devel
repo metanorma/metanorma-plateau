@@ -1,0 +1,5 @@
+# gem "metanorma-standoc", path: "../metanorma-standoc"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "refactor/cleanup_class"
+gem "metanorma-iso", git: "https://github.com/metanorma/metanorma-iso", branch: "refactor/cleanup_class"
+gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "refactor/cleanup_class"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"

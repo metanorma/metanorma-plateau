@@ -2,7 +2,11 @@ module Metanorma
   module Plateau
     # after term def processed, process source after paragraphs so that
     # the moving of paragraphs there does not include termdef
-    class Converter < Jis::Converter
+    class Cleanup < Jis::Cleanup
+      def boilerplate_file(_x_orig)
+        nil
+      end
+
       def termdef_cleanup(xmldoc)
         super
         xmldoc.xpath("//source").each do |s|
@@ -22,7 +26,8 @@ module Metanorma
       def boilerplate_cleanup(xmldoc)
         super
         conv = boilerplate_isodoc(xmldoc) or return
-        c = process_boilerplate_file(File.join(@libdir, "colophon.adoc"), conv)
+        c = process_boilerplate_file(File.join(@libdir, "colophon.adoc"),
+                                     conv)
         xmldoc.root << "<colophon>#{c.children.first.to_xml}</colophon>"
       end
     end
