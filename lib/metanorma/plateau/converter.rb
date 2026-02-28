@@ -18,7 +18,7 @@ module Metanorma
         "MLIT"
       end
 
-      def init_misc(node)
+      def init_metadata(node)
         super
         @default_doctype = "technical-report"
       end
