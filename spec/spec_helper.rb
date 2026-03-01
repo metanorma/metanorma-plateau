@@ -132,9 +132,10 @@ end
 TERMS_BOILERPLATE = "".freeze
 
 def boilerplate_read(file)
+  conv = Metanorma::Plateau::Converter.new(:plateau, {})
+  cl = Metanorma::Plateau::Cleanup.new(conv)
   HTMLEntities.new.decode(
-    Metanorma::Plateau::Converter
-    .new(:plateau, {}).boilerplate_file_restructure(file)
+    cl.boilerplate_file_restructure(file)
     .to_xml.gsub(/<(\/)?sections>/, "<\\1boilerplate>")
       .gsub(/ id="_[^"]+"/, " id='_'"),
   )
