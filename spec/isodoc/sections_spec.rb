@@ -262,13 +262,15 @@ RSpec.describe IsoDoc::Plateau do
                       </fmt-xref-label>
                       <preferred id="_">
                          <expression>
-                            <name>Term2</name>
+                            <name id="_">Term2</name>
                          </expression>
                       </preferred>
                       <fmt-preferred>
                          <p>
                             <semx element="preferred" source="_">
-                               <strong>Term2</strong>
+                               <strong>
+                                  <semx element="expression/name" source="_">Term2</semx>
+                               </strong>
                             </semx>
                          </p>
                       </fmt-preferred>
@@ -513,16 +515,16 @@ RSpec.describe IsoDoc::Plateau do
                 <semx element="title" source="_">Commentary</semx>
              </fmt-title>
           </annex>
-            <colophon inline-header="true">
-        <clause id="_" inline-header="true" obligation="normative" displayorder="15">
-            <p id="_" anchor="_colophon_title">
-              Introduction Française — Titre Principal — 1: Part du Titre　
-              <span class="colophon_edition">第2版</span>
-            </p>
-            <p id="_" anchor="_colophon_author">国土交通省</p>
-            <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
-        </clause>
-  </colophon>
+          <colophon inline-header="true">
+             <clause id="_" inline-header="true" obligation="normative" displayorder="15">
+                <p id="_" anchor="_colophon_title">
+                   Introduction Française — Titre Principal — 1: Part du Titre　
+                   <span class="colophon_edition">第2版</span>
+                </p>
+                <p id="_" anchor="_colophon_author">国土交通省</p>
+                <p id="_" anchor="_colophon_sponsor">Flintstone Enterprises</p>
+             </clause>
+          </colophon>
        </iso-standard>
     OUTPUT
 
@@ -580,7 +582,7 @@ RSpec.describe IsoDoc::Plateau do
                       <h2>2.1　Normal Terms</h2>
                       <p class="TermNum" id="J">2.1.1</p>
                       <p class="Terms" style="text-align:left;">
-                         <b>Term2</b>
+                         <b><dfn>Term2</dfn></b>
                       </p>
                    </div>
                    <div id="K">

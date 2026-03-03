@@ -108,13 +108,15 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>paddy</name>
+                         <name id="_">paddy</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>paddy</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">paddy</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -242,45 +244,53 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>paddy</name>
+                         <name id="_">paddy</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>paddy</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">paddy</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
                    <admitted id="_">
                       <expression>
-                         <name>paddy rice</name>
+                         <name id="_">paddy rice</name>
                       </expression>
                    </admitted>
                    <admitted id="_">
                       <expression>
-                         <name>rough rice</name>
+                         <name id="_">rough rice</name>
                       </expression>
                    </admitted>
                    <fmt-admitted>
                       <p>
                          ADMITTED:
-                         <semx element="admitted" source="_">paddy rice</semx>
+                         <semx element="admitted" source="_">
+                            <semx element="expression/name" source="_">paddy rice</semx>
+                         </semx>
                       </p>
                       <p>
                          ADMITTED:
-                         <semx element="admitted" source="_">rough rice</semx>
+                         <semx element="admitted" source="_">
+                            <semx element="expression/name" source="_">rough rice</semx>
+                         </semx>
                       </p>
                    </fmt-admitted>
                    <deprecates id="_">
                       <expression>
-                         <name>cargo rice</name>
+                         <name id="_">cargo rice</name>
                       </expression>
                    </deprecates>
                    <fmt-deprecates>
                       <p>
                          DEPRECATED:
-                         <semx element="deprecates" source="_">cargo rice</semx>
+                         <semx element="deprecates" source="_">
+                            <semx element="expression/name" source="_">cargo rice</semx>
+                         </semx>
                       </p>
                    </fmt-deprecates>
                    <definition id="_">
@@ -450,13 +460,15 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>term1</name>
+                         <name id="_">term1</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>term1</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">term1</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -485,13 +497,15 @@ RSpec.describe IsoDoc::Plateau do
                       </fmt-xref-label>
                       <preferred id="_">
                          <expression>
-                            <name>term2</name>
+                            <name id="_">term2</name>
                          </expression>
                       </preferred>
                       <fmt-preferred>
                          <p>
                             <semx element="preferred" source="_">
-                               <strong>term2</strong>
+                               <strong>
+                                  <semx element="expression/name" source="_">term2</semx>
+                               </strong>
                             </semx>
                          </p>
                       </fmt-preferred>
@@ -555,13 +569,15 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>paddy</name>
+                         <name id="_">paddy</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>paddy</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">paddy</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -695,45 +711,53 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>paddy</name>
+                         <name id="_">paddy</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>paddy</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">paddy</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
                    <admitted id="_">
                       <expression>
-                         <name>paddy rice</name>
+                         <name id="_">paddy rice</name>
                       </expression>
                    </admitted>
                    <admitted id="_">
                       <expression>
-                         <name>rough rice</name>
+                         <name id="_">rough rice</name>
                       </expression>
                    </admitted>
                    <fmt-admitted>
                       <p>
                          代替用語：
-                         <semx element="admitted" source="_">paddy rice</semx>
+                         <semx element="admitted" source="_">
+                            <semx element="expression/name" source="_">paddy rice</semx>
+                         </semx>
                       </p>
                       <p>
                          代替用語：
-                         <semx element="admitted" source="_">rough rice</semx>
+                         <semx element="admitted" source="_">
+                            <semx element="expression/name" source="_">rough rice</semx>
+                         </semx>
                       </p>
                    </fmt-admitted>
                    <deprecates id="_">
                       <expression>
-                         <name>cargo rice</name>
+                         <name id="_">cargo rice</name>
                       </expression>
                    </deprecates>
                    <fmt-deprecates>
                       <p>
                          推奨しない用語：
-                         <semx element="deprecates" source="_">cargo rice</semx>
+                         <semx element="deprecates" source="_">
+                            <semx element="expression/name" source="_">cargo rice</semx>
+                         </semx>
                       </p>
                    </fmt-deprecates>
                    <definition id="_">
@@ -905,13 +929,15 @@ RSpec.describe IsoDoc::Plateau do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>term1</name>
+                         <name id="_">term1</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>term1</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">term1</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -940,13 +966,15 @@ RSpec.describe IsoDoc::Plateau do
                       </fmt-xref-label>
                       <preferred id="_">
                          <expression>
-                            <name>term2</name>
+                            <name id="_">term2</name>
                          </expression>
                       </preferred>
                       <fmt-preferred>
                          <p>
                             <semx element="preferred" source="_">
-                               <strong>term2</strong>
+                               <strong>
+                                  <semx element="expression/name" source="_">term2</semx>
+                               </strong>
                             </semx>
                          </p>
                       </fmt-preferred>
@@ -1253,13 +1281,15 @@ RSpec.describe IsoDoc::Plateau do
              </fmt-xref-label>
              <preferred id="_">
                 <expression>
-                   <name>Term 1</name>
+                   <name id="_">Term 1</name>
                 </expression>
              </preferred>
              <fmt-preferred>
                 <p>
                    <semx element="preferred" source="_">
-                      <strong>Term 1</strong>
+                      <strong>
+                         <semx element="expression/name" source="_">Term 1</semx>
+                      </strong>
                    </semx>
                 </p>
              </fmt-preferred>
@@ -1317,13 +1347,15 @@ RSpec.describe IsoDoc::Plateau do
              </fmt-xref-label>
              <preferred id="_">
                 <expression>
-                   <name>Term 2</name>
+                   <name id="_">Term 2</name>
                 </expression>
              </preferred>
              <fmt-preferred>
                 <p>
                    <semx element="preferred" source="_">
-                      <strong>Term 2</strong>
+                      <strong>
+                         <semx element="expression/name" source="_">Term 2</semx>
+                      </strong>
                    </semx>
                 </p>
              </fmt-preferred>
@@ -1456,13 +1488,15 @@ RSpec.describe IsoDoc::Plateau do
              </fmt-xref-label>
              <preferred id="_">
                 <expression>
-                   <name>Term 3</name>
+                   <name id="_">Term 3</name>
                 </expression>
              </preferred>
              <fmt-preferred>
                 <p>
                    <semx element="preferred" source="_">
-                      <strong>Term 3</strong>
+                      <strong>
+                         <semx element="expression/name" source="_">Term 3</semx>
+                      </strong>
                    </semx>
                 </p>
              </fmt-preferred>
