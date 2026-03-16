@@ -229,10 +229,18 @@ RSpec.describe IsoDoc do
        <div id="A">
           <h1>1</h1>
           <figure id="figureA-1" class="figure" style="page-break-after: avoid;page-break-inside: avoid;">
+          <picture>
              <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+          </picture>
+          <picture>
              <img src="rice_images/rice_image1.png" height="20" width="auto"/>
+          </picture>
+          <picture>
              <img src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
+          </picture>
+          <picture>
              <img src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto"/>
+          </picture>
              <a href="#figureA-1a" class="TableFootnoteRef">a)</a>
       <div class="key formula_dl">
          <p style="page-break-after: avoid;">
@@ -293,7 +301,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(pres_output)
       .at("//xmlns:clause[@id = 'A']").to_xml)
-      .gsub(/&lt;/, "&#x3c;")))
+      .gsub("&lt;", "&#x3c;")))
       .to be_equivalent_to Canon.format_xml(presxml)
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))
@@ -320,87 +328,87 @@ RSpec.describe IsoDoc do
            </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
-             </clause>
-          </preface>
-          <sections>
-             <clause id="A" displayorder="2">
-                <fmt-title id="_" depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="A">1</semx>
-                   </span>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="A">1</semx>
-                </fmt-xref-label>
-                <figure id="figureA-1" keep-with-next="true" keep-lines-together="true" autonum="1-1">
-                   <name id="_">Overall title</name>
-                   <fmt-name id="_">
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="A">1</semx>
-                         <span class="fmt-autonum-delim">-</span>
-                         <semx element="autonum" source="figureA-1">1</semx>
-                      </span>
-                      <span class="fmt-caption-delim"> — </span>
-                      <semx element="name" source="_">Overall title</semx>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Figure</span>
-                      <semx element="autonum" source="A">1</semx>
-                      <span class="fmt-autonum-delim">-</span>
-                      <semx element="autonum" source="figureA-1">1</semx>
-                   </fmt-xref-label>
-                   <figure id="note1" autonum="1-1 a">
-                      <name id="_">Subfigure 1</name>
-                      <fmt-name id="_">
-                         <span class="fmt-caption-label">
-                            <semx element="autonum" source="note1">a</semx>
-                            <span class="fmt-label-delim">)</span>
-                         </span>
-                         <span class="fmt-caption-delim">  </span>
-                         <semx element="name" source="_">Subfigure 1</semx>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="A">1</semx>
-                         <span class="fmt-autonum-delim">-</span>
-                         <semx element="autonum" source="figureA-1">1</semx>
-                         <span class="fmt-autonum-delim"> </span>
-                         <semx element="autonum" source="note1">a</semx>
-                         <span class="fmt-autonum-delim">)</span>
-                      </fmt-xref-label>
-                      <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
-                   </figure>
-                   <figure id="note2" autonum="1-1 b">
-                      <name id="_">Subfigure 2</name>
-                      <fmt-name id="_">
-                         <span class="fmt-caption-label">
-                            <semx element="autonum" source="note2">b</semx>
-                            <span class="fmt-label-delim">)</span>
-                         </span>
-                         <span class="fmt-caption-delim">  </span>
-                         <semx element="name" source="_">Subfigure 2</semx>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="A">1</semx>
-                         <span class="fmt-autonum-delim">-</span>
-                         <semx element="autonum" source="figureA-1">1</semx>
-                         <span class="fmt-autonum-delim"> </span>
-                         <semx element="autonum" source="note2">b</semx>
-                         <span class="fmt-autonum-delim">)</span>
-                      </fmt-xref-label>
-                      <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
-                   </figure>
-                </figure>
-             </clause>
-          </sections>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title id="_" depth="1">Contents</fmt-title>
+            </clause>
+         </preface>
+         <sections>
+            <clause id="A" displayorder="2">
+               <fmt-title id="_" depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="A">1</semx>
+                  </span>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="A">1</semx>
+               </fmt-xref-label>
+               <figure id="figureA-1" keep-with-next="true" keep-lines-together="true" autonum="1-1">
+                  <name id="_">Overall title</name>
+                  <fmt-name id="_">
+                     <span class="fmt-caption-label">
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="A">1</semx>
+                        <span class="fmt-autonum-delim">-</span>
+                        <semx element="autonum" source="figureA-1">1</semx>
+                     </span>
+                     <span class="fmt-caption-delim"> — </span>
+                     <semx element="name" source="_">Overall title</semx>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Figure</span>
+                     <semx element="autonum" source="A">1</semx>
+                     <span class="fmt-autonum-delim">-</span>
+                     <semx element="autonum" source="figureA-1">1</semx>
+                  </fmt-xref-label>
+                  <figure id="note1" autonum="1-1 a">
+                     <name id="_">Subfigure 1</name>
+                     <fmt-name id="_">
+                        <span class="fmt-caption-label">
+                           <semx element="autonum" source="note1">a</semx>
+                           <span class="fmt-label-delim">)</span>
+                        </span>
+                        <span class="fmt-caption-delim">  </span>
+                        <semx element="name" source="_">Subfigure 1</semx>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="A">1</semx>
+                        <span class="fmt-autonum-delim">-</span>
+                        <semx element="autonum" source="figureA-1">1</semx>
+                        <span class="fmt-autonum-delim"> </span>
+                        <semx element="autonum" source="note1">a</semx>
+                        <span class="fmt-autonum-delim">)</span>
+                     </fmt-xref-label>
+                     <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
+                  </figure>
+                  <figure id="note2" autonum="1-1 b">
+                     <name id="_">Subfigure 2</name>
+                     <fmt-name id="_">
+                        <span class="fmt-caption-label">
+                           <semx element="autonum" source="note2">b</semx>
+                           <span class="fmt-label-delim">)</span>
+                        </span>
+                        <span class="fmt-caption-delim">  </span>
+                        <semx element="name" source="_">Subfigure 2</semx>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="A">1</semx>
+                        <span class="fmt-autonum-delim">-</span>
+                        <semx element="autonum" source="figureA-1">1</semx>
+                        <span class="fmt-autonum-delim"> </span>
+                        <semx element="autonum" source="note2">b</semx>
+                        <span class="fmt-autonum-delim">)</span>
+                     </fmt-xref-label>
+                     <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
+                  </figure>
+               </figure>
+            </clause>
+         </sections>
+      </iso-standard>
     OUTPUT
     html = <<~OUTPUT
       #{HTML_HDR}
@@ -412,11 +420,15 @@ RSpec.describe IsoDoc do
                <h1>1</h1>
                <figure id="figureA-1" class="figure" style="page-break-after: avoid;page-break-inside: avoid;">
                  <figure id="note1" class="figure">
+          <picture>
                    <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+          </picture>
                    <figcaption>a)  Subfigure 1</figcaption>
                  </figure>
                  <figure id="note2" class="figure">
+          <picture>
                    <img src="rice_images/rice_image1.png" height="20" width="auto"/>
+          </picture>
                    <figcaption>b)  Subfigure 2</figcaption>
                  </figure>
                  <figcaption>Figure 1-1 — Overall title</figcaption>
@@ -426,11 +438,11 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-        pres_output = IsoDoc::Plateau::PresentationXMLConvert
+    pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output
-      .gsub(/&lt;/, "&#x3c;"))))
+      .gsub("&lt;", "&#x3c;"))))
       .to be_equivalent_to Canon.format_xml(presxml)
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))))
@@ -457,7 +469,7 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", presxml, true)))).to be_equivalent_to Canon.format_xml(html)
-    presxml.sub!(/<sections>/,
+    presxml.sub!("<sections>",
                  "<bibdata><language>ja</language></bibdata><sections>")
     html.gsub!('lang="en"', 'lang="ja"')
       .sub!("<p>ABC</p>", "<p>&#x3000;ABC</p>")
@@ -521,236 +533,236 @@ RSpec.describe IsoDoc do
     INPUT
 
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1" id="_">Contents</fmt-title>
-             </clause>
-          </preface>
-          <sections>
-             <clause id="x" inline-header="false" obligation="normative" displayorder="2">
-                <title id="_">Clause</title>
-                <fmt-title depth="1" id="_">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="x">1</semx>
-                   </span>
-                   <span class="fmt-caption-delim">
-                      <tab/>
-                   </span>
-                   <semx element="title" source="_">Clause</semx>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="x">1</semx>
-                </fmt-xref-label>
-                <p id="_">
-                   Paragraph
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">1</origin>
-                   </source>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">2</origin>
-                   </source>
-                </p>
-                <fmt-source>
-                   (SOURCE:
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">1</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</fmt-origin>
-                      </semx>
-                   </semx>
-                   /
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">2</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">2</fmt-origin>
-                      </semx>
-                   </semx>
-                   )
-                </fmt-source>
-                <ul id="_">
-                   <li id="_">
-                      <fmt-name id="_">
-                         <semx element="autonum" source="_">－</semx>
-                      </fmt-name>
-                      <p id="_">List</p>
-                   </li>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">3</origin>
-                   </source>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">4</origin>
-                   </source>
-                </ul>
-                <fmt-source>
-                   (SOURCE:
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">3</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</fmt-origin>
-                      </semx>
-                   </semx>
-                   /
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">4</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">4</fmt-origin>
-                      </semx>
-                   </semx>
-                   )
-                </fmt-source>
-                <ol id="_" type="alphabet">
-                   <li id="_">
-                      <fmt-name id="_">
-                         <semx element="autonum" source="_">a</semx>
-                         <span class="fmt-label-delim">)</span>
-                      </fmt-name>
-                      <p id="_">List</p>
-                   </li>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">5</origin>
-                   </source>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">6</origin>
-                   </source>
-                </ol>
-                <fmt-source>
-                   (SOURCE:
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">5</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</fmt-origin>
-                      </semx>
-                   </semx>
-                   /
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">6</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">6</fmt-origin>
-                      </semx>
-                   </semx>
-                   )
-                </fmt-source>
-                <dl id="_">
-                   <dt>List</dt>
-                   <dd>
-                      <p id="_">Entry</p>
-                   </dd>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">7</origin>
-                   </source>
-                   <source status="identical" id="_">
-                      <origin bibitemid="x" type="inline" citeas="">8</origin>
-                   </source>
-                </dl>
-                <fmt-source>
-                   (SOURCE:
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">7</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</fmt-origin>
-                      </semx>
-                   </semx>
-                   /
-                   <semx element="source" source="_">
-                      <origin bibitemid="x" type="inline" citeas="" id="_">8</origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">8</fmt-origin>
-                      </semx>
-                   </semx>
-                   )
-                </fmt-source>
-             </clause>
-          </sections>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1" id="_">Contents</fmt-title>
+            </clause>
+         </preface>
+         <sections>
+            <clause id="x" inline-header="false" obligation="normative" displayorder="2">
+               <title id="_">Clause</title>
+               <fmt-title depth="1" id="_">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="x">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Clause</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="x">1</semx>
+               </fmt-xref-label>
+               <p id="_">
+                  Paragraph
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">1</origin>
+                  </source>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">2</origin>
+                  </source>
+               </p>
+               <fmt-source>
+                  (SOURCE:
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">1</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">1</fmt-origin>
+                     </semx>
+                  </semx>
+                  /
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">2</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">2</fmt-origin>
+                     </semx>
+                  </semx>
+                  )
+               </fmt-source>
+               <ul id="_">
+                  <li id="_">
+                     <fmt-name id="_">
+                        <semx element="autonum" source="_">－</semx>
+                     </fmt-name>
+                     <p id="_">List</p>
+                  </li>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">3</origin>
+                  </source>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">4</origin>
+                  </source>
+               </ul>
+               <fmt-source>
+                  (SOURCE:
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">3</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">3</fmt-origin>
+                     </semx>
+                  </semx>
+                  /
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">4</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">4</fmt-origin>
+                     </semx>
+                  </semx>
+                  )
+               </fmt-source>
+               <ol id="_" type="alphabet">
+                  <li id="_">
+                     <fmt-name id="_">
+                        <semx element="autonum" source="_">a</semx>
+                        <span class="fmt-label-delim">)</span>
+                     </fmt-name>
+                     <p id="_">List</p>
+                  </li>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">5</origin>
+                  </source>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">6</origin>
+                  </source>
+               </ol>
+               <fmt-source>
+                  (SOURCE:
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">5</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">5</fmt-origin>
+                     </semx>
+                  </semx>
+                  /
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">6</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">6</fmt-origin>
+                     </semx>
+                  </semx>
+                  )
+               </fmt-source>
+               <dl id="_">
+                  <dt>List</dt>
+                  <dd>
+                     <p id="_">Entry</p>
+                  </dd>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">7</origin>
+                  </source>
+                  <source status="identical" id="_">
+                     <origin bibitemid="x" type="inline" citeas="">8</origin>
+                  </source>
+               </dl>
+               <fmt-source>
+                  (SOURCE:
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">7</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">7</fmt-origin>
+                     </semx>
+                  </semx>
+                  /
+                  <semx element="source" source="_">
+                     <origin bibitemid="x" type="inline" citeas="" id="_">8</origin>
+                     <semx element="origin" source="_">
+                        <fmt-origin bibitemid="x" type="inline" citeas="&lt;span class=&quot;fmt-element-name&quot;&gt;Clause&lt;/span&gt; 1">8</fmt-origin>
+                     </semx>
+                  </semx>
+                  )
+               </fmt-source>
+            </clause>
+         </sections>
+      </iso-standard>
     OUTPUT
     html = <<~HTML
-       <html lang="en">
-          <head/>
-          <body lang="en">
-             <div class="title-section">
-                <p> </p>
-             </div>
-             <br/>
-             <div class="prefatory-section">
-                <p> </p>
-             </div>
-             <br/>
-             <div class="main-section">
-                <br/>
-                <div id="_" class="TOC">
-                   <h1 class="IntroTitle">Contents</h1>
-                </div>
-                <div id="x">
-                   <h1>1  Clause</h1>
-                   <p id="_">
-             Paragraph
-     
-     
-           </p>
-                   <div class="BlockSource">
-                      <p>(SOURCE:
-               1
-             /
-               2
-             )</p>
-                   </div>
-                   <div class="ul_wrap">
-                      <ul id="_">
-                         <li id="_">
-                            <p id="_">List</p>
-                         </li>
-                      </ul>
-                   </div>
-                   <div class="BlockSource">
-                      <p>(SOURCE:
-               3
-             /
-               4
-             )</p>
-                   </div>
-                   <div class="ol_wrap">
-                      <ol type="a" id="_" class="alphabet">
-                         <li id="_">
-                            <p id="_">List</p>
-                         </li>
-                      </ol>
-                   </div>
-                   <div class="BlockSource">
-                      <p>(SOURCE:
-               5
-             /
-               6
-             )</p>
-                   </div>
-                   <div class="figdl">
-                      <dl id="_">
-                         <dt>
-                            <p>List</p>
-                         </dt>
-                         <dd>
-                            <p id="_">Entry</p>
-                         </dd>
-                      </dl>
-                   </div>
-                   <div class="BlockSource">
-                      <p>(SOURCE:
-               7
-             /
-               8
-             )</p>
-                   </div>
-                </div>
-             </div>
-          </body>
-       </html>
+      <html lang="en">
+         <head/>
+         <body lang="en">
+            <div class="title-section">
+               <p> </p>
+            </div>
+            <br/>
+            <div class="prefatory-section">
+               <p> </p>
+            </div>
+            <br/>
+            <div class="main-section">
+               <br/>
+               <div id="_" class="TOC">
+                  <h1 class="IntroTitle">Contents</h1>
+               </div>
+               <div id="x">
+                  <h1>1  Clause</h1>
+                  <p id="_">
+            Paragraph
+
+
+          </p>
+                  <div class="BlockSource">
+                     <p>(SOURCE:
+              1
+            /
+              2
+            )</p>
+                  </div>
+                  <div class="ul_wrap">
+                     <ul id="_">
+                        <li id="_">
+                           <p id="_">List</p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="BlockSource">
+                     <p>(SOURCE:
+              3
+            /
+              4
+            )</p>
+                  </div>
+                  <div class="ol_wrap">
+                     <ol type="a" id="_" class="alphabet">
+                        <li id="_">
+                           <p id="_">List</p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="BlockSource">
+                     <p>(SOURCE:
+              5
+            /
+              6
+            )</p>
+                  </div>
+                  <div class="figdl">
+                     <dl id="_">
+                        <dt>
+                           <p>List</p>
+                        </dt>
+                        <dd>
+                           <p id="_">Entry</p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <div class="BlockSource">
+                     <p>(SOURCE:
+              7
+            /
+              8
+            )</p>
+                  </div>
+               </div>
+            </div>
+         </body>
+      </html>
     HTML
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output
-      .gsub(/&lt;/, "&#x3c;"))))
+      .gsub("&lt;", "&#x3c;"))))
       .to be_equivalent_to Canon.format_xml(presxml)
     expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))))
@@ -798,141 +810,141 @@ RSpec.describe IsoDoc do
        </standard-document>
     INPUT
     presxml = <<~OUTPUT
-       <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Foreword</title>
-                <fmt-title id="_" depth="1">
-                   <semx element="title" source="_">Foreword</semx>
-                </fmt-title>
-                <p id="B">
-                   <table id="C" autonum="1">
-                      <fmt-name id="_">
-                         <span class="fmt-caption-label">
-                            <span class="fmt-element-name">Table</span>
-                            <semx element="autonum" source="C">1</semx>
-                         </span>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="C">1</semx>
-                      </fmt-xref-label>
-                      <thead> </thead>
-                      <colgroup>
-                         <col width="100%"/>
-                      </colgroup>
-                      <tbody>
-                         <tr>
-                            <td>
-                               <figure id="D" autonum="1">
-                                  <fmt-name id="_">
-                                     <span class="fmt-caption-label">
-                                        <span class="fmt-element-name">Figure</span>
-                                        <semx element="autonum" source="D">1</semx>
-                                     </span>
-                                  </fmt-name>
-                                  <fmt-xref-label>
-                                     <span class="fmt-element-name">Figure</span>
-                                     <semx element="autonum" source="D">1</semx>
-                                  </fmt-xref-label>
-                                  X
-                               </figure>
-                            </td>
-                         </tr>
-                      </tbody>
-                   </table>
-                </p>
-             </foreword>
-          </preface>
-          <sections>
-             <clause id="A1" displayorder="3">
-                <fmt-title id="_" depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="A1">1</semx>
-                   </span>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="A1">1</semx>
-                </fmt-xref-label>
-                <p id="B1">
-                   <table id="C1" autonum="1-1">
-                      <fmt-name id="_">
-                         <span class="fmt-caption-label">
-                            <span class="fmt-element-name">Table</span>
-                            <semx element="autonum" source="A1">1</semx>
-                            <span class="fmt-autonum-delim">-</span>
-                            <semx element="autonum" source="C1">1</semx>
-                         </span>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-autonum-delim">-</span>
-                         <semx element="autonum" source="C1">1</semx>
-                      </fmt-xref-label>
-                      <thead> </thead>
-                      <colgroup>
-                         <col width="100%"/>
-                      </colgroup>
-                      <tbody>
-                         <tr>
-                            <td>
-                               <figure id="D1">X</figure>
-                            </td>
-                         </tr>
-                      </tbody>
-                   </table>
-                </p>
-             </clause>
-          </sections>
-          <annex id="A2" autonum="A" displayorder="4">
-             <fmt-title id="_">
-                <span class="fmt-caption-label">
-                   <span class="fmt-element-name">Annex</span>
-                   <semx element="autonum" source="A2">A</semx>
-                </span>
-                <br/>
-                <span class="fmt-obligation">(informative)</span>
-             </fmt-title>
-             <fmt-xref-label>
-                <span class="fmt-element-name">Annex</span>
-                <semx element="autonum" source="A2">A</semx>
-             </fmt-xref-label>
-             <p id="B2">
-                <table id="C2" autonum="A-1">
-                   <fmt-name id="_">
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A2">A</semx>
-                         <span class="fmt-autonum-delim">-</span>
-                         <semx element="autonum" source="C2">1</semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A2">A</semx>
-                      <span class="fmt-autonum-delim">-</span>
-                      <semx element="autonum" source="C2">1</semx>
-                   </fmt-xref-label>
-                   <thead> </thead>
-                   <colgroup>
-                      <col width="100%"/>
-                   </colgroup>
-                   <tbody>
-                      <tr>
-                         <td>
-                            <figure id="D2">X</figure>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-             </p>
-          </annex>
-       </standard-document>
+      <standard-document xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title id="_" depth="1">Contents</fmt-title>
+            </clause>
+            <foreword id="A" displayorder="2">
+               <title id="_">Foreword</title>
+               <fmt-title id="_" depth="1">
+                  <semx element="title" source="_">Foreword</semx>
+               </fmt-title>
+               <p id="B">
+                  <table id="C" autonum="1">
+                     <fmt-name id="_">
+                        <span class="fmt-caption-label">
+                           <span class="fmt-element-name">Table</span>
+                           <semx element="autonum" source="C">1</semx>
+                        </span>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Table</span>
+                        <semx element="autonum" source="C">1</semx>
+                     </fmt-xref-label>
+                     <thead> </thead>
+                     <colgroup>
+                        <col width="100%"/>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <figure id="D" autonum="1">
+                                 <fmt-name id="_">
+                                    <span class="fmt-caption-label">
+                                       <span class="fmt-element-name">Figure</span>
+                                       <semx element="autonum" source="D">1</semx>
+                                    </span>
+                                 </fmt-name>
+                                 <fmt-xref-label>
+                                    <span class="fmt-element-name">Figure</span>
+                                    <semx element="autonum" source="D">1</semx>
+                                 </fmt-xref-label>
+                                 X
+                              </figure>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </p>
+            </foreword>
+         </preface>
+         <sections>
+            <clause id="A1" displayorder="3">
+               <fmt-title id="_" depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="A1">1</semx>
+                  </span>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="A1">1</semx>
+               </fmt-xref-label>
+               <p id="B1">
+                  <table id="C1" autonum="1-1">
+                     <fmt-name id="_">
+                        <span class="fmt-caption-label">
+                           <span class="fmt-element-name">Table</span>
+                           <semx element="autonum" source="A1">1</semx>
+                           <span class="fmt-autonum-delim">-</span>
+                           <semx element="autonum" source="C1">1</semx>
+                        </span>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Table</span>
+                        <semx element="autonum" source="A1">1</semx>
+                        <span class="fmt-autonum-delim">-</span>
+                        <semx element="autonum" source="C1">1</semx>
+                     </fmt-xref-label>
+                     <thead> </thead>
+                     <colgroup>
+                        <col width="100%"/>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <figure id="D1">X</figure>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </p>
+            </clause>
+         </sections>
+         <annex id="A2" autonum="A" displayorder="4">
+            <fmt-title id="_">
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">Annex</span>
+                  <semx element="autonum" source="A2">A</semx>
+               </span>
+               <br/>
+               <span class="fmt-obligation">(informative)</span>
+            </fmt-title>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="A2">A</semx>
+            </fmt-xref-label>
+            <p id="B2">
+               <table id="C2" autonum="A-1">
+                  <fmt-name id="_">
+                     <span class="fmt-caption-label">
+                        <span class="fmt-element-name">Table</span>
+                        <semx element="autonum" source="A2">A</semx>
+                        <span class="fmt-autonum-delim">-</span>
+                        <semx element="autonum" source="C2">1</semx>
+                     </span>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Table</span>
+                     <semx element="autonum" source="A2">A</semx>
+                     <span class="fmt-autonum-delim">-</span>
+                     <semx element="autonum" source="C2">1</semx>
+                  </fmt-xref-label>
+                  <thead> </thead>
+                  <colgroup>
+                     <col width="100%"/>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <figure id="D2">X</figure>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </p>
+         </annex>
+      </standard-document>
     OUTPUT
     expect(strip_guid(Canon.format_xml(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
