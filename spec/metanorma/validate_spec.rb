@@ -1,5 +1,5 @@
 require "spec_helper"
-require "relaton_iso"
+require "relaton/iso"
 
 RSpec.describe Metanorma::Plateau do
   it "Warns of illegal doctype" do
@@ -15,10 +15,10 @@ RSpec.describe Metanorma::Plateau do
     INPUT
     expect(File.read("test.err.html"))
       .to include("standard is not a recognised document type")
-  end 
+  end
 
   it "validates document against Metanorma XML schema" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = A
       X
       :docfile: test.adoc
