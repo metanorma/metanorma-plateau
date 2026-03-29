@@ -1,5 +1,5 @@
 require "spec_helper"
-require "relaton_iso"
+require "relaton/iso"
 
 RSpec.describe Metanorma::Plateau do
   it "sorts bibliography" do
