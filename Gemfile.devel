@@ -1,4 +1,0 @@
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "features/disambiguated_date"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/html-toc-formatting"
-gem "metanorma-jis", git: "https://github.com/metanorma/metanorma-jis", branch: "fix/html-toc-formatting"
-
