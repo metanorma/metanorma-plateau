@@ -159,7 +159,7 @@ RSpec.describe IsoDoc do
               <script>Latn</script>
              <note>Also available in paperback.</note>
              <abstract>This is a <em>journey</em> into sound</abstract>
-             <place>Geneva</place>
+             <place><formattedPlace>Geneva</formattedPlace></place>
              <relation type="includedIn">
                <bibitem type="book">
                  <title>Collected Essays</title>
@@ -618,7 +618,7 @@ RSpec.describe IsoDoc do
                       <em>journey</em>
                       into sound
                    </abstract>
-                   <place>Geneva</place>
+                   <place><formattedPlace>Geneva</formattedPlace></place>
                    <relation type="includedIn">
                       <bibitem type="book">
                          <title>Collected Essays</title>
@@ -1232,7 +1232,7 @@ RSpec.describe IsoDoc do
                       <em>journey</em>
                       into sound
                    </abstract>
-                   <place>Geneva</place>
+                   <place><formattedPlace>Geneva</formattedPlace></place>
                    <relation type="includedIn">
                       <bibitem type="book">
                          <title>Collected Essays</title>
