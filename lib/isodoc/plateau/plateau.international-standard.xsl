@@ -4,6 +4,8 @@
 
 	<xsl:key name="kfn" match="mn:fn[not(ancestor::*[self::mn:table or self::mn:figure or self::mn:localized-strings] and not(ancestor::mn:fmt-name))]" use="@reference"/>
 
+	<xsl:key name="kid" match="*" use="@id"/>
+
 	<xsl:variable name="debug">false</xsl:variable>
 
 	<!-- <xsl:variable name="isIgnoreComplexScripts">true</xsl:variable> -->
@@ -888,6 +890,7 @@
 	</xsl:template>
 
 	<xsl:template match="mn:preface/mn:page_sequence/mn:clause" priority="3">
+		<xsl:call-template name="setNamedDestination"/>
 		<fo:block>
 			<xsl:call-template name="setId"/>
 			<xsl:call-template name="addReviewHelper"/>
@@ -950,9 +953,13 @@
 			<styles xsl:use-attribute-sets="title-style"><xsl:call-template name="refine_title-style"/></styles>
 		</xsl:variable>
 
+		<xsl:call-template name="setNamedDestination"/>
 		<xsl:choose>
 			<xsl:when test="@inline-header = 'true' and following-sibling::*[1][self::mn:p]">
 				<fo:block role="H{$level}">
+					<xsl:copy-of select="xalan:nodeset($title_styles)/styles/@*"/>
+					<xsl:call-template name="setIDforNamedDestination"/>
+					<xsl:apply-templates/>
 					<xsl:for-each select="following-sibling::*[1][self::mn:p]">
 						<xsl:call-template name="paragraph">
 							<xsl:with-param name="inline-header">true</xsl:with-param>
@@ -991,6 +998,8 @@
 						</xsl:choose>
 					</xsl:if>
 
+					<xsl:call-template name="setIDforNamedDestinationInline"/>
+
 					<xsl:call-template name="extractTitle"/>
 
 					<xsl:apply-templates select="following-sibling::*[1][self::mn:variant-title][@type = 'sub']" mode="subtitle"/>
@@ -1009,6 +1018,7 @@
 	</xsl:template>
 
 	<xsl:template match="mn:sections/mn:page_sequence//mn:clause" priority="20">
+		<xsl:call-template name="setNamedDestination"/>
 		<fo:block keep-with-next="always">
 			<fo:block id="{@id}"/>
 		</fo:block>
@@ -1017,6 +1027,7 @@
 
 	<!-- indent for clause level 4 and more -->
 	<xsl:template match="mn:sections/mn:page_sequence//mn:clause[mn:fmt-title[@depth &gt;= 4]]" priority="20">
+		<xsl:call-template name="setNamedDestination"/>
 		<fo:block keep-with-next="always">
 			<fo:block id="{@id}"/>
 		</fo:block>
@@ -1040,6 +1051,7 @@
 	</xsl:template>
 
 	<xsl:template match="mn:annex" priority="2">
+		<xsl:call-template name="setNamedDestination"/>
 		<fo:block id="{@id}">
 		</fo:block>
 		<xsl:apply-templates/>
@@ -1060,10 +1072,13 @@
 				<xsl:variable name="previous-element" select="local-name(preceding-sibling::*[1])"/>
 				<xsl:variable name="element-name">
 					<xsl:choose>
+						<xsl:when test="preceding-sibling::*[1][self::mn:fmt-title]/@inline-header = 'true'">fo:inline</xsl:when>
 						<xsl:when test="ancestor::mn:figure and parent::mn:note[not(@type = 'units')]">fo:inline</xsl:when>
 						<xsl:otherwise>fo:block</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
+
+				<xsl:call-template name="setNamedDestination"/>
 
 				<xsl:variable name="p_styles">
 					<styles xsl:use-attribute-sets="p-style">
@@ -2802,6 +2817,46 @@
 	</xsl:template>
 
 	<xsl:template name="addNamedDestinationAttribute">
+	<xsl:variable name="docnum"><xsl:number level="any" count="mn:metanorma"/></xsl:variable>
+	<xsl:variable name="caption_label" select="translate(normalize-space(.//mn:span[@class = 'fmt-caption-label']), ' ()', '')"/>
+
+	<xsl:variable name="named_dest_">
+		<xsl:choose>
+			<xsl:when test="count(ancestor::mn:figure) &gt; 1"/> <!-- prevent id 'a)' -->
+			<xsl:when test="ancestor::mn:note or ancestor::mn:example or        ancestor::mn:termnote or ancestor::mn:termexample or        ancestor::mn:admonition"/>
+			<xsl:when test="$caption_label = '' and parent::mn:foreword">
+				<xsl:variable name="foreword_number"><xsl:number count="mn:foreword" level="any"/></xsl:variable>
+				<xsl:if test="$foreword_number = 1">Foreword</xsl:if>
+			</xsl:when>
+			<xsl:when test="$caption_label = '' and parent::mn:introduction">
+				<xsl:variable name="introduction_number"><xsl:number count="mn:introduction" level="any"/></xsl:variable>
+				<xsl:if test="$introduction_number = 1">Introduction</xsl:if>
+			</xsl:when>
+			<xsl:when test="$caption_label = ''"/>
+			<xsl:when test="../@unnumbered = 'true'"/>
+			<xsl:when test="normalize-space(java:matches(java:java.lang.String.new($caption_label), '[\x21-\xFF]+')) = 'false'"/>
+			<!-- 1.1 in Appendix 1 -->
+			<xsl:otherwise>
+				<xsl:if test="ancestor::mn:annex and string(number(substring($caption_label, 1, 1))) != 'NaN'">
+					<xsl:variable name="annex_caption_label" select="translate(normalize-space(ancestor::mn:annex[1]/mn:fmt-title//mn:span[@class = 'fmt-caption-label']), ' ()', '')"/>
+					<xsl:value-of select="concat($annex_caption_label, '_')"/>
+				</xsl:if>
+				<xsl:if test="parent::mn:formula">Formula</xsl:if>
+				<xsl:value-of select="$caption_label"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="named_dest" select="normalize-space($named_dest_)"/>
+	<xsl:if test="$named_dest != ''">
+		<xsl:variable name="named_dest_doc_">
+			<xsl:value-of select="$named_dest"/>
+			<xsl:if test="$docnum != '1'">_<xsl:value-of select="$docnum"/></xsl:if>
+		</xsl:variable>
+		<xsl:variable name="named_dest_doc" select="normalize-space($named_dest_doc_)"/>
+		<xsl:if test="not(key('kid', $named_dest_doc))"> <!-- if element with id '$named_dest_doc' doesn't exist in the document -->
+			<xsl:attribute name="named_dest"><xsl:value-of select="normalize-space($named_dest_doc)"/></xsl:attribute>
+		</xsl:if>
+	</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="mn:fmt-name" mode="update_xml_step1">
@@ -3837,9 +3892,11 @@
 	</xsl:template>
 
 	<xsl:template match="mn:feedback-statement//mn:p">
+		<xsl:param name="skip_id">false</xsl:param>
 		<xsl:param name="margin"/>
 		<!-- process in the template 'paragraph' -->
 		<xsl:call-template name="paragraph">
+			<xsl:with-param name="skip_id" select="$skip_id"/>
 			<xsl:with-param name="margin" select="$margin"/>
 		</xsl:call-template>
 	</xsl:template>
@@ -10283,7 +10340,12 @@
 	<xsl:template match="mn:figure[@class = 'pseudocode']">
 		<xsl:call-template name="setNamedDestination"/>
 		<fo:block id="{@id}">
-			<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
+			<fo:block role="SKIP">
+				<xsl:for-each select="mn:fmt-name"> <!-- set context -->
+					<xsl:call-template name="setIDforNamedDestination"/>
+				</xsl:for-each>
+				<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
+			</fo:block>
 		</fo:block>
 		<xsl:apply-templates select="mn:fmt-name"/>
 	</xsl:template>
@@ -16066,14 +16128,18 @@
 	</xsl:template>
 
 	<xsl:template name="setIDforNamedDestination">
-		<xsl:if test="@named_dest">
-			<xsl:attribute name="id"><xsl:value-of select="@named_dest"/></xsl:attribute>
+		<xsl:if test="$isGenerateTableIF = 'false'">
+			<xsl:if test="@named_dest">
+				<xsl:attribute name="id"><xsl:value-of select="@named_dest"/></xsl:attribute>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="setIDforNamedDestinationInline">
-		<xsl:if test="@named_dest">
-			<fo:inline><xsl:call-template name="setIDforNamedDestination"/></fo:inline>
+		<xsl:if test="$isGenerateTableIF = 'false'">
+			<xsl:if test="@named_dest">
+				<fo:inline><xsl:call-template name="setIDforNamedDestination"/></fo:inline>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -16083,11 +16149,17 @@
 			<xsl:if test="@id and       normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}.*')) = 'false'">
 				<fox:destination internal-destination="{@id}"/>
 			</xsl:if>
-			<xsl:for-each select=". | mn:fmt-title | mn:fmt-name">
+			<xsl:for-each select=". | *[1][self::mn:fmt-title] | *[1][self::mn:fmt-name]">
 				<xsl:if test="@named_dest">
 					<fox:destination internal-destination="{@named_dest}"/>
 				</xsl:if>
 			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="copyParagraphId">
+		<xsl:if test="normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}.*')) = 'false'">
+			<xsl:copy-of select="@id"/>
 		</xsl:if>
 	</xsl:template>
 
