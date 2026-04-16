@@ -195,8 +195,8 @@ RSpec.describe Metanorma::Plateau do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to (output)
     xml = Nokogiri::XML(Asciidoctor.convert(
                           input.sub(":docfile: test.adoc",
                                     ":docfile: test.adoc\n:language: en"),
@@ -325,8 +325,8 @@ RSpec.describe Metanorma::Plateau do
       </colophon>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to (output)
   end
 
   it "populates cover images" do
@@ -357,10 +357,10 @@ RSpec.describe Metanorma::Plateau do
          </presentation-metadata>
       </metanorma-extension>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
-                                                                         *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
+                                                        *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to (output)
   end
 
   it "populates sources on paragraphs and lists" do
@@ -458,10 +458,10 @@ RSpec.describe Metanorma::Plateau do
           </clause>
         </sections>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:sections").to_xml))
+      .to be_xml_equivalent_to (output)
   end
 
   it "does not include termdefs in nesting of sources" do
@@ -540,10 +540,10 @@ RSpec.describe Metanorma::Plateau do
          </terms>
       </sections>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
           .convert(input, *OPTIONS))
-          .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+          .at("//xmlns:sections").to_xml))
+      .to be_xml_equivalent_to (output)
   end
 
   it "applies default requirement model" do

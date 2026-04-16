@@ -685,12 +685,12 @@ RSpec.describe IsoDoc::Plateau do
         pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output
+    expect((strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .to be_xml_equivalent_to (presxml)
+    expect((strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+      .to be_html5_equivalent_to (html)
   end
 
   it "places revhistory, TOC without abstracts" do
@@ -776,11 +776,11 @@ RSpec.describe IsoDoc::Plateau do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect((strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .to be_xml_equivalent_to (presxml)
   end
 
   it "labels deep-nested sections" do
@@ -1306,10 +1306,10 @@ RSpec.describe IsoDoc::Plateau do
           </annex>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect((strip_guid(IsoDoc::Plateau::PresentationXMLConvert
        .new(presxml_options)
        .convert("test", input, true)))
        .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .to be_xml_equivalent_to (presxml)
   end
 end

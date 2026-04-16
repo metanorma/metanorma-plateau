@@ -923,10 +923,10 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output
+    expect((strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"'))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .to be_xml_equivalent_to (presxml)
 
     presxml = <<~OUTPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
@@ -1543,10 +1543,10 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input
       .sub("<language>en</language>", "<language>ja</language>"), true)
-    expect(Canon.format_xml(strip_guid(pres_output
+    expect((strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"'))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .to be_xml_equivalent_to (presxml)
   end
 
   it "tailors rendering to language of reference" do
@@ -1693,12 +1693,12 @@ RSpec.describe IsoDoc do
     issn_ja = <<~OUTPUT
       <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M. &amp; Payne S. (eds.)　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series (N.S.)」　2022, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
-    expect(Canon.format_xml(pres_output
+    expect((pres_output
       .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
-      .to be_equivalent_to Canon.format_xml(issn_en)
-    expect(Canon.format_xml(pres_output
+      .to be_xml_equivalent_to (issn_en)
+    expect((pres_output
       .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml))
-      .to be_equivalent_to Canon.format_xml(issn_ja)
+      .to be_xml_equivalent_to (issn_ja)
 
     issn_en = <<~OUTPUT
       <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M.,  Payne S. （編）. Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series （N.S.）. 2022, 巻1 いいえ7, 89〜112頁</formattedref>
@@ -1712,11 +1712,11 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input
       .sub("<language>en</language>", "<language>ja</language>"), true))
-    expect(Canon.format_xml(pres_output
+    expect((pres_output
       .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
-      .to be_equivalent_to Canon.format_xml(issn_en)
-    expect(Canon.format_xml(pres_output
+      .to be_xml_equivalent_to (issn_en)
+    expect((pres_output
       .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml))
-      .to be_equivalent_to Canon.format_xml(issn_ja)
+      .to be_xml_equivalent_to (issn_ja)
   end
 end

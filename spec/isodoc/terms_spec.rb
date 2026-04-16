@@ -524,8 +524,8 @@ RSpec.describe IsoDoc::Plateau do
 
     pres_output = IsoDoc::Plateau::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect((strip_guid(pres_output)))
+      .to be_xml_equivalent_to (presxml)
 
     presxml = <<~OUTPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
@@ -994,8 +994,8 @@ RSpec.describe IsoDoc::Plateau do
     xml = Nokogiri::XML(IsoDoc::Plateau::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect((strip_guid(xml.to_xml)))
+      .to be_xml_equivalent_to (presxml)
   end
 
   it "renders different types of termsource" do
@@ -1545,7 +1545,7 @@ RSpec.describe IsoDoc::Plateau do
       .convert("test", input, true)
     pres_output = strip_guid(Nokogiri::XML(pres_output)
 .at("//xmlns:terms").to_xml)
-    expect(Canon.format_xml(pres_output))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect((pres_output))
+      .to be_xml_equivalent_to (presxml)
   end
 end

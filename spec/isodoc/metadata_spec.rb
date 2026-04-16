@@ -134,7 +134,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
 
   it "processes IsoXML metadata" do
     c = IsoDoc::Plateau::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     output =
@@ -144,15 +144,15 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         docnumber_undated: "1000-1.3",
         docnumeric: "1000",
         docsubtitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; その 1： Part du Titre",
-        docsubtitleintro: "Introduction Fran&#xe7;aise",
+        docsubtitleintro: "Introduction Fran&#xE7;aise",
         docsubtitlemain: "Titre Principal",
         docsubtitlepart: "Part du Titre",
-        docsubtitlepartlabel: "その&#xa0;1",
+        docsubtitlepartlabel: "その 1",
         doctitle: "Introduction&#xa0;&#x2014; Main Title — Title&#xa0;&#x2014; Part 1: Title Part",
         doctitleintro: "Introduction",
         doctitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
         doctitlepart: "Title Part",
-        doctitlepartlabel: "Part&#xa0;1",
+        doctitlepartlabel: "Part 1",
         doctype: "Standard",
         doctype_display: "Standard",
         docyear: "2000",
@@ -179,9 +179,8 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         unpublished: true }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
-
     c = IsoDoc::Plateau::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata>
           <language>ja</language>
@@ -198,12 +197,12 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         docsubtitleintro: "Introduction",
         docsubtitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
         docsubtitlepart: "Title Part",
-        docsubtitlepartlabel: "Part&#xa0;1",
+        docsubtitlepartlabel: "Part 1",
         doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; その 1： Part du Titre",
         doctitleintro: "Introduction Fran&#xE7;aise",
         doctitlemain: "Titre Principal",
         doctitlepart: "Part du Titre",
-        doctitlepartlabel: "その&#xa0;1",
+        doctitlepartlabel: "その 1",
         doctype: "Standard",
         doctype_display: "Standard",
         docyear: "2000",
@@ -376,11 +375,11 @@ RSpec.describe IsoDoc::Plateau::Metadata do
          <sections> </sections>
       </jis-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
   .new(presxml_options)
-  .convert("test", input, true)))
+  .convert("test", input, true))
   .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(output)
+      .to be_equivalent_to (output)
 
     output = <<~OUTPUT
       <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="#{Metanorma::Plateau::VERSION}">
@@ -525,12 +524,12 @@ RSpec.describe IsoDoc::Plateau::Metadata do
          <sections> </sections>
       </jis-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
     .new(presxml_options)
     .convert("test", input.sub("<language>en</language>",
-                               "<language>ja</language"), true)))
+                               "<language>ja</language"), true))
     .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(output)
+      .to be_equivalent_to (output)
   end
 
   it "internationalises dates in bibdata" do
@@ -560,11 +559,11 @@ RSpec.describe IsoDoc::Plateau::Metadata do
           </bibdata>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))
+      .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(output)
+      .to be_equivalent_to (output)
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
@@ -581,12 +580,12 @@ RSpec.describe IsoDoc::Plateau::Metadata do
           </bibdata>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input.sub!("<language>en</language>",
-                                  "<language>ja</language"), true)))
+                                  "<language>ja</language"), true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(output)
+      .to be_equivalent_to (output)
 
     input.sub!("</bibdata>", <<~SUB
       </bibdata><metanorma-extension>
@@ -610,11 +609,11 @@ RSpec.describe IsoDoc::Plateau::Metadata do
          </bibdata>
       </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Canon.format(output)
   end
 end

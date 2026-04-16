@@ -12,6 +12,8 @@ require "metanorma"
 require "metanorma/plateau"
 require "canon"
 
+Canon::Config.instance.profile = :metanorma
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
@@ -147,7 +149,6 @@ ASCIIDOCTOR_ISO_DIR = Pathname
 BOILERPLATE = "".freeze
 
 BLANK_HDR = <<~"HDR".freeze
-  <?xml version="1.0" encoding="UTF-8"?>
   <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Plateau::VERSION}" flavor="plateau">
   <bibdata type="standard">
       <docidentifier primary="true" type="JIS">0:#{Date.today.year}</docidentifier>
