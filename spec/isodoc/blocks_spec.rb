@@ -441,11 +441,11 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect((strip_guid(pres_output
-      .gsub("&lt;", "&#x3c;"))))
+    expect(strip_guid(pres_output
+      .gsub("&lt;", "&#x3c;")))
       .to be_xml_equivalent_to (presxml)
-    expect((strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
+    expect(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
       .to be_html5_equivalent_to (html)
   end
 
@@ -460,21 +460,21 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
          <div id="A">
-         <h1/>
+         <h1></h1>
          <p>ABC</p>
                </div>
              </div>
          </body>
        </html>
     OUTPUT
-    expect((strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true)))).to be_html5_equivalent_to (html)
+    expect(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_html5_equivalent_to (html)
     presxml.sub!("<sections>",
                  "<bibdata><language>ja</language></bibdata><sections>")
     html.gsub!('lang="en"', 'lang="ja"')
       .sub!("<p>ABC</p>", "<p>&#x3000;ABC</p>")
-    expect((strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", presxml, true))))
+    expect(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", presxml, true)))
       .to be_html5_equivalent_to (html)
   end
 
@@ -761,11 +761,11 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect((strip_guid(pres_output
-      .gsub("&lt;", "&#x3c;"))))
+    expect(strip_guid(pres_output
+      .gsub("&lt;", "&#x3c;")))
       .to be_xml_equivalent_to (presxml)
-    expect((strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
+    expect(strip_guid(IsoDoc::Plateau::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
       .to be_html5_equivalent_to (html)
   end
 
@@ -952,9 +952,9 @@ RSpec.describe IsoDoc do
           </annex>
        </standard-document>
     OUTPUT
-    expect(strip_guid((IsoDoc::Plateau::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))
+      .convert("test", input, true)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_xml_equivalent_to (presxml)
   end
