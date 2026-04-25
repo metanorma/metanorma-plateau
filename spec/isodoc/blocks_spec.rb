@@ -303,7 +303,7 @@ RSpec.describe IsoDoc do
       .at("//xmlns:clause[@id = 'A']").to_xml)
       .gsub("&lt;", "&#x3c;"))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Plateau::HtmlConvert.new({})
+    expect(strip_guid(Nokogiri::HTML5(IsoDoc::Plateau::HtmlConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@id = 'A']").to_xml))
       .to be_html5_equivalent_to html
