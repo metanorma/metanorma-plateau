@@ -8,7 +8,7 @@ require "asciidoctor"
 require "metanorma-plateau"
 require "rspec/matchers"
 require "equivalent-xml"
-require "metanorma"
+require "metanorma-core"
 require "metanorma/plateau"
 require "canon"
 

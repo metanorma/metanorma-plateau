@@ -8,7 +8,7 @@ require "isodoc/plateau/pdf_convert"
 require "isodoc/plateau/presentation_xml_convert"
 require "isodoc/plateau/metadata"
 require "isodoc/plateau/xref"
-require "metanorma"
+require "metanorma-core"
 
 if defined? Metanorma::Registry
   require_relative "metanorma/plateau"
