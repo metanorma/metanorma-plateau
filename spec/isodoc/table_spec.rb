@@ -542,7 +542,7 @@ RSpec.describe IsoDoc do
                       </tfoot>
                    </table>
                    <table id="tableD-2" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
-                      <thead/>
+                      <thead></thead>
                       <tbody>
                          <tr>
                             <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">A</td>
@@ -1022,7 +1022,7 @@ RSpec.describe IsoDoc do
                       </tfoot>
                    </table>
                    <table id="tableD-2" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
-                      <thead/>
+                      <thead></thead>
                       <tbody>
                          <tr>
                             <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">A</td>
