@@ -17,7 +17,8 @@ RSpec.describe IsoDoc::Plateau::Metadata do
           <title language="ja" type="title-part-prefix">その 1</title>
         <docidentifier type="PLATEAU">1000-1.3:2000</docidentifier>
         <docnumber>1000</docnumber>
-        <date type="published">2020-10-11</date>
+        <date type="published"><on>2020-10-11</on></date>
+        <date type="updated"><on>2000-01-01</on></date>
         <contributor>
           <role type="author"/>
           <organization>
@@ -74,10 +75,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
            </person>
          </contributor>
         <edition>2</edition>
-        <version>
-          <revision-date>2000-01-01</revision-date>
-          <draft>0.3.4</draft>
-        </version>
+        <version>0.3.4</version>
         <language>ja</language>
         <script>Jpan</script>
         <status>
@@ -176,7 +174,8 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         stageabbr: "WD",
         statusabbr: "PreWD3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true,
+        updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
     c = IsoDoc::Plateau::HtmlConvert.new({})
@@ -226,7 +225,8 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         stageabbr: "WD",
         statusabbr: "PreWD3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true,
+        updateddate: "平成12年1月1日" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -250,6 +250,9 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <date type="published">令和2年10月11日</date>
             <date type="published" language="ja">令和2年10月11日</date>
             <date type="published" language="en">2020-10-11</date>
+            <date type="updated">平成12年1月1日</date>
+            <date language="ja" type="updated">平成12年1月1日</date>
+            <date language="en" type="updated">2000-01-01</date>
             <contributor>
                <role type="author"/>
                <organization>
@@ -310,10 +313,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <edition language="ja" numberonly="true">2</edition>
             <edition language="en">second edition</edition>
             <edition language="en" numberonly="true">2</edition>
-            <version>
-               <revision-date>2000-01-01</revision-date>
-               <draft>0.3.4</draft>
-            </version>
+            <version>0.3.4</version>
             <language current="true">ja</language>
             <script current="true">Jpan</script>
             <status>
@@ -398,7 +398,10 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <docnumber>1000</docnumber>
             <date type="published">令和2年10月11日</date>
             <date type="published" language="ja">令和2年10月11日</date>
-            <date type="published" language="en">2020-10-11</date>
+            <date language="en" type="published">2020-10-11</date>
+            <date type="updated">平成12年1月1日</date>
+            <date language="ja" type="updated">平成12年1月1日</date>
+            <date language="en" type="updated">2000-01-01</date>
             <contributor>
                <role type="author"/>
                <organization>
@@ -459,10 +462,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <edition language="ja" numberonly="true">2</edition>
             <edition language="en">second edition</edition>
             <edition language="en" numberonly="true">2</edition>
-            <version>
-               <revision-date>2000-01-01</revision-date>
-               <draft>0.3.4</draft>
-            </version>
+            <version>0.3.4</version>
             <language current="true">ja</language>
             <script current="true">Jpan</script>
             <status>
