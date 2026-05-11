@@ -539,7 +539,7 @@ RSpec.describe IsoDoc::Plateau do
 
     html = <<~OUTPUT
       <html lang="ja">
-         <head/>
+         <head></head>
          <body lang="ja">
             <div class="title-section">
                <p> </p>
@@ -590,9 +590,7 @@ RSpec.describe IsoDoc::Plateau do
                   <div id="I">
                      <h2>2.1　Normal Terms</h2>
                      <p class="TermNum" id="J">2.1.1</p>
-                     <p class="Terms" style="text-align:left;">
-                        <b><dfn>Term2</dfn></b>
-                     </p>
+                     <p class="Terms" style="text-align:left;"><b><dfn>Term2</dfn></b></p>
                   </div>
                   <div id="K">
                      <h2>2.2　記号</h2>
@@ -631,13 +629,7 @@ RSpec.describe IsoDoc::Plateau do
                </div>
                <br/>
                <div id="P" class="Section3">
-                  <h1 class="Annex">
-                     附属書 A
-                     <br/>
-                     <span class="obligation">（規定）</span>
-                     <br/>
-                     <b>Annex</b>
-                  </h1>
+                  <h1 class="Annex">附属書 A<br/><span class="obligation">（規定）</span><br/><b>Annex</b></h1>
                   <p style="display:none;" class="variant-title-toc">附属書 A　Annex</p>
                   <div id="Q">
                      <h2>A.1　Annex A.1</h2>
@@ -661,20 +653,13 @@ RSpec.describe IsoDoc::Plateau do
                   <p class="CommentaryStandardNumber">　TRZ 1000-1
       </p>
                   <p class="CommentaryStandardName">　Introduction Française — Titre Principal — </p>
-                  <p class="zzSTDTitle1">
-      #{'                           　'}
-                     <br/>
-                     <b>Part du Titre</b>
-                  </p>
+                  <p class="zzSTDTitle1">#{'                           　'}<br/><b>Part du Titre</b></p>
                   <h1 class="Annex">Commentary</h1>
                </div>
                <br/>
        <div class="colophon" id="_">
           <h1 class="IntroTitle"></h1>
-          <p id="_">
-             　 Introduction Française — Titre Principal — 1: Part du Titre#{'　'}
-             <span class="colophon_edition">第2版</span>
-          </p>
+          <p id="_">　 Introduction Française — Titre Principal — 1: Part du Titre#{'　'}<span class="colophon_edition">第2版</span></p>
           <p id="_">　国土交通省</p>
           <p id="_">　Flintstone Enterprises</p>
        </div>
