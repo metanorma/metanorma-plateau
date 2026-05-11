@@ -13,14 +13,6 @@ module IsoDoc
         y = load_file("i18n-#{yaml_lang(lang, script)}.yaml")
         y.empty? ? load_file("i18n-en.yaml").merge(super) : super.deep_merge(y)
       end
-
-      # Numeric regnal year
-      def japanese_year(time)
-        era_yr = time.era_year.to_i
-        "#{time.strftime('%JN')}#{era_yr}年"
-      rescue StandardError
-        time.year.to_s
-      end
     end
   end
 end

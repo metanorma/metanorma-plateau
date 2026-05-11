@@ -12,3 +12,8 @@ punct:
   biblio-field-delimiter: "　"
   biblio-terminator: ""
   comma: 、
+date_format:
+  default:
+    year:       "%EY[numeric]年"
+    year_month: "%EY[numeric]年%-m月"
+    full:       "%EY[numeric]年%-m月%-d日"
