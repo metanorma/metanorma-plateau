@@ -335,7 +335,11 @@ RSpec.describe IsoDoc do
                                      </localityStack>
                                   </origin>
                                   <semx element="origin" source="_">
-                                     <fmt-xref type="inline" target="ISO712" style="reference-tag">ISO 712,  Section 1</fmt-xref>
+                                                       <fmt-xref style="reference-tag" target="ISO712" type="inline">
+                       <span class="stdpublisher">ISO </span>
+                       <span class="stddocNumber">712</span>
+                       ,  Section 1
+                     </fmt-xref>
                                   </semx>
                                   ,
                                   <semx element="modification" source="_">with adjustments</semx>
@@ -382,7 +386,12 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
+                   <biblio-tag>
+                              <strong>
+             <span class="stdpublisher">ISO </span>
+             <span class="stddocNumber">712</span>
+           </strong>,
+                    </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </formattedref>
@@ -533,8 +542,8 @@ RSpec.describe IsoDoc do
                                <div class="BlockSource">
                                   <p>
                                      SOURCE:
-                                     <a href="#ISO712">ISO 712, Section 1</a>
-                                     , with adjustments
+                                     <a href="#ISO712">
+                       <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,  Section 1</a>, with adjustments
                                   </p>
                                </div>
                             </td>
@@ -553,7 +562,7 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2  Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      <b>ISO 712</b>,
+                              <b><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></b>,
                       <span class="stddocTitle">Cereals and cereal products</span>
                    </p>
                 </div>
@@ -811,7 +820,11 @@ RSpec.describe IsoDoc do
                                      </localityStack>
                                   </origin>
                                   <semx element="origin" source="_">
-                                  <fmt-xref type="inline" style="reference-tag" target="ISO712">ISO 712、  セクション 1</fmt-xref>
+                                  <fmt-xref style="reference-tag" target="ISO712" type="inline">
+                       <span class="stdpublisher">ISO </span>
+                       <span class="stddocNumber">712</span>
+                       、  セクション 1
+                     </fmt-xref>
                                   </semx>
                                   、
                                   <semx element="modification" source="_">with adjustments</semx>
@@ -859,7 +872,12 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="_">2</semx>
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
-                   <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
+                   <biblio-tag>
+                  <strong>
+             <span class="stdpublisher">ISO </span>
+             <span class="stddocNumber">712</span>
+           </strong>,
+                  </biblio-tag>
                    <formattedref>
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </formattedref>
@@ -1013,7 +1031,7 @@ RSpec.describe IsoDoc do
                                <div class="BlockSource">
                                   <p>
                                      出典： 
-                                     <a href="#ISO712">ISO 712、  セクション 1</a>
+                                     <a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>、  セクション 1</a>
                                      、with adjustments
                                   </p>
                                </div>
@@ -1032,8 +1050,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <div>
                    <h1>2　Normative References</h1>
-                   <p id="ISO712" class="NormRef">
-                      <b>ISO 712</b>, 
+                   <p id="ISO712" class="NormRef"><b><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></b>,
                       <span class="stddocTitle">「Cereals and cereal products」</span>
                    </p>
                 </div>

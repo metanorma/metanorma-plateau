@@ -219,7 +219,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011,
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>,
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -418,7 +420,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011,
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>,
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -435,7 +439,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011,
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>,
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -686,7 +692,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011、
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>、
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -887,7 +895,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011、
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>、
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -904,7 +914,9 @@ RSpec.describe IsoDoc::Plateau do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               ISO 7301:2011、
+                               <span class="stdpublisher">ISO </span>
+                               <span class="stddocNumber">7301</span>:
+                               <span class="stdyear">2011</span>、
                                <span class="citesec">3.1</span>
                             </fmt-origin>
                          </semx>
@@ -1449,7 +1461,8 @@ RSpec.describe IsoDoc::Plateau do
                    </origin>
                    <semx element="origin" source="_">
                       <fmt-xref type="inline" style="reference-tag" target="iso643">
-                         ISO 643,
+                         <span class="stdpublisher">ISO </span>
+                         <span class="stddocNumber">643</span>,
                          <span class="citesec">Clause 3</span>
                       </fmt-xref>
                    </semx>
@@ -1465,7 +1478,9 @@ RSpec.describe IsoDoc::Plateau do
                    </origin>
                    <semx element="origin" source="_">
                       <fmt-xref type="inline" style="reference-tag" target="ietf643">
-                         IETF RFC 643,
+                         <span class="stdpublisher">IETF </span>
+                          <span class="stdpublisher">RFC </span>
+                          <span class="stddocNumber">643</span>,
                          <span class="citesec">Clause 3</span>
                       </fmt-xref>
                    </semx>
@@ -1531,7 +1546,7 @@ RSpec.describe IsoDoc::Plateau do
                    </origin>
                    <semx element="origin" source="_">
                       <fmt-xref type="inline" style="reference-tag" target="ihos49">
-                         IHO S-49,
+                         <span class="stdpublisher">IHO</span> S-<span class="stddocNumber">49</span>,
                          <span class="citesec">Clause 3</span>
                       </fmt-xref>
                    </semx>

@@ -216,8 +216,8 @@ def blank_hdr_gen
 end
 
 HTML_HDR = <<~HDR.freeze
-  <html xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
-    <head/>
+  <html lang="en">
+    <head></head>
     <body lang="en">
       <div class="title-section">
         <p>&#160;</p>
