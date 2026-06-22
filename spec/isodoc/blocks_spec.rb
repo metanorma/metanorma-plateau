@@ -166,11 +166,7 @@ RSpec.describe IsoDoc do
                       </localityStack>
                    </origin>
                    <semx element="origin" source="_">
-                   <fmt-xref style="reference-tag" target="ISO712" type="inline">
-             <span class="stdpublisher">ISO </span>
-             <span class="stddocNumber">712</span>
-             ,  Section 1
-           </fmt-xref>
+                   <fmt-xref style="reference-tag" target="ISO712" type="inline">ISO 712,  Section 1</fmt-xref>
                    </semx>
                    ,
                    <semx element="modification" source="_">with adjustments</semx>
@@ -266,8 +262,7 @@ RSpec.describe IsoDoc do
       </div>
              <div class="BlockSource">
                 <p>
-                   (SOURCE:
-                   <a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,  Section 1</a>, with adjustments)
+                   (SOURCE: <a href="#ISO712">ISO 712,  Section 1</a>, with adjustments)
                 </p>
              </div>
              <aside id="fn:figureA-1a" class="footnote">

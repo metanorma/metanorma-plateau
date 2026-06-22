@@ -335,10 +335,7 @@ RSpec.describe IsoDoc do
              <p id="_">
                <eref bibitemid="ISO712" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO712">
-                   <span class="stdpublisher">ISO </span>
-                   <span class="stddocNumber">712</span>
-                 </fmt-xref>
+                 <fmt-xref target="ISO712">ISO 712</fmt-xref>
                </semx>
                <eref bibitemid="ISBN" id="_"/>
                <semx element="eref" source="_">
@@ -350,7 +347,7 @@ RSpec.describe IsoDoc do
                </semx>
                <eref bibitemid="ISO16634" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO16634"><span class="stdpublisher">ISO </span><span class="stddocNumber">16634</span>:--</fmt-xref>
+                 <fmt-xref target="ISO16634">ISO 16634:--</fmt-xref>
                </semx>
                <eref bibitemid="ref1" id="_"/>
                <semx element="eref" source="_">
@@ -391,7 +388,7 @@ RSpec.describe IsoDoc do
              </fmt-xref-label>
              <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
              <bibitem id="ISO712" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></strong>, </biblio-tag>
+               <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals and cereal products</span>
                </formattedref>
@@ -409,7 +406,7 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ISO16634" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">16634</span>:-- (all parts)</strong><fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx></sup></span></fmt-fn-label></fn>
+               <biblio-tag><strong>ISO 16634:-- (all parts)</strong><fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx></sup></span></fmt-fn-label></fn>
        , </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</span>
@@ -435,7 +432,7 @@ RSpec.describe IsoDoc do
                </extent>
              </bibitem>
              <bibitem id="ISO20483" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">20483</span>:<span class="stdyear">2013</span>-<span class="stddocPartNumber">2014</span></strong>, </biblio-tag>
+               <biblio-tag><strong>ISO 20483:2013-2014</strong>, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals and pulses</span>
                </formattedref>
@@ -695,7 +692,7 @@ RSpec.describe IsoDoc do
                </note>
              </bibitem>
              <bibitem id="ISO3696" type="standard">
-               <biblio-tag>[4]<tab/><span class="stdpublisher">ISO </span><span class="stddocNumber">3696</span>, </biblio-tag>
+               <biblio-tag>[4]<tab/>ISO 3696, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Water for analytical laboratory use</span>
                </formattedref>
@@ -726,7 +723,7 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ref11">
-               <biblio-tag>[6]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">10</span>, </biblio-tag>
+               <biblio-tag>[6]<tab/>IETF RFC 10, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
                </formattedref>
@@ -738,11 +735,12 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ref12">
-               <biblio-tag>[Citn]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">20</span>, </biblio-tag>
+               <biblio-tag>[7]<tab/>IETF RFC 20, </biblio-tag>
                <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
      
                  <em>How to cite a reference</em>
                  .</formattedref>
+               <docidentifier type="metanorma-ordinal">[7]</docidentifier>
                <docidentifier type="metanorma">[Citn]</docidentifier>
                <docidentifier type="IETF">IETF RFC 20</docidentifier>
                <docidentifier scope="biblio-tag">IETF RFC 20</docidentifier>
@@ -764,9 +762,9 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect((strip_guid(pres_output
+    expect(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"'))))
+      .gsub(/reference="[^"]+"/, 'reference="1"')))
       .to be_xml_equivalent_to (presxml)
 
     presxml = <<~OUTPUT
@@ -786,10 +784,7 @@ RSpec.describe IsoDoc do
              <p id="_">
                <eref bibitemid="ISO712" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO712">
-                   <span class="stdpublisher">ISO </span>
-                   <span class="stddocNumber">712</span>
-                 </fmt-xref>
+                 <fmt-xref target="ISO712">ISO 712</fmt-xref>
                </semx>
                <eref bibitemid="ISBN" id="_"/>
                <semx element="eref" source="_">
@@ -801,7 +796,7 @@ RSpec.describe IsoDoc do
                </semx>
                <eref bibitemid="ISO16634" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO16634"><span class="stdpublisher">ISO </span><span class="stddocNumber">16634</span>:-- <span class="stdpublisher">(規格群)</span></fmt-xref>
+                 <fmt-xref target="ISO16634">ISO 16634:-- (規格群)</fmt-xref>
                </semx>
                <eref bibitemid="ref1" id="_"/>
                <semx element="eref" source="_">
@@ -839,7 +834,7 @@ RSpec.describe IsoDoc do
              <fmt-xref-label><span class="fmt-element-name">箇条</span> <semx element="autonum" source="_">1</semx></fmt-xref-label>
              <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
              <bibitem id="ISO712" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></strong>, </biblio-tag>
+               <biblio-tag><strong>ISO 712</strong>, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals and cereal products</span>
                </formattedref>
@@ -857,7 +852,7 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ISO16634" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">16634</span>:-- <span class="stdpublisher">(規格群)</span></strong><fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation。（Stage at the time of publication ISO/DIS 16634）</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx></sup></span></fmt-fn-label></fn>
+               <biblio-tag><strong>ISO 16634:-- (</strong><span style="font-family:&quot;MS Gothic&quot;">規格群</span><strong>)</strong><fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation。（Stage at the time of publication ISO/DIS 16634）</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx></sup></span></fmt-fn-label></fn>
        , </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals, pulses, milled cereal products, xxxx, oilseeds and animal feeding stuffs</span>
@@ -883,7 +878,7 @@ RSpec.describe IsoDoc do
                </extent>
              </bibitem>
              <bibitem id="ISO20483" type="standard">
-               <biblio-tag><strong><span class="stdpublisher">ISO </span><span class="stddocNumber">20483</span>:<span class="stdyear">2013</span>-<span class="stddocPartNumber">2014</span></strong>, </biblio-tag>
+               <biblio-tag><strong>ISO 20483:2013-2014</strong>, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Cereals and pulses</span>
                </formattedref>
@@ -931,7 +926,7 @@ RSpec.describe IsoDoc do
              </fmt-title>
              <bibitem id="ISBN" type="book">
                <biblio-tag>[1]<tab/></biblio-tag>
-               <formattedref>Chemicals for analytical laboratory use. 都市はありません。：日付なし</formattedref>
+               <formattedref>Chemicals for analytical laboratory use. 出版地不明：日付なし</formattedref>
                <title format="text/plain">Chemicals for analytical laboratory use</title>
                <docidentifier type="metanorma-ordinal">[1]</docidentifier>
                <docidentifier type="ISBN">ISBN</docidentifier>
@@ -1050,7 +1045,7 @@ RSpec.describe IsoDoc do
              </bibitem>
              <bibitem type="article" id="ISSN">
                <biblio-tag>[3]<tab/></biblio-tag>
-               <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., Payne S. （編）. Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series （N.S.）. 2022, 巻1 いいえ7, 89〜112頁<note type="display" id="_" autonum="1"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></fmt-xref-label><fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-conn">の</span>［3］</span><span class="fmt-conn">の</span><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></fmt-xref-label><semx element="note" source="_"><p>This is an annotation of document ISSN.</p></semx></note>
+               <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., Payne S. （編）. Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series （N.S.）. 2022, 巻1 7号, 89〜112頁<note type="display" id="_" autonum="1"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></fmt-xref-label><fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-conn">の</span>［3］</span><span class="fmt-conn">の</span><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">1</semx></fmt-xref-label><semx element="note" source="_"><p>This is an annotation of document ISSN.</p></semx></note>
        <note type="display" id="_" autonum="2"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">2</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">2</semx></fmt-xref-label><fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-conn">の</span>［3］</span><span class="fmt-conn">の</span><span class="fmt-element-name">注記</span> <semx element="autonum" source="_">2</semx></fmt-xref-label><semx element="note" source="_"><p>This is another annotation of document ISSN.</p></semx></note>
        </formattedref>
                <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
@@ -1143,7 +1138,7 @@ RSpec.describe IsoDoc do
                </note>
              </bibitem>
              <bibitem id="ISO3696" type="standard">
-               <biblio-tag>[4]<tab/><span class="stdpublisher">ISO </span><span class="stddocNumber">3696</span>, </biblio-tag>
+               <biblio-tag>[4]<tab/>ISO 3696, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Water for analytical laboratory use</span>
                </formattedref>
@@ -1174,7 +1169,7 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ref11">
-               <biblio-tag>[6]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">10</span>, </biblio-tag>
+               <biblio-tag>[6]<tab/>IETF RFC 10, </biblio-tag>
                <formattedref>
                  <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
                </formattedref>
@@ -1186,11 +1181,12 @@ RSpec.describe IsoDoc do
                <script>Latn</script>
              </bibitem>
              <bibitem id="ref12">
-               <biblio-tag>[Citn]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">20</span>, </biblio-tag>
+               <biblio-tag>[7]<tab/>IETF RFC 20, </biblio-tag>
                <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
      
                  <em>How to cite a reference</em>
                  .</formattedref>
+               <docidentifier type="metanorma-ordinal">[7]</docidentifier>
                <docidentifier type="metanorma">[Citn]</docidentifier>
                <docidentifier type="IETF">IETF RFC 20</docidentifier>
                <docidentifier scope="biblio-tag">IETF RFC 20</docidentifier>
@@ -1212,9 +1208,9 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input
       .sub("<language>en</language>", "<language>ja</language>"), true)
-    expect((strip_guid(pres_output
+    expect(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"'))))
+      .gsub(/reference="[^"]+"/, 'reference="1"')))
       .to be_xml_equivalent_to (presxml)
   end
 
@@ -1362,30 +1358,30 @@ RSpec.describe IsoDoc do
     issn_ja = <<~OUTPUT
       <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M. &amp; Payne S. (eds.)　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series (N.S.)」　2022, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
-    expect((pres_output
-      .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
+    expect(pres_output
+      .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml)
       .to be_xml_equivalent_to (issn_en)
-    expect((pres_output
-      .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml))
+    expect(pres_output
+      .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml)
       .to be_xml_equivalent_to (issn_ja)
 
     issn_en = <<~OUTPUT
-      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M.,  Payne S. （編）. Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series （N.S.）. 2022, 巻1 いいえ7, 89〜112頁</formattedref>
+      <formattedref>Aluffi P., Anderson D., Hering M., Mustaţă M., Payne S. （編）. Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. London Mathematical Society Lecture Note Series （N.S.）. 2022, 巻1 7号, 89〜112頁</formattedref>
     OUTPUT
 
     issn_ja = <<~OUTPUT
-      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、 Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022、巻1 いいえ7、 89〜112頁</formattedref>
+      <formattedref>Aluffi P.、 Anderson D.、 Hering M.、 Mustaţă M.、 Payne S. （編）　『Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday』　「London Mathematical Society Lecture Note Series （N.S.）」　2022、巻1 7号、 89〜112頁</formattedref>
     OUTPUT
 
     pres_output = Nokogiri::XML(IsoDoc::Plateau::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input
       .sub("<language>en</language>", "<language>ja</language>"), true))
-    expect((pres_output
-      .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml))
+    expect(pres_output
+      .at("//*[@id = 'ISSN']/xmlns:formattedref").to_xml)
       .to be_xml_equivalent_to (issn_en)
-    expect((pres_output
-      .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml))
+    expect(pres_output
+      .at("//*[@id = 'ISSN1']/xmlns:formattedref").to_xml)
       .to be_xml_equivalent_to (issn_ja)
   end
 end

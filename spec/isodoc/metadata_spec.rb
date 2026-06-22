@@ -318,7 +318,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <script current="true">Jpan</script>
             <status>
                <stage abbreviation="WD" language="">20</stage>
-               <stage abbreviation="WD" language="ja">Working draft</stage>
+               <stage abbreviation="WD" language="ja">作業原案</stage>
                <stage abbreviation="WD" language="en">Working draft</stage>
                <substage>20</substage>
                <iteration>3</iteration>
@@ -467,7 +467,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
             <script current="true">Jpan</script>
             <status>
                <stage abbreviation="WD" language="">20</stage>
-               <stage abbreviation="WD" language="ja">Working draft</stage>
+               <stage abbreviation="WD" language="ja">作業原案</stage>
                <stage abbreviation="WD" language="en">Working draft</stage>
                <substage>20</substage>
                <iteration>3</iteration>

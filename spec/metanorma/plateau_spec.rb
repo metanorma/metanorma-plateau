@@ -83,7 +83,7 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" type="title-intro">Introduction Française</title>
            <title language="ja" type="title-main">Titre Principal</title>
            <title language="ja" type="title-part">Part du Titre</title>
-           <title language="ja" type="title-part-prefix">その 1</title>
+           <title language="ja" type="title-part-prefix">第1部</title>
            <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
            <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">
@@ -215,7 +215,7 @@ RSpec.describe Metanorma::Plateau do
            <title language="ja" type="title-intro">Introduction Française</title>
            <title language="ja" type="title-main">Titre Principal</title>
            <title language="ja" type="title-part">Part du Titre</title>
-           <title language="ja" type="title-part-prefix">その 1</title>
+           <title language="ja" type="title-part-prefix">第1部</title>
            <docidentifier type="PLATEAU" primary="true">PLATEAU 1000</docidentifier>
            <docnumber>PLATEAU 1000</docnumber>
            <date type="announced">
