@@ -1325,7 +1325,7 @@
 	<xsl:template match="mn:preprocess-xslt" mode="update_xml_pres"/>
 	<xsl:template match="mn:stem" mode="update_xml_pres"/>
 
-	<xsl:template match="mn:span[                @class = 'fmt-caption-label' or                 @class = 'fmt-element-name' or                @class = 'fmt-caption-delim' or                @class = 'fmt-autonum-delim']" mode="update_xml_pres" priority="3">
+	<xsl:template match="mn:span[                @class = 'fmt-caption-label' or                 @class = 'fmt-element-name' or                @class = 'fmt-caption-delim' or                @class = 'fmt-autonum-delim' or                @class = 'fmt-clause-delim']" mode="update_xml_pres" priority="3">
 		<xsl:apply-templates mode="update_xml_pres"/>
 	</xsl:template>
 
@@ -2990,7 +2990,7 @@
 		</xsl:element>
 	</xsl:template> -->
 
-	<xsl:template match="mn:span[                @class = 'fmt-caption-label' or                 @class = 'fmt-element-name' or                @class = 'fmt-caption-delim' or                @class = 'fmt-autonum-delim']" mode="update_xml_step1" priority="3">
+	<xsl:template match="mn:span[                @class = 'fmt-caption-label' or                 @class = 'fmt-element-name' or                @class = 'fmt-caption-delim' or                @class = 'fmt-autonum-delim' or                @class = 'fmt-clause-delim']" mode="update_xml_step1" priority="3">
 		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
 
