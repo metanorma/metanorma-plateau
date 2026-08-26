@@ -14,4 +14,4 @@ if defined? Metanorma::Registry
   require_relative "metanorma/plateau"
   Metanorma::Registry.instance.register(Metanorma::Plateau::Processor)
 end
-
+require "metanorma/plateau/document"
