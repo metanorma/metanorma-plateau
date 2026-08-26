@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "metanorma/standoc"
+require "metanorma/iso/document/models"
+require "metanorma/jis/document/models"
 module Metanorma
   module Plateau
   end
@@ -8,6 +10,8 @@ end
 
 module Metanorma
   module Plateau::Document
+    autoload :Metadata, "metanorma/plateau/document/metadata"
+    autoload :Root, "metanorma/plateau/document/root"
   end
 end
 
@@ -30,5 +34,7 @@ Metanorma::Core::Flavors.register(Metanorma::Core::Flavor.new(
   gem: "metanorma-plateau",
   model_root: Metanorma::Plateau::Document::Root,
   pubid_module: nil,
-  renderers: { html: Metanorma::Html::StandardRenderer },
+  renderers: { html: lambda do |_document, **_options|
+    Metanorma::Html::StandardRenderer
+  end },
 ))
