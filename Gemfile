@@ -2,6 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}" }
 
 gemspec
+gem "metanorma-mirror", "~> 1.0"
 
 # TEMPORARY: cross-PR branch pins so CI can resolve the in-flight
 # metanorma-standoc namespace rename (Metanorma::Standoc::Document)
@@ -16,7 +17,6 @@ gem "relaton-bib", "~> 2.2.0.pre.alpha.1"
 gem "pubid", github: "pubid/pubid", branch: "main"
 
 eval_gemfile("Gemfile.devel") rescue nil
-gem "metanorma-mirror", github: "metanorma/metanorma-mirror", branch: "feat/svgmap-imagemap-handlers" # TEMPORARY audit chain
 gem "metanorma-iso", github: "metanorma/metanorma-iso", branch: "feat/model-validation-migration" # TEMPORARY audit chain
 gem "metanorma-jis", github: "metanorma/metanorma-jis", branch: "fix/html-renderer-registration" # TEMPORARY audit chain
 gem "metanorma-core", github: "metanorma/metanorma-core", branch: "feat/flavor-table" # TEMPORARY audit chain
