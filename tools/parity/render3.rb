@@ -1,13 +1,16 @@
-# 3.x-line rendering: relaton-bib model -> facade -> Iso690::Renderer
-require "relaton-bib"
+# frozen_string_literal: true
+
+require "nokogiri"
+require "relaton/bib"
 require "relaton-render"
 
-xml = File.read("refs.xml")
-doc = Nokogiri::XML(xml).root
+doc = Nokogiri::XML(File.read("refs.xml")).root
 doc.xpath("./bibitem").each do |b|
-  model = Relaton::BibliographicItem.from_xml(b.to_xml)
+  model = Relaton::Bib::Item.from_xml(b.to_xml)
+  label = b.at("docidentifier")&.text
   general = Relaton::Render::General.new(
     language: model.language&.first || "en",
   )
-  puts "#{model.docidentifier.first.id}: #{general.render(model, embedded: true)}"
+  rendered = general.render(model, embedded: true)
+  puts "#{label}: #{rendered}"
 end
