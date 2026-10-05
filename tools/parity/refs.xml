@@ -1,0 +1,20 @@
+<references>
+<bibitem type="standard" schema-version="v1.2.1" id="iso19115">
+  <title language="en" type="title-main">Geographic information — Metadata</title>
+  <title language="en" type="main">Geographic information — Metadata</title>
+  <docidentifier type="ISO">ISO 19115-1:2014</docidentifier>
+  <docidentifier type="iso-with-lang">ISO 19115-1:2014(en)</docidentifier>
+  <date type="published"><on>2014-04-01</on></date>
+  <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
+  <language>en</language><script>Latn</script><status><stage>60</stage><substage>60</substage></status>
+  <copyright><from>2014</from><owner><organization><name>ISO</name></organization></owner></copyright>
+</bibitem>
+<bibitem type="book" id="mlit2023">
+  <title language="ja" type="main">3D都市モデル整備のためのBIM活用マニュアル</title>
+  <docidentifier type="PLATEAU">PLATEAU Handbook #03</docidentifier>
+  <date type="published"><on>2023-03-27</on></date>
+  <contributor><role type="publisher"/><organization><name>国土交通省　都市局</name></organization></contributor>
+  <language>ja</language><script>Jpan</script>
+  <uri type="citation">https://www.mlit.go.jp/plateau/libraries/handbooks/</uri>
+</bibitem>
+</references>

@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+gem "relaton-render", "3.0.0.pre.alpha.8"
+gem "relaton-bib", "2.1.9"
+gem "nokogiri"
