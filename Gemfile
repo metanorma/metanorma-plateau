@@ -37,7 +37,7 @@ gem "metanorma-iec", github: "metanorma/metanorma-iec",
     ref: "79d56ed6f969f5b52e9240a42ed77ee230e158c1" # metanorma-iec#594
 
 gem "metanorma-jis", github: "metanorma/metanorma-jis", ref: "0319570295c5266f594865f17189033bddcfa15c" # the tree jis#523 merges; flip to main in the cg3 de-branch
-gem "relaton-render", github: "relaton/relaton-render", branch: "main" # main carries #111 (i18n fallback lang) + #115 (per-item-language render_all); pin the released line once it ships
+gem "relaton-render", "= 3.0.0.pre.alpha.19" # released: #111, #115, 1.x renderings contract
 gem "relaton", "= 3.0.0.pre.alpha.4"
 gem "relaton-bib", "2.1.9"
 gem "relaton-cli", ">= 3.0.0.pre.alpha.1"

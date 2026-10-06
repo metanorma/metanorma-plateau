@@ -249,18 +249,6 @@ GIT
       metanorma-utils (>= 2.0.0)
       relaton-render (>= 1.0.0)
 
-GIT
-  remote: https://github.com/relaton/relaton-render
-  revision: fa2388cef480b40a788ca3b3494ad8874f3887c3
-  branch: main
-  specs:
-    relaton-render (3.0.0.pre.alpha.18)
-      htmlentities
-      liquid (~> 5)
-      lutaml-model
-      nokogiri
-      twitter_cldr
-
 PATH
   remote: .
   specs:
@@ -691,21 +679,21 @@ GEM
       rexml (~> 3.2)
     language_server-protocol (3.17.0.6)
     latex-decode (0.4.2)
-    leptris (1.9.311.2-aarch64-linux)
+    leptris (1.9.311.3-aarch64-linux)
       ffi (~> 1.15)
-    leptris (1.9.311.2-aarch64-linux-musl)
+    leptris (1.9.311.3-aarch64-linux-musl)
       ffi (~> 1.15)
-    leptris (1.9.311.2-arm-linux)
+    leptris (1.9.311.3-arm-linux)
       ffi (~> 1.15)
-    leptris (1.9.311.2-arm-linux-musl)
+    leptris (1.9.311.3-arm-linux-musl)
       ffi (~> 1.15)
-    leptris (1.9.311.2-arm64-darwin)
+    leptris (1.9.311.3-arm64-darwin)
       ffi (~> 1.15)
-    leptris (1.9.311.2-x86_64-darwin)
+    leptris (1.9.311.3-x86_64-darwin)
       ffi (~> 1.15)
-    leptris (1.9.311.2-x86_64-linux)
+    leptris (1.9.311.3-x86_64-linux)
       ffi (~> 1.15)
-    leptris (1.9.311.2-x86_64-linux-musl)
+    leptris (1.9.311.3-x86_64-linux-musl)
       ffi (~> 1.15)
     libpng (1.6.58.6)
       ffi (~> 1.0)
@@ -845,7 +833,7 @@ GEM
       moxml
     mn2pdf (2.72)
     mnconvert (1.89.0)
-    moxml (0.5.110)
+    moxml (0.5.111)
     multi_json (1.21.2)
     nenv (0.3.0)
     net-http-digest_auth (1.4.1)
@@ -1059,6 +1047,12 @@ GEM
       uuidtools
     relaton-logger (0.2.4)
       logger (~> 1.6)
+    relaton-render (3.0.0.pre.alpha.19)
+      htmlentities
+      liquid (~> 5)
+      lutaml-model
+      nokogiri
+      twitter_cldr
     reline (0.7.0)
       io-console (~> 0.5)
     reverse_markdown (2.1.1)
@@ -1365,7 +1359,7 @@ DEPENDENCIES
   relaton (= 3.0.0.pre.alpha.4)
   relaton-bib (= 2.1.9)
   relaton-cli (>= 3.0.0.pre.alpha.1)
-  relaton-render!
+  relaton-render (= 3.0.0.pre.alpha.19)
   rspec (~> 3.6)
   rubocop (~> 1)
   rubocop-performance

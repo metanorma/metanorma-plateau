@@ -335,7 +335,7 @@ RSpec.describe IsoDoc do
                     <eref bibitemid="ref1" id="_"/><semx element="eref" source="_"><fmt-xref target="ref1">ICC&#xA0;167</fmt-xref></semx>
                     <eref bibitemid="ref10" id="_"/><semx element="eref" source="_"><fmt-xref target="ref10">[5]</fmt-xref></semx>
                     <eref bibitemid="ref12" id="_"/><semx element="eref" source="_"><fmt-xref target="ref12">[Citn]</fmt-xref></semx>
-                    <eref bibitemid="A" id="_"/><semx element="eref" source="_"><fmt-link target="http://www.example.com">Work</fmt-link></semx>
+                    <eref bibitemid="A" id="_"/><semx element="eref" source="_"><fmt-link target="http://www.example.com"><em>Work</em></fmt-link></semx>
                   </p>
                 </foreword>
               </preface><sections><references id="_" normative="true" obligation="informative" displayorder="3">
@@ -674,7 +674,7 @@ RSpec.describe IsoDoc do
                     <eref bibitemid="ref1" id="_"/><semx element="eref" source="_"><fmt-xref target="ref1">ICC&#xA0;167</fmt-xref></semx>
                     <eref bibitemid="ref10" id="_"/><semx element="eref" source="_"><fmt-xref target="ref10">[5]</fmt-xref></semx>
                     <eref bibitemid="ref12" id="_"/><semx element="eref" source="_"><fmt-xref target="ref12">[Citn]</fmt-xref></semx>
-                    <eref bibitemid="A" id="_"/><semx element="eref" source="_"><fmt-link target="http://www.example.com">Work</fmt-link></semx>
+                    <eref bibitemid="A" id="_"/><semx element="eref" source="_"><fmt-link target="http://www.example.com"><em>Work</em></fmt-link></semx>
                   </p>
                 </foreword>
               </preface><sections><references id="_" normative="true" obligation="informative" displayorder="3">
