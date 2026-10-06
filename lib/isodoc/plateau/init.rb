@@ -24,9 +24,10 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        ::Relaton::Render::Plateau::General.new(options
-          .merge(language: @lang, script: @script, i18nhash: @i18n.get,
-                 config: @relatonrenderconfig))
+        require_relative "../../metanorma/plateau/citation_style"
+
+        ::Metanorma::Plateau::CitationStyle.new(options
+          .merge(language: @lang, script: @script, i18nhash: @i18n.get))
       end
     end
   end

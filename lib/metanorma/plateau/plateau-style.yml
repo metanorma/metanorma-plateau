@@ -1,0 +1,62 @@
+# The metanorma-plateau CitationStyle instance (relaton-render 3.0.0.pre
+# Iso690 engine). The 1.x config overlays this flavor merged over the JIS
+# config were empty; the JIS templates apply unchanged: home standards
+# (JIS, ISO and IEC docids) render title-first in the stddocTitle span,
+# and Japanese references carry no terminal period.
+name: "PLATEAU (metanorma-plateau flavour)"
+scheme:
+  system: name-date
+  nameForm:
+    initials: true
+    rolePlacement: afterPeriod
+    surnameUpcase: false
+    orgUpcase: false
+  homeDocidType: ["JIS", "ISO", "IEC"]
+  locale:
+    labels:
+      in: ""
+      oxford_comma: ""
+      available_from: "入手可能:"
+      viewed: "参照"
+      version: "第"
+      edition: "版"
+      edition_1: "第1版"
+      edition_2: "第2版"
+      edition_3: "第3版"
+      edition_4: "第4版"
+      edition_5: "第5版"
+      edition_6: "第6版"
+      edition_7: "第7版"
+      edition_8: "第8版"
+      edition_9: "第9版"
+      edition_10: "第10版"
+templates:
+  titleOpen: "<span class='stddocTitle'>"
+  titleClose: "</span>"
+  citation: "{{surname}} {{date}}{{disambiguator}}"
+  reference: "{{creator}}{{title}}, {{medium}}. {{edition}}. {{series}}. {{production}}. {{date}}. {{size}}. {{identifier}}. {{location}}."
+  name: "{{surname}}, {{givenNames}}"
+  series: "({{series_title}} {{series_number}})"
+  uri: "<span class='biburl'><fmt-link target='{{uri}}'>{{uri}}</fmt-link></span>"
+perType:
+  - type: report
+    template: "{{creator}}{{title}}, {{extent}}. {{edition}}. {{stddoc}}. {{access}}"
+    home: false
+  - type: report
+    template: "{{title}}, {{extent}}"
+    home: true
+  - type: monograph
+    template: "{{creator}}{{title}}. {{edition}}. {{series}}. {{location}}: {{production}}. {{date}}. {{size}}. {{access}}"
+  - type: component_part
+    template: "{{creator}}{{title}}. {{componentpart}}. {{date}}. {{extent}}. {{access}}"
+  - type: continuing
+    template: "{{title}}. {{date}}"
+  - type: serial_part
+    template: "{{creator}}{{title}}. {{series}}. {{date}}, {{extent}}"
+    series: "<em>{{series_title}}</em> ({{series_run}})"
+  - type: online
+    template: "{{creator}}{{title}}. {{edition}}. {{medium}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
+  - type: webdoc
+    template: "{{creator}}{{title}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
+  - type: patent
+    template: "{{creator}}{{title}}. {{identifier}}. {{date}}."
