@@ -1,0 +1,10 @@
+
+# TEMPORARY cross-PR pins for the CitationStyle port
+# (metanorma-standoc namespace rename Metanorma::Standoc::Document)
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/move-standard-document"
+gem "metanorma-document", github: "metanorma/metanorma-document", branch: "feat/model-validation-l1-declarations"
+gem "isodoc", github: "metanorma/isodoc", branch: "rt-pubid-2-migration"
+gem "metanorma-iso", github: "metanorma/metanorma-iso", branch: "main"
+gem "metanorma-jis", github: "metanorma/metanorma-jis", branch: "main"
+gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main"
+gem "relaton-render", "3.0.0.pre.alpha.24" # JIS CitationStyle port
