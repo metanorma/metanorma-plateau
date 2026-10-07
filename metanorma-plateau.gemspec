@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.add_dependency "metanorma-jis", ">= 1.1.6"
-  spec.add_dependency "pubid"
+  spec.add_dependency "pubid", ">= 2.0.0.pre"
 
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
