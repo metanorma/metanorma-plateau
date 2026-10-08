@@ -7,4 +7,4 @@ gem "isodoc", github: "metanorma/isodoc", branch: "rt-pubid-2-migration"
 gem "metanorma-iso", github: "metanorma/metanorma-iso", branch: "main"
 gem "metanorma-jis", github: "metanorma/metanorma-jis", branch: "main"
 gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main"
-gem "relaton-render", "3.0.0.pre.alpha.24" # JIS CitationStyle port
+gem "relaton-render", "3.0.0.pre.alpha.31" # JIS CitationStyle port
