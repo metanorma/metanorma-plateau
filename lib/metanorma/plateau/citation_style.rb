@@ -22,11 +22,13 @@ module Metanorma
       # the punctuation (field separator, title marks, list joins)
       # follows the item's own language
       def style_path(lang)
-        if @lang.to_s.start_with?("ja")
-          lang.to_s == "ja" || lang.nil? ? STYLE_JA_JA : STYLE_JA_EN
-        else
-          lang.to_s == "ja" ? STYLE_EN_JA : super
-        end
+        r = if @lang.to_s.start_with?("ja")
+              lang.to_s == "ja" || lang.nil? ? STYLE_JA_JA : STYLE_JA_EN
+            else
+              lang.to_s == "ja" ? STYLE_EN_JA : super
+            end
+        warn "DBG-PS doc=#{@lang} item=#{lang.inspect} style=#{File.basename(r.to_s)}" if ENV["PLATEAU_STYLE_DEBUG"]
+        r
       end
 
       # The ja-document rendering of a Latin item closes an ASCII

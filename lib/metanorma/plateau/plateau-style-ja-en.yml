@@ -1,69 +1,39 @@
-# The plateau CitationStyle instance for Latin items in a Japanese
-# document (relaton-render 3.0.0.pre Iso690 engine): the ja pack's
-# labels with the item's own ASCII punctuation and list joins.
 name: "ISO 690 (metanorma-plateau flavour, ja document, en items)"
+family: iso690
+extends: jis-en
 scheme:
-  system: name-date
-  shortFromReference: true
-  homeDocidType: []
-  nameForm:
-    initials: true
-    initialsSeparator: ""
-    initialsPeriod: true
-    surnameUpcase: false
-    subsequentSurnameUpcase: false
-    invertedAll: true
-    completenameUpcase: false
-    orgUpcase: false
-    editorsMarked: false
   locale:
     labels:
-      "and": ""
-      oxford_comma: ""
       list_separator: ", "
       extent_group_separator: ", "
-      series_no: ""
+      date: "n.d"
+  nameForm:
+    orgUpcase: false
+    completenameUpcase: false
 templates:
+  name: "{{surname}} {{givenNames}}"
   titleOpen: ""
   titleClose: ""
-  identifierMode: first
-  citation: "{{surname}} {{date}}"
-  uri: "<span class='biburl'><fmt-link target='{{uri}}'>{{uri}}</fmt-link></span>"
-  reference: "{{creator}}{{role}}. {{title}}. {{edition}}. （{{series}}）. {{production}}. {{date}}. {{size}}"
-  name: "{{surname}} {{givenNames}}"
+  reference: "{{creator}}{{role}} {{title}} {{edition}} ({{series}}) {{production}} {{date}} {{size}}"
 perType:
   - type: report
     home: true
-    short: "<span class='stddocTitle'>{{title}}</span>, {{extent}}"
+    short: "<span class='stddocTitle'>「{{title}}」</span>、 {{extent}}"
     template: "{{title}}"
-    title: "<span class='stddocTitle'>{{title}}</span>"
+    title: "<span class='stddocTitle'>「{{title}}」</span>"
   - type: report
     fallbacks:
       date: "日付なし"
-    template: "{{creator}}. {{title}}. {{edition}}. {{production}}. {{authorizer}}. {{location}}"
-    short: "{{creator}}. <span class='stddocTitle'>{{title}}</span>. {{edition}}. {{production}}"
+    template: "{{creator}} {{title}} {{edition}} {{production}} {{authorizer}} {{location}}"
+    short: "{{creator}} <span class='stddocTitle'>「{{title}}」</span> {{edition}} {{production}}"
     title: "<span class='stddocTitle'>{{title}}</span>"
   - type: monograph
-    noPlace: true
-    fallbacks:
-      date: "日付なし"
-    template: "{{creator}}{{role}}. {{title}}. {{edition}}. （{{series}}）. {{production}}. {{date}}. {{size}}. {{location}}"
-  - type: continuing
-    template: "{{title}}. {{date}}"
-  - type: online
-    fallbacks:
-      date: "日付なし"
-    template: "{{creator}}. {{title}}. {{production}}. {{date}}. {{location}}"
-  - type: webdoc
-    fallbacks:
-      date: "日付なし"
-    template: "{{creator}}. {{title}}. {{production}}. {{date}}. {{location}}"
+    template: "{{creator}}{{role}} {{title}} {{edition}} ({{series}}) {{production}} {{date}} {{size}} {{location}}"
   - type: component_part
-    noPlace: true
-    template: "{{creator}}{{role}}. {{title}}. {{componentpart}}. {{edition}}. （{{series}}）. {{production}}. {{date}}. {{extent}}. {{location}}"
+    template: "{{creator}}{{role}} {{title}} {{componentpart}} {{edition}} ({{series}}) {{production}} {{date}} {{extent}} {{location}}"
   - type: serial_part
-    template: "{{creator}}{{role}}. {{title}}. {{series}}. {{date}}, {{extent}}. {{location}}"
-    series: "{{seriestitle}} （{{seriesrun}}）"
+    template: "{{creator}}{{role}} 『{{title}}』 {{series}} {{date}}, {{extent}} {{location}}"
+    series: "「{{seriestitle}} ({{seriesrun}})」"
   - type: article
-    template: "{{creator}}{{role}}. {{title}}. {{series}}. {{date}}, {{extent}}"
-    series: "{{seriestitle}} （{{seriesrun}}）"
+    template: "{{creator}}{{role}} 『{{title}}』 {{series}} {{date}}, {{extent}}"
+    series: "「{{seriestitle}} ({{seriesrun}})」"
