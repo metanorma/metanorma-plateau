@@ -19,6 +19,7 @@ scheme:
     orgUpcase: false
     editorsMarked: false
   locale:
+    availableAt: "入手先："
     labels:
       "and": ""
       oxford_comma: ""
