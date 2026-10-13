@@ -1,7 +1,11 @@
 module IsoDoc
-  module XrefGen
+  module Plateau
+    # ISO-default list numbering. The JIS flavor reopens
+    # IsoDoc::XrefGen::OlTypeProvider with its own scheme, and its
+    # autoload can land after any same-module reopen (superclass
+    # resolution during the Xref class body loads isodoc/jis/xref).
+    # Prepending keeps the ISO scheme winning regardless of load order.
     module OlTypeProvider
-      # revert to ISO default
       def ol_type(list, depth)
         return list["type"].to_sym if list["type"]
         return :arabic if [2, 7].include? depth
@@ -13,9 +17,7 @@ module IsoDoc
         :arabic
       end
     end
-  end
 
-  module Plateau
     class Counter < IsoDoc::XrefGen::Counter
     end
 
@@ -104,3 +106,8 @@ refer_list)
     end
   end
 end
+
+# After the class bodies above have resolved IsoDoc::Jis::Xref (and so
+# loaded the JIS OlTypeProvider reopen), pin the ISO scheme.
+IsoDoc::XrefGen::Counter.prepend(IsoDoc::Plateau::OlTypeProvider)
+IsoDoc::Jis::Counter.prepend(IsoDoc::Plateau::OlTypeProvider)

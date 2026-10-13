@@ -5,6 +5,10 @@
 name: "ISO 690 (metanorma-plateau flavour, ja)"
 family: iso690
 extends: jis-ja
+rules:
+  component_part: jis_component_part
+  series: jis_series
+  extent: jis_extent
 templates:
   titleOpen: ""
   titleClose: ""

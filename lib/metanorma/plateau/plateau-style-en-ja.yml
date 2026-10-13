@@ -2,6 +2,10 @@
 # (relaton-render 3.0.0.pre Iso690 engine): the ISO 690 order with the
 # Latin punctuation of the en language pack.
 name: "ISO 690 (metanorma-plateau flavour, en)"
+rules:
+  component_part: jis_component_part
+  series: jis_series
+  extent: jis_extent
 scheme:
   system: name-date
   shortFromReference: true

@@ -11,9 +11,10 @@ module Metanorma
     # the plateau bilingual forms - the fullwidth space as the field
     # separator, 『』 for component titles, 「」 for series titles -
     # in each item's own language punctuation; an English document
-    # takes the plain JIS forms.
+    # takes the canonical JIS forms.
     #
     class CitationStyle < ::Metanorma::Jis::CitationStyle
+      STYLE_EN_EN = File.join(__dir__, "plateau-style-en-en.yml")
       STYLE_EN_JA = File.join(__dir__, "plateau-style-en-ja.yml")
       STYLE_JA_EN = File.join(__dir__, "plateau-style-ja-en.yml")
       STYLE_JA_JA = File.join(__dir__, "plateau-style-ja-ja.yml")
@@ -25,7 +26,7 @@ module Metanorma
         r = if @lang.to_s.start_with?("ja")
               lang.to_s == "ja" || lang.nil? ? STYLE_JA_JA : STYLE_JA_EN
             else
-              lang.to_s == "ja" ? STYLE_EN_JA : super
+              lang.to_s == "ja" ? STYLE_EN_JA : STYLE_EN_EN
             end
         warn "DBG-PS doc=#{@lang} item=#{lang.inspect} style=#{File.basename(r.to_s)}" if ENV["PLATEAU_STYLE_DEBUG"]
         r
