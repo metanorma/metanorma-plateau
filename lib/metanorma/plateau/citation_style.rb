@@ -56,7 +56,6 @@ module Metanorma
           script: @renderer_opts[:script],
           labels: @renderer_opts[:labels],
           style: style_path(lang),
-          elements: ::Metanorma::Jis::JisElements::ELEMENTS,
         )
       end
     end
