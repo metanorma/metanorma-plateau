@@ -1,0 +1,15 @@
+# The plateau delta over the canonical jis-en pack: an English
+# document's English items take the plain JIS forms with English
+# edition words ("Fourth edition" over the pack's bare ordinal) and
+# the JIS component-part/series/extent rules.
+name: "ISO 690 (metanorma-plateau flavour, en document, en items)"
+family: iso690
+extends: jis-en
+rules:
+  component_part: jis_component_part
+  series: jis_series
+  extent: jis_extent
+scheme:
+  locale:
+    labels:
+      edition_ordinal: "{{ var1 | ordinal_word }} edition"

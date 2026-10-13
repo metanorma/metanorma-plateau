@@ -4,6 +4,10 @@
 name: "ISO 690 (metanorma-plateau flavour, ja document, en items)"
 family: iso690
 extends: jis-en
+rules:
+  component_part: jis_component_part
+  series: jis_series
+  extent: jis_extent
 scheme:
   system: name-date
   shortFromReference: true
