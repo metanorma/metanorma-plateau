@@ -10,7 +10,7 @@ gemspec
 # (delta labels win per key) shipped in relaton-render alpha.32;
 # metanorma-jis's loose ~> constraint would let cached older alphas
 # resolve in CI
-gem "relaton-render", ">= 3.0.0.pre.alpha.32", github: "metanorma/relaton-render", branch: "main"
+gem "relaton-render", "~> 3.0.0.pre.alpha"
 
 gem "gem-release"
 
