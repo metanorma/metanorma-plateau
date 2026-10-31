@@ -177,7 +177,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+                           nil))).to eq output
     c = IsoDoc::Plateau::HtmlConvert.new({})
     _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -228,7 +228,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
         unpublished: true,
         updateddate: "平成12年1月1日" }
     expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+                           nil))).to eq output
   end
 
   it "internationalises IsoXML metadata" do
@@ -379,7 +379,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
   .new(presxml_options)
   .convert("test", input, true))
   .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to (output)
+      .to be_xml_equivalent_to (output)
 
     output = <<~OUTPUT
       <jis-standard xmlns="https://www.metanorma.org/ns/plateau" type="presentation" version="#{Metanorma::Plateau::VERSION}">
@@ -529,7 +529,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
     .convert("test", input.sub("<language>en</language>",
                                "<language>ja</language"), true))
     .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to (output)
+      .to be_xml_equivalent_to (output)
   end
 
   it "internationalises dates in bibdata" do
@@ -563,7 +563,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to (output)
+      .to be_xml_equivalent_to (output)
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
@@ -585,7 +585,7 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       .convert("test", input.sub!("<language>en</language>",
                                   "<language>ja</language"), true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to (output)
+      .to be_xml_equivalent_to (output)
 
     input.sub!("</bibdata>", <<~SUB
       </bibdata><metanorma-extension>
@@ -614,6 +614,6 @@ RSpec.describe IsoDoc::Plateau::Metadata do
       .convert("test", input, true))
       .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format(output)
+      .to be_xml_equivalent_to Canon.format(output)
   end
 end
