@@ -1,4 +1,4 @@
-require "relaton-render"
+require "relaton/render"
 require "metanorma-jis"
 # the Jis render stack this class subclasses now loads lazily
 # (metanorma-jis#525); bring it in explicitly
